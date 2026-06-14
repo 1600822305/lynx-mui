@@ -23,11 +23,16 @@ interface ButtonOwnerState {
   disabled: boolean
 }
 
-const sizePadding: Record<ButtonSize, string> = {
-  small: '4px 10px',
-  medium: '6px 16px',
-  large: '8px 22px',
+// Exact MUI padding matrix, keyed by (variant, size). Outlined values are 1px
+// smaller to compensate for the border, matching @mui/material.
+const paddingMatrix: Record<ButtonVariant, Record<ButtonSize, string>> = {
+  text: { small: '4px 5px', medium: '6px 8px', large: '8px 11px' },
+  outlined: { small: '3px 9px', medium: '5px 15px', large: '7px 21px' },
+  contained: { small: '4px 10px', medium: '6px 16px', large: '8px 22px' },
 }
+
+// MUI action.hoverOpacity (0.04) — the tint applied to text/outlined on hover.
+const HOVER_OPACITY = 0.04
 
 /** Root (container) variant table -> sx object, including `:active` / disabled states. */
 function buttonRootStyle(os: ButtonOwnerState, theme: Theme): SxObject {
@@ -38,33 +43,36 @@ function buttonRootStyle(os: ButtonOwnerState, theme: Theme): SxObject {
     alignItems: 'center',
     justifyContent: 'center',
     minWidth: '64px',
-    padding: sizePadding[os.size],
+    padding: paddingMatrix[os.variant][os.size],
     borderRadius: `${theme.shape.borderRadius}px`,
-    transition: 'background-color 0.2s, box-shadow 0.2s',
+    transition: 'background-color 0.25s, box-shadow 0.25s, border-color 0.25s, color 0.25s',
   }
   if (os.fullWidth) style.width = '100%'
 
   if (os.variant === 'contained') {
     style.backgroundColor = c.main
     style.boxShadow = theme.shadows[2]
-    style['&:active'] = { backgroundColor: c.dark, boxShadow: theme.shadows[4] }
+    style['&:active'] = { backgroundColor: c.dark, boxShadow: theme.shadows[8] }
     style['&.Mui-disabled'] = {
       backgroundColor: theme.palette.action.disabledBackground,
-      boxShadow: 'none',
+      boxShadow: theme.shadows[0],
     }
   } else if (os.variant === 'outlined') {
     style.backgroundColor = 'transparent'
     style.borderWidth = '1px'
     style.borderStyle = 'solid'
     style.borderColor = alpha(c.main, 0.5)
-    style['&:active'] = { backgroundColor: alpha(c.main, 0.08), borderColor: c.main }
+    style['&:active'] = { backgroundColor: alpha(c.main, HOVER_OPACITY), borderColor: c.main }
     style['&.Mui-disabled'] = { borderColor: theme.palette.action.disabledBackground }
   } else {
     style.backgroundColor = 'transparent'
-    style['&:active'] = { backgroundColor: alpha(c.main, 0.08) }
+    style['&:active'] = { backgroundColor: alpha(c.main, HOVER_OPACITY) }
   }
   return style
 }
+
+// MUI Button font sizes per size (medium = typography.button = 14).
+const labelFontSize: Record<ButtonSize, number> = { small: 13, medium: 14, large: 15 }
 
 /** Label (text slot) variant table -> resolved Lynx style. */
 function buttonLabelStyle(os: ButtonOwnerState, theme: Theme): LynxStyle {
@@ -74,7 +82,7 @@ function buttonLabelStyle(os: ButtonOwnerState, theme: Theme): LynxStyle {
     ? theme.palette.action.disabled
     : os.variant === 'contained' ? c.contrastText : c.main
   const style: SxObject = {
-    fontSize: `${t.fontSize}px`,
+    fontSize: `${labelFontSize[os.size]}px`,
     fontWeight: `${t.fontWeight}`,
     lineHeight: `${t.lineHeight}`,
     letterSpacing: `${t.letterSpacing}px`,

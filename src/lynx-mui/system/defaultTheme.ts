@@ -52,7 +52,7 @@ export const defaultTheme: Theme = {
     subtitle1: { fontFamily, fontSize: 16, fontWeight: 400, lineHeight: 1.75, letterSpacing: 0.15 },
     subtitle2: { fontFamily, fontSize: 14, fontWeight: 500, lineHeight: 1.57, letterSpacing: 0.1 },
     body1: { fontFamily, fontSize: 16, fontWeight: 400, lineHeight: 1.5, letterSpacing: 0.15 },
-    body2: { fontFamily, fontSize: 14, fontWeight: 400, lineHeight: 1.43, letterSpacing: 0.17 },
+    body2: { fontFamily, fontSize: 14, fontWeight: 400, lineHeight: 1.43, letterSpacing: 0.15 },
     button: { fontFamily, fontSize: 14, fontWeight: 500, lineHeight: 1.75, letterSpacing: 0.4, textTransform: 'uppercase' },
     caption: { fontFamily, fontSize: 12, fontWeight: 400, lineHeight: 1.66, letterSpacing: 0.4 },
     overline: { fontFamily, fontSize: 12, fontWeight: 400, lineHeight: 2.66, letterSpacing: 1, textTransform: 'uppercase' },

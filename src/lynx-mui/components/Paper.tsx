@@ -22,6 +22,7 @@ function paperStyle(os: PaperOwnerState, theme: Theme): SxObject {
   const style: SxObject = {
     backgroundColor: theme.palette.background.paper,
     color: theme.palette.text.primary,
+    transition: 'box-shadow 0.3s',
   }
   if (!os.square) style.borderRadius = `${theme.shape.borderRadius}px`
 

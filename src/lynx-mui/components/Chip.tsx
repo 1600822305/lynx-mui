@@ -4,6 +4,7 @@ import { createComponent } from '../system/createComponent.js'
 import type { BaseProps } from '../system/createComponent.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, Theme } from '../system/types.js'
+import { alpha } from '../utils/alpha.js'
 
 export type ChipVariant = 'filled' | 'outlined'
 export type ChipColor =
@@ -26,10 +27,16 @@ interface ChipOwnerState {
   size: ChipSize
 }
 
+// MUI: height 32 (small 24); borderRadius is always 32/2 = 16 (fully rounded).
+// fontSize is 13 for both sizes. Horizontal padding lives on the label and is
+// 1px tighter for outlined (to offset the border).
 const chipHeight: Record<ChipSize, string> = { small: '24px', medium: '32px' }
-const chipRadius: Record<ChipSize, string> = { small: '12px', medium: '16px' }
-const chipPadding: Record<ChipSize, string> = { small: '0 8px', medium: '0 12px' }
-const chipFontSize: Record<ChipSize, number> = { small: 12, medium: 13 }
+const CHIP_FONT_SIZE = 13
+
+const chipPadding: Record<ChipVariant, Record<ChipSize, string>> = {
+  filled: { small: '0 8px', medium: '0 12px' },
+  outlined: { small: '0 7px', medium: '0 11px' },
+}
 
 function chipRootStyle(os: ChipOwnerState, theme: Theme): SxObject {
   const style: SxObject = {
@@ -38,8 +45,8 @@ function chipRootStyle(os: ChipOwnerState, theme: Theme): SxObject {
     alignItems: 'center',
     justifyContent: 'center',
     height: chipHeight[os.size],
-    borderRadius: chipRadius[os.size],
-    padding: chipPadding[os.size],
+    borderRadius: '16px',
+    padding: chipPadding[os.variant][os.size],
   }
   const isDefault = os.color === 'default'
   const c = isDefault ? undefined : theme.palette[os.color as ChipPaletteColor]
@@ -48,9 +55,11 @@ function chipRootStyle(os: ChipOwnerState, theme: Theme): SxObject {
     style.backgroundColor = 'transparent'
     style.borderWidth = '1px'
     style.borderStyle = 'solid'
-    style.borderColor = c ? c.main : theme.palette.action.disabled
+    // default -> grey[400]; colored -> alpha(main, 0.7)
+    style.borderColor = c ? alpha(c.main, 0.7) : theme.palette.grey['400']
   } else {
-    style.backgroundColor = c ? c.main : theme.palette.grey['300']
+    // default filled -> action.selected (rgba(0,0,0,0.08)); colored -> main
+    style.backgroundColor = c ? c.main : theme.palette.action.selected
   }
   return style
 }
@@ -63,7 +72,7 @@ function chipLabelStyle(os: ChipOwnerState, theme: Theme): LynxStyle {
   if (os.variant === 'outlined') color = c ? c.main : theme.palette.text.primary
   else color = c ? c.contrastText : theme.palette.text.primary
 
-  return sxToStyle({ fontSize: `${chipFontSize[os.size]}px`, color, whiteSpace: 'nowrap' }, theme)
+  return sxToStyle({ fontSize: `${CHIP_FONT_SIZE}px`, color, whiteSpace: 'nowrap' }, theme)
 }
 
 /** MUI `Chip` -> Lynx `<view>` (pill) + `<text>` (label). */
