@@ -36,7 +36,7 @@ function typographyStyle(os: TypographyOwnerState, theme: Theme): SxObject {
   const style: SxObject = {}
   if (os.variant !== 'inherit') {
     const v = theme.typography[os.variant]
-    style.fontFamily = v.fontFamily
+    if (v.fontFamily) style.fontFamily = v.fontFamily
     style.fontSize = `${v.fontSize}px`
     style.fontWeight = `${v.fontWeight}`
     style.lineHeight = `${v.lineHeight}`

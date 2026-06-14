@@ -1,6 +1,9 @@
 import type { Theme } from './types.js'
 
-const fontFamily = 'Roboto, Helvetica, Arial, sans-serif'
+// Empty = use the platform's system font. Forcing a Latin-only stack (e.g.
+// Roboto) makes CJK glyphs render blank on Lynx since it doesn't fall back
+// per-glyph. Users can set a real fontFamily (with CJK fallbacks) via the theme.
+const fontFamily = ''
 
 /**
  * Minimal default theme mirroring MUI's light default. Intentionally small —

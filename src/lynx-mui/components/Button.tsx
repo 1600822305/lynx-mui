@@ -73,14 +73,15 @@ function buttonLabelStyle(os: ButtonOwnerState, theme: Theme): LynxStyle {
   const color = os.disabled
     ? theme.palette.action.disabled
     : os.variant === 'contained' ? c.contrastText : c.main
-  return sxToStyle({
-    fontFamily: t.fontFamily,
+  const style: SxObject = {
     fontSize: `${t.fontSize}px`,
     fontWeight: `${t.fontWeight}`,
     lineHeight: `${t.lineHeight}`,
     letterSpacing: `${t.letterSpacing}px`,
     color,
-  }, theme)
+  }
+  if (t.fontFamily) style.fontFamily = t.fontFamily
+  return sxToStyle(style, theme)
 }
 
 /** MUI `Button` -> Lynx `<view>` (container) + `<text>` (label). */
