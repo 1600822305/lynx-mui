@@ -10,6 +10,14 @@ export type {
   ButtonColor,
   ButtonSize,
 } from './components/Button.js'
+export { Stack } from './components/Stack.js'
+export type { StackProps, StackDirection } from './components/Stack.js'
+export { Paper } from './components/Paper.js'
+export type { PaperProps, PaperVariant } from './components/Paper.js'
+export { Divider } from './components/Divider.js'
+export type { DividerProps, DividerOrientation } from './components/Divider.js'
+export { Chip } from './components/Chip.js'
+export type { ChipProps, ChipVariant, ChipColor, ChipSize } from './components/Chip.js'
 
 // System / theming.
 export { defaultTheme } from './system/defaultTheme.js'
