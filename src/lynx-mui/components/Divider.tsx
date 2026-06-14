@@ -16,20 +16,22 @@ interface DividerOwnerState {
 }
 
 function dividerStyle(os: DividerOwnerState, theme: Theme): SxObject {
+  // Mirror MUI: a zero-width border box where one side carries the hairline.
+  const style: SxObject = {
+    margin: 0,
+    borderWidth: 0,
+    borderStyle: 'solid',
+    borderColor: theme.palette.divider,
+  }
   if (os.orientation === 'vertical') {
-    const style: SxObject = {
-      width: '1px',
-      backgroundColor: theme.palette.divider,
-    }
+    style.borderRightWidth = '1px'
     if (os.flexItem) style.alignSelf = 'stretch'
     else style.height = '100%'
-    return style
+  } else {
+    style.borderBottomWidth = '1px'
+    style.width = '100%'
   }
-  return {
-    width: '100%',
-    height: '1px',
-    backgroundColor: theme.palette.divider,
-  }
+  return style
 }
 
 /** MUI `Divider` -> Lynx `<view>` hairline (1px). */
