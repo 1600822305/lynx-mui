@@ -1,0 +1,64 @@
+import type { Theme } from './types.js'
+
+const fontFamily = 'Roboto, Helvetica, Arial, sans-serif'
+
+/**
+ * Minimal default theme mirroring MUI's light default. Intentionally small —
+ * just enough for sx resolution and component rendering. The full theme system
+ * (ThemeProvider, palette modes, etc.) is intentionally deferred.
+ */
+export const defaultTheme: Theme = {
+  spacing: (factor: number) => factor * 8,
+  shape: { borderRadius: 4 },
+  palette: {
+    mode: 'light',
+    primary: { main: '#1976d2', light: '#42a5f5', dark: '#1565c0', contrastText: '#fff' },
+    secondary: { main: '#9c27b0', light: '#ba68c8', dark: '#7b1fa2', contrastText: '#fff' },
+    error: { main: '#d32f2f', light: '#ef5350', dark: '#c62828', contrastText: '#fff' },
+    warning: { main: '#ed6c02', light: '#ff9800', dark: '#e65100', contrastText: '#fff' },
+    info: { main: '#0288d1', light: '#03a9f4', dark: '#01579b', contrastText: '#fff' },
+    success: { main: '#2e7d32', light: '#4caf50', dark: '#1b5e20', contrastText: '#fff' },
+    text: {
+      primary: 'rgba(0, 0, 0, 0.87)',
+      secondary: 'rgba(0, 0, 0, 0.6)',
+      disabled: 'rgba(0, 0, 0, 0.38)',
+    },
+    background: { default: '#fff', paper: '#fff' },
+    divider: 'rgba(0, 0, 0, 0.12)',
+    grey: {
+      '50': '#fafafa', '100': '#f5f5f5', '200': '#eeeeee', '300': '#e0e0e0',
+      '400': '#bdbdbd', '500': '#9e9e9e', '600': '#757575', '700': '#616161',
+      '800': '#424242', '900': '#212121',
+    },
+    action: {
+      active: 'rgba(0, 0, 0, 0.54)',
+      hover: 'rgba(0, 0, 0, 0.04)',
+      selected: 'rgba(0, 0, 0, 0.08)',
+      disabled: 'rgba(0, 0, 0, 0.26)',
+      disabledBackground: 'rgba(0, 0, 0, 0.12)',
+    },
+  },
+  typography: {
+    fontFamily,
+    h1: { fontFamily, fontSize: 96, fontWeight: 300, lineHeight: 1.167, letterSpacing: -1.5 },
+    h2: { fontFamily, fontSize: 60, fontWeight: 300, lineHeight: 1.2, letterSpacing: -0.5 },
+    h3: { fontFamily, fontSize: 48, fontWeight: 400, lineHeight: 1.167, letterSpacing: 0 },
+    h4: { fontFamily, fontSize: 34, fontWeight: 400, lineHeight: 1.235, letterSpacing: 0.25 },
+    h5: { fontFamily, fontSize: 24, fontWeight: 400, lineHeight: 1.334, letterSpacing: 0 },
+    h6: { fontFamily, fontSize: 20, fontWeight: 500, lineHeight: 1.6, letterSpacing: 0.15 },
+    subtitle1: { fontFamily, fontSize: 16, fontWeight: 400, lineHeight: 1.75, letterSpacing: 0.15 },
+    subtitle2: { fontFamily, fontSize: 14, fontWeight: 500, lineHeight: 1.57, letterSpacing: 0.1 },
+    body1: { fontFamily, fontSize: 16, fontWeight: 400, lineHeight: 1.5, letterSpacing: 0.15 },
+    body2: { fontFamily, fontSize: 14, fontWeight: 400, lineHeight: 1.43, letterSpacing: 0.17 },
+    button: { fontFamily, fontSize: 14, fontWeight: 500, lineHeight: 1.75, letterSpacing: 0.4, textTransform: 'uppercase' },
+    caption: { fontFamily, fontSize: 12, fontWeight: 400, lineHeight: 1.66, letterSpacing: 0.4 },
+    overline: { fontFamily, fontSize: 12, fontWeight: 400, lineHeight: 2.66, letterSpacing: 1, textTransform: 'uppercase' },
+  },
+  shadows: [
+    'none',
+    '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
+    '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)',
+    '0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12)',
+    '0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)',
+  ],
+}
