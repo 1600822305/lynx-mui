@@ -73,15 +73,15 @@ function getBadgeElementStyle(os: BadgeOwnerState, theme: Theme): LynxStyle {
     sx.padding = '0 6px'
   }
 
-  // Color.
+  // Color. v7 source: only the non-default palette colors set a background;
+  // `color="default"` has NO backgroundColor in MUI's base badge style and
+  // inherits its text color, so we mirror that (transparent + inherit).
   if (os.color !== 'default') {
     const c = theme.palette[os.color as BadgePaletteColor]
     sx.backgroundColor = c.main
     sx.color = c.contrastText
   } else {
-    // Default: grey background (v7 fallback, no explicit palette entry).
-    sx.backgroundColor = theme.palette.grey['300']
-    sx.color = theme.palette.text.primary
+    sx.color = 'inherit'
   }
 
   return sxToStyle(sx, theme)
