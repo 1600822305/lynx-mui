@@ -2,7 +2,15 @@ import { useState } from '@lynx-js/react'
 import type { ReactNode } from '@lynx-js/react'
 
 import './App.css'
-import { Box, Button, Typography } from './lynx-mui/index.js'
+import {
+  Box,
+  Button,
+  Chip,
+  Divider,
+  Paper,
+  Stack,
+  Typography,
+} from './lynx-mui/index.js'
 
 function SectionTitle(props: { children: string }) {
   return (
@@ -97,6 +105,59 @@ export function App() {
           <Box sx={{ px: 3, py: 1, bgcolor: 'success.main', borderRadius: 4 }}>
             <Typography variant='body2' sx={{ color: 'success.contrastText' }}>pill</Typography>
           </Box>
+        </Row>
+
+        <SectionTitle>Paper · elevation</SectionTitle>
+        <Row>
+          <Paper elevation={0} sx={{ p: 2 }}>
+            <Typography variant='body2'>elevation 0</Typography>
+          </Paper>
+          <Paper elevation={1} sx={{ p: 2 }}>
+            <Typography variant='body2'>elevation 1</Typography>
+          </Paper>
+          <Paper elevation={4} sx={{ p: 2 }}>
+            <Typography variant='body2'>elevation 4</Typography>
+          </Paper>
+          <Paper elevation={8} sx={{ p: 2 }}>
+            <Typography variant='body2'>elevation 8</Typography>
+          </Paper>
+          <Paper variant='outlined' sx={{ p: 2 }}>
+            <Typography variant='body2'>outlined</Typography>
+          </Paper>
+        </Row>
+
+        <SectionTitle>Stack · spacing + Divider</SectionTitle>
+        <Paper variant='outlined' sx={{ p: 2 }}>
+          <Stack spacing={1}>
+            <Typography variant='body2'>Stack item one</Typography>
+            <Divider />
+            <Typography variant='body2'>Stack item two</Typography>
+            <Divider />
+            <Typography variant='body2'>Stack item three</Typography>
+          </Stack>
+        </Paper>
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 1, mt: 1 }}>
+          <Typography variant='body2'>left</Typography>
+          <Divider orientation='vertical' flexItem />
+          <Typography variant='body2'>right</Typography>
+        </Box>
+
+        <SectionTitle>Chip · filled</SectionTitle>
+        <Row>
+          <Chip label='Default' />
+          <Chip label='Primary' color='primary' />
+          <Chip label='Secondary' color='secondary' />
+          <Chip label='Success' color='success' />
+          <Chip label='Error' color='error' />
+        </Row>
+
+        <SectionTitle>Chip · outlined + sizes</SectionTitle>
+        <Row>
+          <Chip label='Default' variant='outlined' />
+          <Chip label='Primary' variant='outlined' color='primary' />
+          <Chip label='Info' variant='outlined' color='info' />
+          <Chip label='Small' size='small' color='primary' />
+          <Chip label='Small outlined' size='small' variant='outlined' color='secondary' />
         </Row>
       </Box>
     </scroll-view>
