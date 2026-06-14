@@ -60,6 +60,24 @@ function spacingToCss(value: string | number, theme: Theme): string | number {
   return typeof value === 'number' ? `${theme.spacing(value)}px` : value
 }
 
+/**
+ * Props whose numeric value is unitless (mirrors React DOM's unitless list).
+ * Every other numeric length gets `px` appended, because Lynx rejects bare
+ * lengths ("CSS length need units (except 0)") whereas MUI/React tolerate them.
+ */
+const unitlessProps = new Set<string>([
+  'flex',
+  'flexGrow',
+  'flexShrink',
+  'order',
+  'fontWeight',
+  'lineHeight',
+  'opacity',
+  'zIndex',
+  'aspectRatio',
+  'zoom',
+])
+
 function applyEntry(
   target: StyleBag,
   key: string,
@@ -91,6 +109,13 @@ function applyEntry(
   // palette token resolution for color props
   if (colorProps.has(cssKey) && typeof value === 'string') {
     target[cssKey] = resolveColor(value, theme)
+    return
+  }
+
+  // bare numbers -> px for length props (MUI/React semantics); 0 and unitless
+  // props (flexGrow, lineHeight, zIndex, ...) are left untouched.
+  if (typeof value === 'number' && value !== 0 && !unitlessProps.has(cssKey)) {
+    target[cssKey] = `${value}px`
     return
   }
 

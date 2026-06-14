@@ -55,9 +55,9 @@ function getBadgeElementStyle(os: BadgeOwnerState, theme: Theme): LynxStyle {
     boxSizing: 'border-box',
     fontWeight: '500',
     fontSize: '12px',
-    minWidth: radius * 2,
-    height: radius * 2,
-    borderRadius: radius,
+    minWidth: `${radius * 2}px`,
+    height: `${radius * 2}px`,
+    borderRadius: `${radius}px`,
     lineHeight: 1,
     zIndex: 1,
     // v7 positioning: top-right corner.
