@@ -3,12 +3,28 @@ import type { ReactNode } from '@lynx-js/react'
 
 import './App.css'
 import {
+  AppBar,
+  Badge,
   Box,
   Button,
+  Card,
+  CardActions,
+  CardContent,
   Chip,
+  Container,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Divider,
+  Link,
+  List,
+  ListItem,
+  ListItemText,
   Paper,
   Stack,
+  ToggleButton,
+  Toolbar,
   Typography,
 } from './lynx-mui/index.js'
 
@@ -159,6 +175,171 @@ export function App() {
           <Chip label='Small' size='small' color='primary' />
           <Chip label='Small outlined' size='small' variant='outlined' color='secondary' />
         </Row>
+
+        <SectionTitle>Container · maxWidth</SectionTitle>
+        <Container maxWidth='sm' sx={{ bgcolor: 'grey.100' }}>
+          <Typography variant='body2'>Container maxWidth=&quot;sm&quot; (600px), centered with gutters</Typography>
+        </Container>
+
+        <SectionTitle>Card · elevation + outlined</SectionTitle>
+        <Row>
+          <Card sx={{ width: '160px' }}>
+            <CardContent>
+              <Typography variant='h6'>Card</Typography>
+              <Typography variant='body2' sx={{ color: 'text.secondary' }}>
+                elevation 1 (default)
+              </Typography>
+            </CardContent>
+            <Divider />
+            <CardActions>
+              <Button size='small'>Share</Button>
+              <Button size='small'>Learn</Button>
+            </CardActions>
+          </Card>
+          <Card variant='outlined' sx={{ width: '160px' }}>
+            <CardContent>
+              <Typography variant='h6'>Outlined</Typography>
+              <Typography variant='body2' sx={{ color: 'text.secondary' }}>
+                variant=&quot;outlined&quot;
+              </Typography>
+            </CardContent>
+            <CardActions disableSpacing>
+              <Button size='small' color='secondary'>Action</Button>
+            </CardActions>
+          </Card>
+        </Row>
+
+        <SectionTitle>Toolbar · regular + dense</SectionTitle>
+        <Paper variant='outlined' sx={{ mb: 1 }}>
+          <Toolbar>
+            <Typography variant='h6'>Title</Typography>
+            <Box sx={{ flexGrow: 1 }} />
+            <Button color='primary'>Login</Button>
+          </Toolbar>
+        </Paper>
+        <Paper variant='outlined'>
+          <Toolbar variant='dense'>
+            <Typography variant='subtitle1'>Dense</Typography>
+            <Box sx={{ flexGrow: 1 }} />
+            <Chip label='beta' size='small' color='info' />
+          </Toolbar>
+        </Paper>
+
+        <SectionTitle>List · ListItem + ListItemText</SectionTitle>
+        <Paper variant='outlined'>
+          <List>
+            <ListItem>
+              <ListItemText primary='Inbox' secondary='12 new messages' />
+            </ListItem>
+            <Divider />
+            <ListItem>
+              <ListItemText primary='Drafts' secondary='Saved locally' />
+            </ListItem>
+            <Divider />
+            <ListItem>
+              <ListItemText primary='Trash' />
+            </ListItem>
+          </List>
+        </Paper>
+
+        <SectionTitle>AppBar · colors</SectionTitle>
+        <AppBar color='primary' sx={{ p: 2, mb: 1 }}>
+          <Typography variant='h6' sx={{ color: 'primary.contrastText' }}>Primary AppBar</Typography>
+        </AppBar>
+        <AppBar color='secondary' sx={{ p: 2, mb: 1 }}>
+          <Typography variant='h6' sx={{ color: 'secondary.contrastText' }}>Secondary AppBar</Typography>
+        </AppBar>
+        <AppBar color='default' sx={{ p: 2, mb: 1 }}>
+          <Typography variant='h6'>Default AppBar</Typography>
+        </AppBar>
+        <AppBar color='transparent' elevation={0} sx={{ p: 2, mb: 1, borderWidth: '1px', borderStyle: 'solid', borderColor: 'divider' }}>
+          <Typography variant='h6'>Transparent AppBar</Typography>
+        </AppBar>
+
+        <SectionTitle>ToggleButton · colors + selected</SectionTitle>
+        <Row>
+          <ToggleButton value='a'>Default</ToggleButton>
+          <ToggleButton value='b' selected>Selected</ToggleButton>
+          <ToggleButton value='c' color='primary' selected>Primary</ToggleButton>
+          <ToggleButton value='d' color='secondary' selected>Secondary</ToggleButton>
+          <ToggleButton value='e' disabled>Disabled</ToggleButton>
+        </Row>
+
+        <SectionTitle>ToggleButton · sizes</SectionTitle>
+        <Row>
+          <ToggleButton value='s' size='small'>Small</ToggleButton>
+          <ToggleButton value='m' size='medium'>Medium</ToggleButton>
+          <ToggleButton value='l' size='large'>Large</ToggleButton>
+        </Row>
+
+        <SectionTitle>Link · underline variants</SectionTitle>
+        <Row>
+          <Link underline='always'>Always underline</Link>
+          <Link underline='hover'>Hover (degrades to none)</Link>
+          <Link underline='none'>No underline</Link>
+        </Row>
+        <Row>
+          <Link color='secondary'>Secondary</Link>
+          <Link color='error'>Error link</Link>
+          <Link variant='h6'>h6 variant</Link>
+        </Row>
+
+        <SectionTitle>Badge · colors + variants</SectionTitle>
+        <Row>
+          <Badge badgeContent={4} color='primary'>
+            <Box sx={{ width: 40, height: 40, bgcolor: 'grey.300', borderRadius: 1 }} />
+          </Badge>
+          <Badge badgeContent={10} color='secondary'>
+            <Box sx={{ width: 40, height: 40, bgcolor: 'grey.300', borderRadius: 1 }} />
+          </Badge>
+          <Badge badgeContent={100} color='error'>
+            <Box sx={{ width: 40, height: 40, bgcolor: 'grey.300', borderRadius: 1 }} />
+          </Badge>
+          <Badge badgeContent={0} color='primary' showZero>
+            <Box sx={{ width: 40, height: 40, bgcolor: 'grey.300', borderRadius: 1 }} />
+          </Badge>
+        </Row>
+
+        <SectionTitle>Badge · dot + default</SectionTitle>
+        <Row>
+          <Badge variant='dot' color='primary'>
+            <Box sx={{ width: 40, height: 40, bgcolor: 'grey.300', borderRadius: 1 }} />
+          </Badge>
+          <Badge variant='dot' color='error'>
+            <Box sx={{ width: 40, height: 40, bgcolor: 'grey.300', borderRadius: 1 }} />
+          </Badge>
+          <Badge badgeContent={5}>
+            <Box sx={{ width: 40, height: 40, bgcolor: 'grey.300', borderRadius: 1 }} />
+          </Badge>
+        </Row>
+
+        <SectionTitle>Dialog pieces</SectionTitle>
+        <Paper elevation={8} sx={{ mb: 2 }}>
+          <DialogTitle>Dialog Title</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              This is a dialog content text demonstrating the DialogContentText component with body1 typography and secondary text color.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button variant='text' color='primary'>Cancel</Button>
+            <Button variant='text' color='primary'>OK</Button>
+          </DialogActions>
+        </Paper>
+
+        <SectionTitle>Dialog pieces · dividers</SectionTitle>
+        <Paper elevation={8}>
+          <DialogTitle>With Dividers</DialogTitle>
+          <DialogContent dividers>
+            <DialogContentText>
+              This example shows DialogContent with the dividers prop enabled, adding top and bottom borders.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button variant='text' color='primary'>Disagree</Button>
+            <Button variant='text' color='primary'>Agree</Button>
+          </DialogActions>
+        </Paper>
       </Box>
     </scroll-view>
   )
