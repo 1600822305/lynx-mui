@@ -20,7 +20,7 @@ export interface TableFooterProps {
  * MUI's `display: table-footer-group` becomes a flex column.
  */
 export function TableFooter(props: TableFooterProps) {
-  const rootSx: SxObject = { display: 'flex', flexDirection: 'column' }
+  const rootSx: SxObject = { display: 'flex', flexDirection: 'column', width: '100%' }
   const rootStyle: LynxStyle = {
     ...sxToStyle(rootSx, defaultTheme),
     ...sxToStyle(props.sx, defaultTheme),
