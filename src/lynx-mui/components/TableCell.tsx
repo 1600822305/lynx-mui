@@ -70,8 +70,9 @@ function alignToTextAlign(align: TableCellAlign): 'left' | 'center' | 'right' {
  * - align -> textAlign + justifyContent
  *
  * Degradations vs MUI:
- * - No CSS table layout: every non-checkbox cell uses `flex: 1` (equal column
- *   widths) instead of content-based auto sizing.
+ * - No CSS table layout: every non-checkbox cell grows equally
+ *   (`flexGrow/flexShrink: 1`, `flexBasis: 0`) instead of content-based auto
+ *   sizing.
  * - `align: 'right'` keeps `flexDirection: row` (MUI uses `row-reverse`), so a
  *   TableSortLabel arrow stays to the right of its label rather than the left.
  * - `stickyHeader` does not pin the header (Lynx lacks `position: sticky`); the
@@ -111,7 +112,13 @@ export function TableCell(props: TableCellProps) {
       cellSx.padding = '0px 0px 0px 4px'
     }
   } else {
-    cellSx.flex = 1
+    // Equal-width columns. Lynx does not apply the `flex: 1` shorthand when it
+    // is given as a number, so the cell never grows and collapses to its
+    // content; use the longhands (matching `Tab`) instead.
+    cellSx.flexGrow = 1
+    cellSx.flexShrink = 1
+    cellSx.flexBasis = 0
+    cellSx.minWidth = 0
     if (padding === 'none') {
       cellSx.padding = '0px'
     } else if (size === 'small') {
@@ -136,6 +143,11 @@ export function TableCell(props: TableCellProps) {
     letterSpacing: `${body2.letterSpacing}px`,
     color: theme.palette.text.primary,
     textAlign: alignToTextAlign(align),
+    // Fill the cell so the text wraps at the column width. Lynx has no
+    // `min-content` (the shrink lower bound is treated as 0px), so a `<text>`
+    // left to auto-size inside a flex cell collapses to ~0 width and renders
+    // one character per line; an explicit width prevents that.
+    width: '100%',
   }
   if (variant === 'head') {
     textSx.color = theme.palette.text.primary

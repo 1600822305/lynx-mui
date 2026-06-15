@@ -48,7 +48,7 @@ export interface TableProps {
  *
  * Degradations vs MUI:
  * - No CSS `display: table` in Lynx: the table is emulated with flexbox
- *   (column of rows; each row a flex row; each cell `flex: 1` for equal widths).
+ *   (column of rows; each row a flex row; each cell grows equally for equal widths).
  *   Auto column sizing (content-based widths) is therefore not reproduced.
  * - `borderCollapse` / `borderSpacing` are no-ops (handled by cell borderBottom).
  */
