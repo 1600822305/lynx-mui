@@ -2,10 +2,25 @@
 
 > 这份是给**执行子模型**看的通用流程文档。统筹会**单独**发你一条"本批任务"消息(只含:批次号 + 组件清单 + 该批特有要点)。
 > **你要做的 = 本文档的通用流程 + 那条任务消息里的组件清单。** 两者结合即可开工,不用再问统筹要细节。
+>
+> **第一步永远是 §1:先确认手上有这两个仓库/路径。没有就先弄到,再读文档、再动手。**
 
 ---
 
-## 0. 你的角色
+## 1. 第一步:先准备这两个仓库 / 路径(没有就先弄到,再往下做)
+
+| 用途 | 路径 | 没有就执行 |
+| --- | --- | --- |
+| **① 工作仓库** lynx-mui(你写代码的地方) | `/home/ubuntu/repos/lynx-mui` | `git clone https://github.com/1600822305/lynx-mui /home/ubuntu/repos/lynx-mui` |
+| **② MUI 参照源码** mui-ref(只读基准,**所有数值都回这核对**) | `/home/ubuntu/mui-ref/node_modules/@mui/material`(v7.3.11)+ `@mui/icons-material` | `cd /home/ubuntu/mui-ref && npm i @mui/material@7.3.11 @mui/icons-material@7.3.11` |
+
+- 工作仓库:你通常**没有 git 写权限** → 最终**交 patch**,不要 push、不要开 PR(见 §8)。
+- MUI 参照:读 `<C>/<C>.js` 的 `styled(...)` 根样式 + `variants` 逐属性翻译。
+- 两个都就位后,再进 §2/§3。
+
+---
+
+## 2. 你的角色
 
 - 你是**执行子模型**,只做**分配给你的这一批**组件,不是统筹、不做整合、不开 PR。
 - 逐属性 1:1 复刻 `@mui/material` **v7.3.11** 到 Lynx(ReactLynx)。
@@ -14,24 +29,14 @@
 
 ---
 
-## 1. 开工前准备(必做)
+## 3. 开工前必读
 
-1. **读唯一事实来源 (SSOT)**:`docs/ORCHESTRATION.md`(架构 / 1:1 铁律 / Lynx 约束速查 / 工厂用法 / 整合流程)。本文档不重复它,只给你的执行清单。
-2. **拿到仓库**:本机没有就
-   ```
-   git clone https://github.com/1600822305/lynx-mui /home/ubuntu/repos/lynx-mui
-   ```
-   你通常没有 git 写权限 → 最终**交 patch**,不要 push、不要开 PR(见 §6)。
-3. **MUI 参照源码(只读基准)**:`/home/ubuntu/mui-ref/node_modules/@mui/material`(v7.3.11)+ `@mui/icons-material`。没有就:
-   ```
-   cd /home/ubuntu/mui-ref && npm i @mui/material@7.3.11 @mui/icons-material@7.3.11
-   ```
-   **所有数值都回这里逐属性核对**(读 `<C>/<C>.js` 的 `styled(...)` 根样式 + `variants`)。
-4. **Lynx 必读**(做任何 Lynx 任务前):https://lynxjs.org/next/llms.txt 。涉及输入控件再查 `<input>` / `<textarea>` 文档;相关:Rsbuild https://rsbuild.rs/llms.txt 、Rspack https://rspack.rs/llms.txt 。
+1. **读唯一事实来源 (SSOT)**:`docs/ORCHESTRATION.md`(架构 / 1:1 铁律 / Lynx 约束速查 / 工厂用法 / 整合流程)+ 本文档。本文档不重复 SSOT,只给你的执行清单。
+2. **Lynx 必读**(做任何 Lynx 任务前):https://lynxjs.org/next/llms.txt 。涉及输入控件再查 `<input>` / `<textarea>` 文档;相关:Rsbuild https://rsbuild.rs/llms.txt 、Rspack https://rspack.rs/llms.txt 。
 
 ---
 
-## 2. 1:1 复刻铁律
+## 4. 1:1 复刻铁律
 
 1. **数值唯一来源 = MUI v7.3.11 源码**,不是记忆、不是"差不多"。padding 矩阵 / 颜色取值 / 尺寸 / 圆角 / 字重逐属性翻译。
 2. **公共 API / prop 名必须和 MUI 1:1**(组件名、prop 名、默认值、variant 取值)。这是最贵的返工源——名字错了,后面所有调用方和 demo 都得改。拿不准就照 MUI `.d.ts` 抄。
@@ -41,7 +46,7 @@
 
 ---
 
-## 3. Lynx 约束速查(踩过的坑)
+## 5. Lynx 约束速查(踩过的坑)
 
 > 完整版见 ORCHESTRATION.md §5。高频要点:
 
@@ -57,7 +62,7 @@
 
 ---
 
-## 4. 零重叠铁律(避免和别的批次/统筹撞车)
+## 6. 零重叠铁律(避免和别的批次/统筹撞车)
 
 1. **只新增你这一批的组件文件**(`src/lynx-mui/components/*.tsx` 及必要的 `*.css`)。
 2. **绝对不要动 `src/lynx-mui/system/*`**(`defaultTheme` / `types` / `resolveSx` / `createComponent` / `shorthands`)。**缺主题值/缺 token 不要自己往 system 里加**——在 patch 里**标注 `FLAG: 缺 xxx`** 反馈给统筹,先用 MUI 默认值内联 + 注释,统筹会补进基座。
@@ -66,7 +71,7 @@
 
 ---
 
-## 5. demo + 验证(交付前必做)
+## 7. demo + 验证(交付前必做)
 
 1. **App.tsx 末尾追加本批 demo**:把你这批每个组件都摆一个可视示例(供统筹/用户在 LynxExplorer 肉眼比对 MUI)。
 2. **降级登记**:每个 Lynx 实现不了/简化的点,在**代码注释**里写明(`// Lynx degradation: ...`),方便后续质量 pass 回填。
@@ -78,7 +83,7 @@
 
 ---
 
-## 6. 交付方式(= 导 patch,别 push 别开 PR)
+## 8. 交付方式(= 导 patch,别 push 别开 PR)
 
 ```
 git fetch origin main && git diff origin/main...HEAD > batch<X>.patch
@@ -90,6 +95,6 @@ git fetch origin main && git diff origin/main...HEAD > batch<X>.patch
 
 ---
 
-## 7. 一句话总结
+## 9. 一句话总结
 
-> 读 SSOT(ORCHESTRATION.md)→ 装/核对 mui-ref 源码 → 只写本批组件文件、不碰 system/、index.ts/App.tsx 末尾追加 → 逐属性 1:1 + API/prop 名对齐 + 降级注释 → `tsc && build` 全绿 → 导 `batch<X>.patch` 当附件发回(不 push、不 PR)。本批组件清单见统筹单独发你的任务消息。
+> **先确认两个仓库/路径就位(§1)** → 读 SSOT(ORCHESTRATION.md)+ Lynx llms.txt → 只写本批组件文件、不碰 system/、index.ts·App.tsx 末尾追加 → 逐属性 1:1 + API/prop 名对齐 + 降级注释 → `tsc && build` 全绿 → 导 `batch<X>.patch` 当附件发回(不 push、不 PR)。本批组件清单见统筹单独发你的任务消息。
