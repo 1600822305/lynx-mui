@@ -55,6 +55,9 @@ export type { DialogContentTextProps } from './components/DialogContentText.js'
 export { DialogActions } from './components/DialogActions.js'
 export type { DialogActionsProps } from './components/DialogActions.js'
 
+// Icons — SvgIcon base + createSvgIcon factory + prebuilt set (1:1 with @mui/icons-material).
+export * from './icons/index.js'
+
 // System / theming.
 export { defaultTheme } from './system/defaultTheme.js'
 export {

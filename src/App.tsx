@@ -3,29 +3,43 @@ import type { ReactNode } from '@lynx-js/react'
 
 import './App.css'
 import {
+  AddIcon,
   AppBar,
+  ArrowBackIcon,
   Badge,
   Box,
   Button,
   Card,
   CardActions,
   CardContent,
+  CheckCircleIcon,
   Chip,
+  CloseIcon,
   Container,
+  DeleteIcon,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
   Divider,
+  ExpandMoreIcon,
+  FavoriteIcon,
+  iconPaths,
   Link,
   List,
   ListItem,
   ListItemText,
+  MenuIcon,
   Paper,
+  SearchIcon,
+  SettingsIcon,
   Stack,
+  StarIcon,
+  SvgIcon,
   ToggleButton,
   Toolbar,
   Typography,
+  WarningIcon,
 } from './lynx-mui/index.js'
 
 function SectionTitle(props: { children: string }) {
@@ -340,6 +354,38 @@ export function App() {
             <Button variant='text' color='primary'>Agree</Button>
           </DialogActions>
         </Paper>
+
+        <SectionTitle>Icons · set (action color)</SectionTitle>
+        <Row>
+          <MenuIcon color='action' />
+          <SearchIcon color='action' />
+          <CloseIcon color='action' />
+          <AddIcon color='action' />
+          <DeleteIcon color='action' />
+          <SettingsIcon color='action' />
+          <ExpandMoreIcon color='action' />
+          <ArrowBackIcon color='action' />
+          <FavoriteIcon color='action' />
+          <StarIcon color='action' />
+        </Row>
+
+        <SectionTitle>Icons · color</SectionTitle>
+        <Row>
+          <CheckCircleIcon color='success' />
+          <WarningIcon color='warning' />
+          <CloseIcon color='error' />
+          <FavoriteIcon color='secondary' />
+          <StarIcon color='primary' />
+          <SettingsIcon htmlColor='#673ab7' />
+        </Row>
+
+        <SectionTitle>Icons · fontSize (small / medium / large)</SectionTitle>
+        <Row>
+          <StarIcon color='primary' fontSize='small' />
+          <StarIcon color='primary' fontSize='medium' />
+          <StarIcon color='primary' fontSize='large' />
+          <SvgIcon pathData={iconPaths.Home} color='primary' size={48} />
+        </Row>
       </Box>
     </scroll-view>
   )
