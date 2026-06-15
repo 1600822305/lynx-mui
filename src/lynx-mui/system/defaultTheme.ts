@@ -49,6 +49,15 @@ export const defaultTheme: Theme = {
   },
   typography: {
     fontFamily,
+    htmlFontSize: 16,
+    fontSize: 14,
+    fontWeightLight: 300,
+    fontWeightRegular: 400,
+    fontWeightMedium: 500,
+    fontWeightBold: 700,
+    // MUI returns rem; on Lynx we render px (scale is pre-converted to px), so
+    // pxToRem(n) -> `${n}px` — visually identical at the default 16px base.
+    pxToRem: (size: number) => `${size}px`,
     h1: { fontFamily, fontSize: 96, fontWeight: 300, lineHeight: 1.167, letterSpacing: -1.5 },
     h2: { fontFamily, fontSize: 60, fontWeight: 300, lineHeight: 1.2, letterSpacing: -0.5 },
     h3: { fontFamily, fontSize: 48, fontWeight: 400, lineHeight: 1.167, letterSpacing: 0 },

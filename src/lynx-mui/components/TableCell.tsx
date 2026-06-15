@@ -139,12 +139,12 @@ export function TableCell(props: TableCellProps) {
   }
   if (variant === 'head') {
     textSx.color = theme.palette.text.primary
-    textSx.fontWeight = '500' // theme.typography.fontWeightMedium
-    textSx.lineHeight = '24px' // theme.typography.pxToRem(24)
+    textSx.fontWeight = `${theme.typography.fontWeightMedium}`
+    textSx.lineHeight = theme.typography.pxToRem(24)
   } else if (variant === 'footer') {
     textSx.color = theme.palette.text.secondary
-    textSx.lineHeight = '21px' // theme.typography.pxToRem(21)
-    textSx.fontSize = '12px' // theme.typography.pxToRem(12)
+    textSx.lineHeight = theme.typography.pxToRem(21)
+    textSx.fontSize = theme.typography.pxToRem(12)
   }
 
   const { children } = props
