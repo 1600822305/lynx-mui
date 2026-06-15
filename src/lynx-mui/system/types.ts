@@ -86,12 +86,29 @@ export interface ZIndex {
   tooltip: number
 }
 
+/**
+ * MUI typography globals (font-weight scale, base sizes, and `pxToRem`).
+ * `pxToRem` mirrors MUI's helper but, because this library renders in px on
+ * Lynx (the whole scale is pre-converted to px integers), it returns a `px`
+ * string instead of `rem` — visually identical at the default 16px base.
+ */
+export interface TypographyGlobals {
+  fontFamily: string
+  htmlFontSize: number
+  fontSize: number
+  fontWeightLight: number
+  fontWeightRegular: number
+  fontWeightMedium: number
+  fontWeightBold: number
+  pxToRem: (size: number) => string
+}
+
 export interface Theme {
   /** Returns spacing in px. `spacing(2)` -> 16 by default. */
   spacing: (factor: number) => number
   shape: { borderRadius: number }
   palette: Palette
-  typography: Record<TypographyVariant, TypographyStyle> & { fontFamily: string }
+  typography: Record<TypographyVariant, TypographyStyle> & TypographyGlobals
   /** elevation -> box-shadow string. Index 0 is 'none'. */
   shadows: string[]
   /** Stacking order for overlays (AppBar/Drawer/Modal/Snackbar/Tooltip/...). */
