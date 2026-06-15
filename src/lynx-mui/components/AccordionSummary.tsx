@@ -7,13 +7,6 @@ import { defaultTheme } from '../system/defaultTheme.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp } from '../system/types.js'
 
-/**
- * Hardcoded: theme.transitions missing.
- * FLAG to orchestrator: need transitions.duration.shortest (150ms).
- */
-const DURATION_SHORTEST = '150ms'
-const EASING = 'cubic-bezier(0.4, 0, 0.2, 1)'
-
 export interface AccordionSummaryProps {
   children?: ReactNode
   /** Override expand icon (default: ExpandMoreIcon). Pass false to hide. */
@@ -37,7 +30,7 @@ export interface AccordionSummaryProps {
  *
  * Degradations vs MUI:
  * - No ButtonBase ripple; uses simple bindtap.
- * - focusVisible background omitted (theme.palette.action.focus missing from theme).
+ * - focusVisible background omitted (Lynx has no keyboard focus state).
  */
 export function AccordionSummary(props: AccordionSummaryProps) {
   const theme = defaultTheme
@@ -46,6 +39,7 @@ export function AccordionSummary(props: AccordionSummaryProps) {
   const disableGutters = props.disableGutters === true
 
   const { body1 } = theme.typography
+  const { duration, easing } = theme.transitions
 
   // Root style
   const rootSx: SxObject = {
@@ -55,7 +49,7 @@ export function AccordionSummary(props: AccordionSummaryProps) {
     width: '100%',
     minHeight: (!disableGutters && expanded) ? 64 : 48,
     padding: '0px 16px',
-    transition: `min-height ${DURATION_SHORTEST} ${EASING}, background-color ${DURATION_SHORTEST} ${EASING}`,
+    transition: `min-height ${duration.shortest}ms ${easing.easeInOut}, background-color ${duration.shortest}ms ${easing.easeInOut}`,
   }
   if (disabled) rootSx.opacity = theme.palette.action.disabledOpacity
   const rootStyle: LynxStyle = { ...sxToStyle(rootSx, theme), ...sxToStyle(props.sx, theme), ...props.style }
@@ -67,7 +61,7 @@ export function AccordionSummary(props: AccordionSummaryProps) {
     alignItems: 'center',
     flexGrow: 1,
     margin: (!disableGutters && expanded) ? '20px 0' : '12px 0',
-    transition: `margin ${DURATION_SHORTEST} ${EASING}`,
+    transition: `margin ${duration.shortest}ms ${easing.easeInOut}`,
   }
   const contentStyle: LynxStyle = sxToStyle(contentSx, theme)
 
@@ -96,7 +90,7 @@ export function AccordionSummary(props: AccordionSummaryProps) {
     alignItems: 'center',
     justifyContent: 'center',
     transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
-    transition: `transform ${DURATION_SHORTEST} ${EASING}`,
+    transition: `transform ${duration.shortest}ms ${easing.easeInOut}`,
   }
   const expandIconWrapperStyle: LynxStyle = sxToStyle(expandIconWrapperSx, theme)
 

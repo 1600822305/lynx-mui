@@ -106,7 +106,7 @@ export function Rating(props: RatingProps) {
       height: `${px}px`,
       flexShrink: 0,
       transform: pressed ? 'scale(1.2)' : 'scale(1)',
-      transition: 'transform 150ms',
+      transition: `transform ${theme.transitions.duration.shortest}ms ${theme.transitions.easing.easeInOut}`,
     }
 
     const overlayStyle: LynxStyle = {
