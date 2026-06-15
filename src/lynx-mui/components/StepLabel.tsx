@@ -66,6 +66,9 @@ function labelSx(
     lineHeight: `${body2.lineHeight}`,
     letterSpacing: `${body2.letterSpacing}px`,
     color: theme.palette.text.secondary,
+    // Fill the container so the label wraps at its width instead of collapsing
+    // to ~0 (Lynx has no `min-content`; shrink lower bound is treated as 0px).
+    width: '100%',
   }
   if (active || completed) {
     sx.color = theme.palette.text.primary
