@@ -171,3 +171,46 @@ export type {
   ToggleButtonGroupProps,
   ToggleButtonGroupOrientation,
 } from './components/ToggleButtonGroup.js'
+
+// Batch L — Table family (Table, TableContainer, TableHead, TableBody,
+// TableRow, TableCell, TableFooter, TableSortLabel).
+export { Table, TableContext, Tablelvl2Context } from './components/Table.js'
+export type {
+  TableProps,
+  TableCellPadding,
+  TableCellSize,
+  TableContextValue,
+  Tablelvl2ContextValue,
+  Tablelvl2Variant,
+} from './components/Table.js'
+export { TableContainer } from './components/TableContainer.js'
+export type { TableContainerProps } from './components/TableContainer.js'
+export { TableHead } from './components/TableHead.js'
+export type { TableHeadProps } from './components/TableHead.js'
+export { TableBody } from './components/TableBody.js'
+export type { TableBodyProps } from './components/TableBody.js'
+export { TableRow } from './components/TableRow.js'
+export type { TableRowProps } from './components/TableRow.js'
+export { TableCell } from './components/TableCell.js'
+export type { TableCellProps, TableCellAlign } from './components/TableCell.js'
+export { TableFooter } from './components/TableFooter.js'
+export type { TableFooterProps } from './components/TableFooter.js'
+export { TableSortLabel } from './components/TableSortLabel.js'
+export type { TableSortLabelProps, TableSortDirection } from './components/TableSortLabel.js'
+
+// Batch O — Pagination & BottomNavigation.
+export { Pagination } from './components/Pagination.js'
+export type { PaginationProps } from './components/Pagination.js'
+export { PaginationItem } from './components/PaginationItem.js'
+export type {
+  PaginationItemProps,
+  PaginationItemType,
+  PaginationItemColor,
+  PaginationItemVariant,
+  PaginationItemShape,
+  PaginationItemSize,
+} from './components/PaginationItem.js'
+export { BottomNavigation } from './components/BottomNavigation.js'
+export type { BottomNavigationProps } from './components/BottomNavigation.js'
+export { BottomNavigationAction } from './components/BottomNavigationAction.js'
+export type { BottomNavigationActionProps } from './components/BottomNavigationAction.js'

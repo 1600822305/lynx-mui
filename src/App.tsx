@@ -68,6 +68,25 @@ import {
 } from './lynx-mui/index.js'
 // Batch J — Button family.
 import { ButtonGroup, Fab, ToggleButtonGroup } from './lynx-mui/index.js'
+// Batch L — Table family.
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+} from './lynx-mui/index.js'
+// Batch O — Pagination & BottomNavigation.
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  HomeIcon,
+  Pagination,
+  PersonIcon,
+} from './lynx-mui/index.js'
 
 function SectionTitle(props: { children: string }) {
   return (
@@ -766,6 +785,8 @@ export function App() {
         </Accordion>
 
         <BatchJSection />
+        <BatchLSection />
+        <BatchOSection />
       </Box>
     </scroll-view>
   )
@@ -851,6 +872,287 @@ function BatchJSection() {
           <ToggleButton value='underline'>Underline</ToggleButton>
         </ToggleButtonGroup>
       </Row>
+    </>
+  )
+}
+
+// Batch L gallery — Table family (self-contained state).
+function BatchLSection() {
+  const [order, setOrder] = useState<'asc' | 'desc'>('asc')
+  const [orderBy, setOrderBy] = useState('calories')
+  const [selected, setSelected] = useState('Eclair')
+
+  const handleSort = (col: string) => {
+    if (orderBy === col) {
+      setOrder(order === 'asc' ? 'desc' : 'asc')
+    } else {
+      setOrderBy(col)
+      setOrder('asc')
+    }
+  }
+
+  return (
+    <>
+      <SectionTitle>Table · basic (right-aligned numerics)</SectionTitle>
+      <Paper>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Dessert (100g serving)</TableCell>
+                <TableCell align='right'>Calories</TableCell>
+                <TableCell align='right'>Fat&nbsp;(g)</TableCell>
+                <TableCell align='right'>Carbs&nbsp;(g)</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow hover>
+                <TableCell>Frozen yoghurt</TableCell>
+                <TableCell align='right'>159</TableCell>
+                <TableCell align='right'>6.0</TableCell>
+                <TableCell align='right'>24</TableCell>
+              </TableRow>
+              <TableRow hover>
+                <TableCell>Ice cream sandwich</TableCell>
+                <TableCell align='right'>237</TableCell>
+                <TableCell align='right'>9.0</TableCell>
+                <TableCell align='right'>37</TableCell>
+              </TableRow>
+              <TableRow hover>
+                <TableCell>Eclair</TableCell>
+                <TableCell align='right'>262</TableCell>
+                <TableCell align='right'>16.0</TableCell>
+                <TableCell align='right'>24</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+
+      <SectionTitle>Table · dense (size=small) + selectable rows</SectionTitle>
+      <Paper>
+        <TableContainer>
+          <Table size='small'>
+            <TableHead>
+              <TableRow>
+                <TableCell>Dessert</TableCell>
+                <TableCell align='right'>Calories</TableCell>
+                <TableCell align='right'>Carbs</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow hover selected={selected === 'Frozen yoghurt'} onClick={() => setSelected('Frozen yoghurt')}>
+                <TableCell>Frozen yoghurt</TableCell>
+                <TableCell align='right'>159</TableCell>
+                <TableCell align='right'>24</TableCell>
+              </TableRow>
+              <TableRow hover selected={selected === 'Eclair'} onClick={() => setSelected('Eclair')}>
+                <TableCell>Eclair</TableCell>
+                <TableCell align='right'>262</TableCell>
+                <TableCell align='right'>24</TableCell>
+              </TableRow>
+              <TableRow hover selected={selected === 'Cupcake'} onClick={() => setSelected('Cupcake')}>
+                <TableCell>Cupcake</TableCell>
+                <TableCell align='right'>305</TableCell>
+                <TableCell align='right'>67</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+
+      <SectionTitle>Table · checkbox padding + selection</SectionTitle>
+      <Paper>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell padding='checkbox'>
+                  <Checkbox />
+                </TableCell>
+                <TableCell>Dessert</TableCell>
+                <TableCell align='right'>Calories</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow hover selected={selected === 'Frozen yoghurt'}>
+                <TableCell padding='checkbox'>
+                  <Checkbox
+                    checked={selected === 'Frozen yoghurt'}
+                    onChange={() => setSelected('Frozen yoghurt')}
+                  />
+                </TableCell>
+                <TableCell>Frozen yoghurt</TableCell>
+                <TableCell align='right'>159</TableCell>
+              </TableRow>
+              <TableRow hover selected={selected === 'Eclair'}>
+                <TableCell padding='checkbox'>
+                  <Checkbox checked={selected === 'Eclair'} onChange={() => setSelected('Eclair')} />
+                </TableCell>
+                <TableCell>Eclair</TableCell>
+                <TableCell align='right'>262</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+
+      <SectionTitle>TableSortLabel · sortable header</SectionTitle>
+      <Paper>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell sortDirection={orderBy === 'name' ? order : false}>
+                  <TableSortLabel
+                    active={orderBy === 'name'}
+                    direction={orderBy === 'name' ? order : 'asc'}
+                    onClick={() => handleSort('name')}
+                  >
+                    Dessert
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell align='right' sortDirection={orderBy === 'calories' ? order : false}>
+                  <TableSortLabel
+                    active={orderBy === 'calories'}
+                    direction={orderBy === 'calories' ? order : 'asc'}
+                    onClick={() => handleSort('calories')}
+                  >
+                    Calories
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell align='right'>
+                  <TableSortLabel hideSortIcon onClick={() => handleSort('fat')}>
+                    Fat
+                  </TableSortLabel>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>Frozen yoghurt</TableCell>
+                <TableCell align='right'>159</TableCell>
+                <TableCell align='right'>6.0</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Eclair</TableCell>
+                <TableCell align='right'>262</TableCell>
+                <TableCell align='right'>16.0</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+
+      <SectionTitle>Table · TableFooter</SectionTitle>
+      <Paper>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Dessert</TableCell>
+                <TableCell align='right'>Calories</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>Frozen yoghurt</TableCell>
+                <TableCell align='right'>159</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Ice cream sandwich</TableCell>
+                <TableCell align='right'>237</TableCell>
+              </TableRow>
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell>Total</TableCell>
+                <TableCell align='right'>396</TableCell>
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </TableContainer>
+      </Paper>
+    </>
+  )
+}
+
+// Batch O gallery — Pagination & BottomNavigation (self-contained state).
+function BatchOSection() {
+  const [page, setPage] = useState(1)
+  const [navValue, setNavValue] = useState(0)
+  return (
+    <>
+      <SectionTitle>Pagination · variants</SectionTitle>
+      <Row>
+        <Pagination count={10} defaultPage={3} />
+      </Row>
+      <Row>
+        <Pagination count={10} defaultPage={3} variant='outlined' />
+      </Row>
+      <Row>
+        <Pagination count={10} defaultPage={3} shape='rounded' />
+      </Row>
+
+      <SectionTitle>Pagination · colors</SectionTitle>
+      <Row>
+        <Pagination count={10} defaultPage={3} color='primary' />
+      </Row>
+      <Row>
+        <Pagination count={10} defaultPage={3} color='secondary' variant='outlined' />
+      </Row>
+
+      <SectionTitle>Pagination · sizes</SectionTitle>
+      <Row>
+        <Pagination count={6} defaultPage={3} size='small' />
+      </Row>
+      <Row>
+        <Pagination count={6} defaultPage={3} size='large' />
+      </Row>
+
+      <SectionTitle>Pagination · first/last & disabled</SectionTitle>
+      <Row>
+        <Pagination count={11} defaultPage={6} showFirstButton showLastButton />
+      </Row>
+      <Row>
+        <Pagination count={10} defaultPage={3} disabled />
+      </Row>
+
+      <SectionTitle>Pagination · controlled</SectionTitle>
+      <Row>
+        <Pagination
+          count={10}
+          page={page}
+          color='primary'
+          onChange={(value) => { setPage(value) }}
+        />
+      </Row>
+      <Row>
+        <Typography variant='body2'>Current page: {`${page}`}</Typography>
+      </Row>
+
+      <SectionTitle>BottomNavigation · showLabels</SectionTitle>
+      <BottomNavigation
+        showLabels
+        value={navValue}
+        onChange={(value) => { setNavValue(value as number) }}
+      >
+        <BottomNavigationAction label='Home' icon={<HomeIcon />} />
+        <BottomNavigationAction label='Favorites' icon={<FavoriteIcon />} />
+        <BottomNavigationAction label='Search' icon={<SearchIcon />} />
+        <BottomNavigationAction label='Profile' icon={<PersonIcon />} />
+      </BottomNavigation>
+
+      <SectionTitle>BottomNavigation · selected-only label</SectionTitle>
+      <BottomNavigation
+        value={navValue}
+        onChange={(value) => { setNavValue(value as number) }}
+      >
+        <BottomNavigationAction label='Home' icon={<HomeIcon />} />
+        <BottomNavigationAction label='Favorites' icon={<FavoriteIcon />} />
+        <BottomNavigationAction label='Search' icon={<SearchIcon />} />
+        <BottomNavigationAction label='Profile' icon={<PersonIcon />} />
+      </BottomNavigation>
     </>
   )
 }
