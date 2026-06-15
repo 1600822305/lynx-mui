@@ -39,6 +39,7 @@ export const defaultTheme: Theme = {
       selected: 'rgba(0, 0, 0, 0.08)',
       disabled: 'rgba(0, 0, 0, 0.26)',
       disabledBackground: 'rgba(0, 0, 0, 0.12)',
+      disabledOpacity: 0.38,
     },
   },
   typography: {
