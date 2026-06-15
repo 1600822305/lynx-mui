@@ -54,7 +54,8 @@ L0 适配        Lynx intrinsic 元素 <view>/<text>/<image>/<scroll-view>/<svg>
   - spec 字段:`name / root / defaultProps / ownerState(p) / rootStyle(os,theme) / content(args) / stateful:{active}`。
   - `rootStyle` 返回的 sx 对象里可以写 `&:active` / `&.Mui-disabled` 状态选择子,工厂按当前状态合并。
 - **不走工厂的组件**:需要 cloneElement 子节点 / 复杂内部结构的(如 `Switch`/`SwitchBase`/`FormControlLabel`/`IconButton` 的内容槽),可写成普通函数组件或用 `content` 槽 —— 参考这些已有文件。
-- **sx 运行时流水线**:`sx → ①简写展开(shorthands.ts) → ②主题解析(spacing/palette,resolveSx.ts) → ③响应式(按屏宽,目前最小实现) → ④状态拆分(&:active/&.Mui-disabled) → ⑤合并成 inline style`。**数值型长度自动补 px**(unitless 属性 + 0 除外)。
+- **sx 运行时流水线**:`sx → ①简写展开(shorthands.ts) → ②主题解析(spacing/palette,resolveSx.ts) → ③响应式 `{xs,sm,md,lg,xl}`(按当前屏宽取值,mobile-first;屏宽来自 `system/screen.ts` 的 `getScreenWidth()` = `SystemInfo.pixelWidth / pixelRatio`) → ④状态拆分(&:active/&.Mui-disabled) → ⑤合并成 inline style`。**数值型长度自动补 px**(unitless 属性 + 0 除外)。
+- **`useMediaQuery(query | (theme)=>query)`** 照 MUI:解析 `min-width`/`max-width`(px)对当前屏宽求布尔,配合 `theme.breakpoints.up/down/between/only`。**降级**:Lynx 无 resize/`matchMedia` 事件且 `SystemInfo` 初始化后不变 → 结果不随旋转/缩放实时更新(平台固有约束,非偷懒);非宽度类媒体特性忽略(视为命中)。
 
 ---
 

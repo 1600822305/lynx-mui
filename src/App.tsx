@@ -110,8 +110,14 @@ import {
   RadioGroup,
   TextField,
 } from './lynx-mui/index.js'
-// Theme mechanism (createTheme / ThemeProvider / useTheme).
-import { createTheme, ThemeProvider, useTheme } from './lynx-mui/index.js'
+// Theme mechanism (createTheme / ThemeProvider / useTheme) + responsive (useMediaQuery).
+import {
+  createTheme,
+  ThemeProvider,
+  useTheme,
+  useMediaQuery,
+  getScreenWidth,
+} from './lynx-mui/index.js'
 
 function SectionTitle(props: { children: string }) {
   return (
@@ -815,6 +821,7 @@ export function App() {
         <StepperSection />
         <BatchPSection />
         <ThemeMechanismSection />
+        <ResponsiveSection />
       </Box>
     </scroll-view>
   )
@@ -863,6 +870,45 @@ function ThemeMechanismSection() {
           <PrimarySwatch label='useTheme()' />
         </Row>
       </ThemeProvider>
+    </>
+  )
+}
+
+// useMediaQuery + responsive sx demo (driven by current screen width via SystemInfo).
+function ResponsiveSection() {
+  const theme = useTheme()
+  const width = getScreenWidth()
+  const downSm = useMediaQuery(theme.breakpoints.down('sm'))
+  const upMd = useMediaQuery(theme.breakpoints.up('md'))
+  const label = upMd ? 'md+ (>=900)' : downSm ? 'xs (<600)' : 'sm (600–899)'
+  return (
+    <>
+      <SectionTitle>Responsive · current width</SectionTitle>
+      <Row>
+        <Box sx={{ px: 1.5, py: 1, borderRadius: 1, bgcolor: 'background.paper', border: '1px solid', borderColor: 'divider' }}>
+          <Typography variant='body2'>
+            width ≈ {Math.round(width)}px · breakpoint: {label}
+          </Typography>
+        </Box>
+      </Row>
+
+      <SectionTitle>Responsive · sx breakpoint object picks per width</SectionTitle>
+      <Row>
+        <Box
+          sx={{
+            px: 2,
+            py: 1.5,
+            borderRadius: 1,
+            color: 'primary.contrastText',
+            width: { xs: '100%', sm: 240, md: 360 },
+            bgcolor: { xs: 'error.main', sm: 'warning.main', md: 'success.main' },
+          }}
+        >
+          <Typography variant='body2' sx={{ color: 'primary.contrastText' }}>
+            xs→full/red · sm→240/amber · md→360/green
+          </Typography>
+        </Box>
+      </Row>
     </>
   )
 }
