@@ -16,6 +16,7 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
+  Checkbox,
   CheckCircleIcon,
   Chip,
   CloseIcon,
@@ -28,6 +29,7 @@ import {
   Divider,
   ExpandMoreIcon,
   FavoriteIcon,
+  FormControlLabel,
   iconPaths,
   Link,
   List,
@@ -35,11 +37,13 @@ import {
   ListItemText,
   MenuIcon,
   Paper,
+  Radio,
   SearchIcon,
   SettingsIcon,
   Stack,
   StarIcon,
   SvgIcon,
+  Switch,
   Tab,
   Tabs,
   ToggleButton,
@@ -70,6 +74,9 @@ function Row(props: { children: ReactNode }) {
 export function App() {
   const [count, setCount] = useState(0)
   const [tabValue, setTabValue] = useState(0)
+  const [checkboxOn, setCheckboxOn] = useState(true)
+  const [radioValue, setRadioValue] = useState('a')
+  const [switchOn, setSwitchOn] = useState(true)
 
   return (
     <scroll-view scroll-orientation='vertical' style={{ height: '100vh' }}>
@@ -403,6 +410,73 @@ export function App() {
             <Button variant='text' color='primary'>Agree</Button>
           </DialogActions>
         </Paper>
+
+        <SectionTitle>Checkbox · colors + sizes</SectionTitle>
+        <Row>
+          <Checkbox defaultChecked />
+          <Checkbox defaultChecked color='secondary' />
+          <Checkbox defaultChecked color='success' />
+          <Checkbox defaultChecked color='error' />
+          <Checkbox />
+          <Checkbox defaultChecked size='small' />
+          <Checkbox defaultChecked disabled />
+          <Checkbox disabled />
+        </Row>
+        <Row>
+          <FormControlLabel
+            control={<Checkbox checked={checkboxOn} onChange={setCheckboxOn} />}
+            label={checkboxOn ? 'Checked (tap me)' : 'Unchecked (tap me)'}
+          />
+        </Row>
+
+        <SectionTitle>Radio · controlled group</SectionTitle>
+        <Row>
+          <FormControlLabel
+            control={<Radio checked={radioValue === 'a'} onChange={() => { setRadioValue('a') }} />}
+            label='Option A'
+          />
+          <FormControlLabel
+            control={<Radio checked={radioValue === 'b'} onChange={() => { setRadioValue('b') }} />}
+            label='Option B'
+          />
+          <FormControlLabel
+            control={<Radio checked={radioValue === 'c'} onChange={() => { setRadioValue('c') }} color='secondary' />}
+            label='Option C'
+          />
+        </Row>
+        <Row>
+          <Radio defaultChecked />
+          <Radio defaultChecked color='success' size='small' />
+          <Radio defaultChecked disabled />
+          <Radio disabled />
+        </Row>
+
+        <SectionTitle>Switch · colors + sizes</SectionTitle>
+        <Row>
+          <Switch defaultChecked />
+          <Switch defaultChecked color='secondary' />
+          <Switch defaultChecked color='success' />
+          <Switch defaultChecked color='error' />
+          <Switch />
+          <Switch defaultChecked size='small' />
+          <Switch defaultChecked disabled />
+          <Switch disabled />
+        </Row>
+        <Row>
+          <FormControlLabel
+            control={<Switch checked={switchOn} onChange={setSwitchOn} />}
+            label={switchOn ? 'On' : 'Off'}
+          />
+        </Row>
+
+        <SectionTitle>FormControlLabel · labelPlacement</SectionTitle>
+        <Row>
+          <FormControlLabel control={<Checkbox defaultChecked />} label='end' labelPlacement='end' />
+          <FormControlLabel control={<Checkbox defaultChecked />} label='start' labelPlacement='start' />
+          <FormControlLabel control={<Checkbox defaultChecked />} label='top' labelPlacement='top' />
+          <FormControlLabel control={<Checkbox defaultChecked />} label='bottom' labelPlacement='bottom' />
+          <FormControlLabel control={<Checkbox />} label='disabled' disabled />
+        </Row>
 
         <SectionTitle>Icons · set (action color)</SectionTitle>
         <Row>
