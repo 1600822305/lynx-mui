@@ -96,6 +96,20 @@ import {
   StepLabel,
   Stepper,
 } from './lynx-mui/index.js'
+// Batch P — TextField family.
+import {
+  FilledInput,
+  FormControl,
+  FormGroup,
+  FormHelperText,
+  FormLabel,
+  Input,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  RadioGroup,
+  TextField,
+} from './lynx-mui/index.js'
 
 function SectionTitle(props: { children: string }) {
   return (
@@ -797,6 +811,7 @@ export function App() {
         <BatchLSection />
         <BatchOSection />
         <StepperSection />
+        <BatchPSection />
       </Box>
     </scroll-view>
   )
@@ -1274,6 +1289,97 @@ function StepperSection() {
           <Button variant='text' size='small' disabled={mobileStep === maxSteps - 1} onClick={() => { setMobileStep((s) => s + 1) }}>Next</Button>
         }
       />
+    </>
+  )
+}
+
+// Batch P gallery — TextField family (self-contained state).
+function BatchPSection() {
+  const [name, setName] = useState('')
+  const [pwd, setPwd] = useState('')
+  const [multi, setMulti] = useState('')
+  const [fruit, setFruit] = useState('apple')
+  return (
+    <>
+      <SectionTitle>TextField · variants</SectionTitle>
+      <Row>
+        <TextField label='Standard' variant='standard' value={name} onChange={setName} />
+        <TextField label='Filled' variant='filled' value={name} onChange={setName} />
+        <TextField label='Outlined' variant='outlined' value={name} onChange={setName} />
+      </Row>
+
+      <SectionTitle>TextField · states</SectionTitle>
+      <Row>
+        <TextField label='Helper' helperText='Some help text' value={name} onChange={setName} />
+        <TextField label='Error' error helperText='This field is required' value={name} onChange={setName} />
+        <TextField label='Disabled' disabled value='Disabled' />
+        <TextField label='Required' required value={name} onChange={setName} />
+      </Row>
+
+      <SectionTitle>TextField · size & password</SectionTitle>
+      <Row>
+        <TextField label='Small' size='small' value={name} onChange={setName} />
+        <TextField placeholder='Search…' variant='outlined' value={name} onChange={setName} />
+        <TextField label='Password' type='password' value={pwd} onChange={setPwd} />
+      </Row>
+
+      <SectionTitle>TextField · multiline</SectionTitle>
+      <Row>
+        <TextField label='Multiline' multiline rows={3} value={multi} onChange={setMulti} />
+      </Row>
+
+      <SectionTitle>TextField · adornments</SectionTitle>
+      <Row>
+        <TextField
+          label='Weight'
+          variant='outlined'
+          value={name}
+          onChange={setName}
+          startAdornment={<InputAdornment position='start'>kg</InputAdornment>}
+          endAdornment={<InputAdornment position='end'><SearchIcon /></InputAdornment>}
+        />
+      </Row>
+
+      <SectionTitle>FormControl + Input variants</SectionTitle>
+      <Row>
+        <FormControl variant='standard'>
+          <InputLabel>Standard</InputLabel>
+          <Input value={name} onChange={setName} />
+          <FormHelperText>standard input</FormHelperText>
+        </FormControl>
+      </Row>
+      <Row>
+        <FormControl variant='filled'>
+          <InputLabel>Filled</InputLabel>
+          <FilledInput value={name} onChange={setName} />
+        </FormControl>
+        <FormControl variant='outlined'>
+          <InputLabel>Outlined</InputLabel>
+          <OutlinedInput value={name} onChange={setName} />
+        </FormControl>
+      </Row>
+
+      <SectionTitle>FormLabel + RadioGroup</SectionTitle>
+      <FormControl>
+        <FormLabel>Fruit</FormLabel>
+        <RadioGroup value={fruit} onChange={setFruit}>
+          <FormControlLabel value='apple' control={<Radio />} label='Apple' />
+          <FormControlLabel value='banana' control={<Radio />} label='Banana' />
+          <FormControlLabel value='cherry' control={<Radio />} label='Cherry' />
+        </RadioGroup>
+      </FormControl>
+
+      <SectionTitle>RadioGroup · row</SectionTitle>
+      <RadioGroup row value={fruit} onChange={setFruit}>
+        <FormControlLabel value='apple' control={<Radio />} label='Apple' />
+        <FormControlLabel value='banana' control={<Radio />} label='Banana' />
+      </RadioGroup>
+
+      <SectionTitle>FormGroup</SectionTitle>
+      <FormGroup>
+        <FormControlLabel control={<Radio />} label='Option A' />
+        <FormControlLabel control={<Radio />} label='Option B' />
+      </FormGroup>
     </>
   )
 }

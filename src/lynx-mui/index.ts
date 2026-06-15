@@ -241,3 +241,41 @@ export { StepperContext, useStepperContext } from './components/StepperContext.j
 export type { StepperContextValue, StepperOrientation } from './components/StepperContext.js'
 export { StepContext, useStepContext } from './components/StepContext.js'
 export type { StepContextValue } from './components/StepContext.js'
+
+// Batch P — TextField family (FormControl, inputs, labels, adornment, RadioGroup).
+export {
+  FormControlContext,
+  useFormControl,
+  formControlState,
+} from './components/FormControlContext.js'
+export type {
+  FormControlState,
+  FormControlColor,
+  FormControlSize,
+  FormControlVariant,
+  FormControlMargin,
+} from './components/FormControlContext.js'
+export { FormControl } from './components/FormControl.js'
+export type { FormControlProps } from './components/FormControl.js'
+export { FormLabel, formLabelColor, formLabelRootSx } from './components/FormLabel.js'
+export type { FormLabelProps } from './components/FormLabel.js'
+export { FormHelperText } from './components/FormHelperText.js'
+export type { FormHelperTextProps } from './components/FormHelperText.js'
+export { FormGroup } from './components/FormGroup.js'
+export type { FormGroupProps } from './components/FormGroup.js'
+export { InputBase, inputAccentColor } from './components/InputBase.js'
+export type { InputBaseProps, InputBaseOwnProps, InputBaseState } from './components/InputBase.js'
+export { Input } from './components/Input.js'
+export type { InputProps } from './components/Input.js'
+export { OutlinedInput } from './components/OutlinedInput.js'
+export type { OutlinedInputProps } from './components/OutlinedInput.js'
+export { FilledInput } from './components/FilledInput.js'
+export type { FilledInputProps } from './components/FilledInput.js'
+export { InputLabel } from './components/InputLabel.js'
+export type { InputLabelProps } from './components/InputLabel.js'
+export { InputAdornment } from './components/InputAdornment.js'
+export type { InputAdornmentProps } from './components/InputAdornment.js'
+export { TextField } from './components/TextField.js'
+export type { TextFieldProps } from './components/TextField.js'
+export { RadioGroup } from './components/RadioGroup.js'
+export type { RadioGroupProps } from './components/RadioGroup.js'
