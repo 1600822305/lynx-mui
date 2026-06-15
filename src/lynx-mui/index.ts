@@ -337,3 +337,27 @@ export { MenuList } from './components/MenuList.js'
 export type { MenuListProps, MenuListVariant } from './components/MenuList.js'
 export { MenuItem } from './components/MenuItem.js'
 export type { MenuItemProps } from './components/MenuItem.js'
+
+// Batch C — transitions (Lynx CSS transition/transform; no react-transition-group).
+export { Collapse } from './components/Collapse.js'
+export type { CollapseProps, CollapseOrientation, CollapseTimeout } from './components/Collapse.js'
+export { Fade } from './components/Fade.js'
+export type { FadeProps, FadeTimeout } from './components/Fade.js'
+export { Slide } from './components/Slide.js'
+export type { SlideProps, SlideDirection, SlideTimeout } from './components/Slide.js'
+
+// Batch D — leaf components (ButtonBase, ListItemIcon, Grid, CssBaseline).
+export { ButtonBase } from './components/ButtonBase.js'
+export type { ButtonBaseProps } from './components/ButtonBase.js'
+export { ListItemIcon } from './components/ListItemIcon.js'
+export type { ListItemIconProps, ListItemIconAlign } from './components/ListItemIcon.js'
+export { Grid } from './components/Grid.js'
+export type {
+  GridProps,
+  GridSizeValue,
+  GridResponsive,
+  GridDirection,
+  GridWrap,
+} from './components/Grid.js'
+export { CssBaseline } from './components/CssBaseline.js'
+export type { CssBaselineProps } from './components/CssBaseline.js'
