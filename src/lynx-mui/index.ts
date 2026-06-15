@@ -134,6 +134,13 @@ export type {
   ElementTag,
   ComponentSpec,
 } from './system/createComponent.js'
+export { styled } from './system/styled.js'
+export type {
+  StyledOptions,
+  StyledProps,
+  StyledStyle,
+  StyledStyleArg,
+} from './system/styled.js'
 export { alpha } from './utils/alpha.js'
 export { lighten, darken } from './utils/lighten.js'
 export type {
