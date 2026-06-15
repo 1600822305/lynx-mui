@@ -20,7 +20,7 @@ export interface TableHeadProps {
  * with head typography. MUI's `display: table-header-group` becomes a flex column.
  */
 export function TableHead(props: TableHeadProps) {
-  const rootSx: SxObject = { display: 'flex', flexDirection: 'column' }
+  const rootSx: SxObject = { display: 'flex', flexDirection: 'column', width: '100%' }
   const rootStyle: LynxStyle = {
     ...sxToStyle(rootSx, defaultTheme),
     ...sxToStyle(props.sx, defaultTheme),

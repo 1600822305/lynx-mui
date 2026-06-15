@@ -20,7 +20,7 @@ export interface TableBodyProps {
  * MUI's `display: table-row-group` becomes a flex column.
  */
 export function TableBody(props: TableBodyProps) {
-  const rootSx: SxObject = { display: 'flex', flexDirection: 'column' }
+  const rootSx: SxObject = { display: 'flex', flexDirection: 'column', width: '100%' }
   const rootStyle: LynxStyle = {
     ...sxToStyle(rootSx, defaultTheme),
     ...sxToStyle(props.sx, defaultTheme),
