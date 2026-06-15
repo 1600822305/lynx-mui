@@ -171,3 +171,111 @@ export type {
   ToggleButtonGroupProps,
   ToggleButtonGroupOrientation,
 } from './components/ToggleButtonGroup.js'
+
+// Batch L — Table family (Table, TableContainer, TableHead, TableBody,
+// TableRow, TableCell, TableFooter, TableSortLabel).
+export { Table, TableContext, Tablelvl2Context } from './components/Table.js'
+export type {
+  TableProps,
+  TableCellPadding,
+  TableCellSize,
+  TableContextValue,
+  Tablelvl2ContextValue,
+  Tablelvl2Variant,
+} from './components/Table.js'
+export { TableContainer } from './components/TableContainer.js'
+export type { TableContainerProps } from './components/TableContainer.js'
+export { TableHead } from './components/TableHead.js'
+export type { TableHeadProps } from './components/TableHead.js'
+export { TableBody } from './components/TableBody.js'
+export type { TableBodyProps } from './components/TableBody.js'
+export { TableRow } from './components/TableRow.js'
+export type { TableRowProps } from './components/TableRow.js'
+export { TableCell } from './components/TableCell.js'
+export type { TableCellProps, TableCellAlign } from './components/TableCell.js'
+export { TableFooter } from './components/TableFooter.js'
+export type { TableFooterProps } from './components/TableFooter.js'
+export { TableSortLabel } from './components/TableSortLabel.js'
+export type { TableSortLabelProps, TableSortDirection } from './components/TableSortLabel.js'
+
+// Batch O — Pagination & BottomNavigation.
+export { Pagination } from './components/Pagination.js'
+export type { PaginationProps } from './components/Pagination.js'
+export { PaginationItem } from './components/PaginationItem.js'
+export type {
+  PaginationItemProps,
+  PaginationItemType,
+  PaginationItemColor,
+  PaginationItemVariant,
+  PaginationItemShape,
+  PaginationItemSize,
+} from './components/PaginationItem.js'
+export { BottomNavigation } from './components/BottomNavigation.js'
+export type { BottomNavigationProps } from './components/BottomNavigation.js'
+export { BottomNavigationAction } from './components/BottomNavigationAction.js'
+export type { BottomNavigationActionProps } from './components/BottomNavigationAction.js'
+
+// Batch N — Stepper family (Stepper, Step, StepLabel, StepConnector, StepIcon,
+// StepButton, StepContent, MobileStepper) — 1:1 with @mui/material v7.3.11.
+export { Stepper } from './components/Stepper.js'
+export type { StepperProps } from './components/Stepper.js'
+export { Step } from './components/Step.js'
+export type { StepProps } from './components/Step.js'
+export { StepLabel } from './components/StepLabel.js'
+export type { StepLabelProps } from './components/StepLabel.js'
+export { StepConnector } from './components/StepConnector.js'
+export type { StepConnectorProps } from './components/StepConnector.js'
+export { StepIcon } from './components/StepIcon.js'
+export type { StepIconProps } from './components/StepIcon.js'
+export { StepButton } from './components/StepButton.js'
+export type { StepButtonProps } from './components/StepButton.js'
+export { StepContent } from './components/StepContent.js'
+export type { StepContentProps } from './components/StepContent.js'
+export { MobileStepper } from './components/MobileStepper.js'
+export type {
+  MobileStepperProps,
+  MobileStepperVariant,
+  MobileStepperPosition,
+} from './components/MobileStepper.js'
+export { StepperContext, useStepperContext } from './components/StepperContext.js'
+export type { StepperContextValue, StepperOrientation } from './components/StepperContext.js'
+export { StepContext, useStepContext } from './components/StepContext.js'
+export type { StepContextValue } from './components/StepContext.js'
+
+// Batch P — TextField family (FormControl, inputs, labels, adornment, RadioGroup).
+export {
+  FormControlContext,
+  useFormControl,
+  formControlState,
+} from './components/FormControlContext.js'
+export type {
+  FormControlState,
+  FormControlColor,
+  FormControlSize,
+  FormControlVariant,
+  FormControlMargin,
+} from './components/FormControlContext.js'
+export { FormControl } from './components/FormControl.js'
+export type { FormControlProps } from './components/FormControl.js'
+export { FormLabel, formLabelColor, formLabelRootSx } from './components/FormLabel.js'
+export type { FormLabelProps } from './components/FormLabel.js'
+export { FormHelperText } from './components/FormHelperText.js'
+export type { FormHelperTextProps } from './components/FormHelperText.js'
+export { FormGroup } from './components/FormGroup.js'
+export type { FormGroupProps } from './components/FormGroup.js'
+export { InputBase, inputAccentColor } from './components/InputBase.js'
+export type { InputBaseProps, InputBaseOwnProps, InputBaseState } from './components/InputBase.js'
+export { Input } from './components/Input.js'
+export type { InputProps } from './components/Input.js'
+export { OutlinedInput } from './components/OutlinedInput.js'
+export type { OutlinedInputProps } from './components/OutlinedInput.js'
+export { FilledInput } from './components/FilledInput.js'
+export type { FilledInputProps } from './components/FilledInput.js'
+export { InputLabel } from './components/InputLabel.js'
+export type { InputLabelProps } from './components/InputLabel.js'
+export { InputAdornment } from './components/InputAdornment.js'
+export type { InputAdornmentProps } from './components/InputAdornment.js'
+export { TextField } from './components/TextField.js'
+export type { TextFieldProps } from './components/TextField.js'
+export { RadioGroup } from './components/RadioGroup.js'
+export type { RadioGroupProps } from './components/RadioGroup.js'

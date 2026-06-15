@@ -68,6 +68,48 @@ import {
 } from './lynx-mui/index.js'
 // Batch J — Button family.
 import { ButtonGroup, Fab, ToggleButtonGroup } from './lynx-mui/index.js'
+// Batch L — Table family.
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+} from './lynx-mui/index.js'
+// Batch O — Pagination & BottomNavigation.
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  HomeIcon,
+  Pagination,
+  PersonIcon,
+} from './lynx-mui/index.js'
+// Batch N — Stepper family.
+import {
+  MobileStepper,
+  Step,
+  StepButton,
+  StepContent,
+  StepLabel,
+  Stepper,
+} from './lynx-mui/index.js'
+// Batch P — TextField family.
+import {
+  FilledInput,
+  FormControl,
+  FormGroup,
+  FormHelperText,
+  FormLabel,
+  Input,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  RadioGroup,
+  TextField,
+} from './lynx-mui/index.js'
 
 function SectionTitle(props: { children: string }) {
   return (
@@ -766,6 +808,10 @@ export function App() {
         </Accordion>
 
         <BatchJSection />
+        <BatchLSection />
+        <BatchOSection />
+        <StepperSection />
+        <BatchPSection />
       </Box>
     </scroll-view>
   )
@@ -851,6 +897,489 @@ function BatchJSection() {
           <ToggleButton value='underline'>Underline</ToggleButton>
         </ToggleButtonGroup>
       </Row>
+    </>
+  )
+}
+
+// Batch L gallery — Table family (self-contained state).
+function BatchLSection() {
+  const [order, setOrder] = useState<'asc' | 'desc'>('asc')
+  const [orderBy, setOrderBy] = useState('calories')
+  const [selected, setSelected] = useState('Eclair')
+
+  const handleSort = (col: string) => {
+    if (orderBy === col) {
+      setOrder(order === 'asc' ? 'desc' : 'asc')
+    } else {
+      setOrderBy(col)
+      setOrder('asc')
+    }
+  }
+
+  return (
+    <>
+      <SectionTitle>Table · basic (right-aligned numerics)</SectionTitle>
+      <Paper>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Dessert (100g serving)</TableCell>
+                <TableCell align='right'>Calories</TableCell>
+                <TableCell align='right'>Fat&nbsp;(g)</TableCell>
+                <TableCell align='right'>Carbs&nbsp;(g)</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow hover>
+                <TableCell>Frozen yoghurt</TableCell>
+                <TableCell align='right'>159</TableCell>
+                <TableCell align='right'>6.0</TableCell>
+                <TableCell align='right'>24</TableCell>
+              </TableRow>
+              <TableRow hover>
+                <TableCell>Ice cream sandwich</TableCell>
+                <TableCell align='right'>237</TableCell>
+                <TableCell align='right'>9.0</TableCell>
+                <TableCell align='right'>37</TableCell>
+              </TableRow>
+              <TableRow hover>
+                <TableCell>Eclair</TableCell>
+                <TableCell align='right'>262</TableCell>
+                <TableCell align='right'>16.0</TableCell>
+                <TableCell align='right'>24</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+
+      <SectionTitle>Table · dense (size=small) + selectable rows</SectionTitle>
+      <Paper>
+        <TableContainer>
+          <Table size='small'>
+            <TableHead>
+              <TableRow>
+                <TableCell>Dessert</TableCell>
+                <TableCell align='right'>Calories</TableCell>
+                <TableCell align='right'>Carbs</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow hover selected={selected === 'Frozen yoghurt'} onClick={() => setSelected('Frozen yoghurt')}>
+                <TableCell>Frozen yoghurt</TableCell>
+                <TableCell align='right'>159</TableCell>
+                <TableCell align='right'>24</TableCell>
+              </TableRow>
+              <TableRow hover selected={selected === 'Eclair'} onClick={() => setSelected('Eclair')}>
+                <TableCell>Eclair</TableCell>
+                <TableCell align='right'>262</TableCell>
+                <TableCell align='right'>24</TableCell>
+              </TableRow>
+              <TableRow hover selected={selected === 'Cupcake'} onClick={() => setSelected('Cupcake')}>
+                <TableCell>Cupcake</TableCell>
+                <TableCell align='right'>305</TableCell>
+                <TableCell align='right'>67</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+
+      <SectionTitle>Table · checkbox padding + selection</SectionTitle>
+      <Paper>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell padding='checkbox'>
+                  <Checkbox />
+                </TableCell>
+                <TableCell>Dessert</TableCell>
+                <TableCell align='right'>Calories</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow hover selected={selected === 'Frozen yoghurt'}>
+                <TableCell padding='checkbox'>
+                  <Checkbox
+                    checked={selected === 'Frozen yoghurt'}
+                    onChange={() => setSelected('Frozen yoghurt')}
+                  />
+                </TableCell>
+                <TableCell>Frozen yoghurt</TableCell>
+                <TableCell align='right'>159</TableCell>
+              </TableRow>
+              <TableRow hover selected={selected === 'Eclair'}>
+                <TableCell padding='checkbox'>
+                  <Checkbox checked={selected === 'Eclair'} onChange={() => setSelected('Eclair')} />
+                </TableCell>
+                <TableCell>Eclair</TableCell>
+                <TableCell align='right'>262</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+
+      <SectionTitle>TableSortLabel · sortable header</SectionTitle>
+      <Paper>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell sortDirection={orderBy === 'name' ? order : false}>
+                  <TableSortLabel
+                    active={orderBy === 'name'}
+                    direction={orderBy === 'name' ? order : 'asc'}
+                    onClick={() => handleSort('name')}
+                  >
+                    Dessert
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell align='right' sortDirection={orderBy === 'calories' ? order : false}>
+                  <TableSortLabel
+                    active={orderBy === 'calories'}
+                    direction={orderBy === 'calories' ? order : 'asc'}
+                    onClick={() => handleSort('calories')}
+                  >
+                    Calories
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell align='right'>
+                  <TableSortLabel hideSortIcon onClick={() => handleSort('fat')}>
+                    Fat
+                  </TableSortLabel>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>Frozen yoghurt</TableCell>
+                <TableCell align='right'>159</TableCell>
+                <TableCell align='right'>6.0</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Eclair</TableCell>
+                <TableCell align='right'>262</TableCell>
+                <TableCell align='right'>16.0</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+
+      <SectionTitle>Table · TableFooter</SectionTitle>
+      <Paper>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Dessert</TableCell>
+                <TableCell align='right'>Calories</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>Frozen yoghurt</TableCell>
+                <TableCell align='right'>159</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Ice cream sandwich</TableCell>
+                <TableCell align='right'>237</TableCell>
+              </TableRow>
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell>Total</TableCell>
+                <TableCell align='right'>396</TableCell>
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </TableContainer>
+      </Paper>
+    </>
+  )
+}
+
+// Batch O gallery — Pagination & BottomNavigation (self-contained state).
+function BatchOSection() {
+  const [page, setPage] = useState(1)
+  const [navValue, setNavValue] = useState(0)
+  return (
+    <>
+      <SectionTitle>Pagination · variants</SectionTitle>
+      <Row>
+        <Pagination count={10} defaultPage={3} />
+      </Row>
+      <Row>
+        <Pagination count={10} defaultPage={3} variant='outlined' />
+      </Row>
+      <Row>
+        <Pagination count={10} defaultPage={3} shape='rounded' />
+      </Row>
+
+      <SectionTitle>Pagination · colors</SectionTitle>
+      <Row>
+        <Pagination count={10} defaultPage={3} color='primary' />
+      </Row>
+      <Row>
+        <Pagination count={10} defaultPage={3} color='secondary' variant='outlined' />
+      </Row>
+
+      <SectionTitle>Pagination · sizes</SectionTitle>
+      <Row>
+        <Pagination count={6} defaultPage={3} size='small' />
+      </Row>
+      <Row>
+        <Pagination count={6} defaultPage={3} size='large' />
+      </Row>
+
+      <SectionTitle>Pagination · first/last & disabled</SectionTitle>
+      <Row>
+        <Pagination count={11} defaultPage={6} showFirstButton showLastButton />
+      </Row>
+      <Row>
+        <Pagination count={10} defaultPage={3} disabled />
+      </Row>
+
+      <SectionTitle>Pagination · controlled</SectionTitle>
+      <Row>
+        <Pagination
+          count={10}
+          page={page}
+          color='primary'
+          onChange={(value) => { setPage(value) }}
+        />
+      </Row>
+      <Row>
+        <Typography variant='body2'>Current page: {`${page}`}</Typography>
+      </Row>
+
+      <SectionTitle>BottomNavigation · showLabels</SectionTitle>
+      <BottomNavigation
+        showLabels
+        value={navValue}
+        onChange={(value) => { setNavValue(value as number) }}
+      >
+        <BottomNavigationAction label='Home' icon={<HomeIcon />} />
+        <BottomNavigationAction label='Favorites' icon={<FavoriteIcon />} />
+        <BottomNavigationAction label='Search' icon={<SearchIcon />} />
+        <BottomNavigationAction label='Profile' icon={<PersonIcon />} />
+      </BottomNavigation>
+
+      <SectionTitle>BottomNavigation · selected-only label</SectionTitle>
+      <BottomNavigation
+        value={navValue}
+        onChange={(value) => { setNavValue(value as number) }}
+      >
+        <BottomNavigationAction label='Home' icon={<HomeIcon />} />
+        <BottomNavigationAction label='Favorites' icon={<FavoriteIcon />} />
+        <BottomNavigationAction label='Search' icon={<SearchIcon />} />
+        <BottomNavigationAction label='Profile' icon={<PersonIcon />} />
+      </BottomNavigation>
+    </>
+  )
+}
+
+// Batch N gallery — Stepper family (self-contained state).
+function StepperSection() {
+  const steps = ['Select campaign', 'Create ad group', 'Create ad']
+  const [activeStep, setActiveStep] = useState(0)
+  const [mobileStep, setMobileStep] = useState(0)
+  const maxSteps = 5
+  const handleNext = () => { setActiveStep((s) => Math.min(s + 1, steps.length)) }
+  const handleBack = () => { setActiveStep((s) => Math.max(s - 1, 0)) }
+  const handleReset = () => { setActiveStep(0) }
+
+  return (
+    <>
+      <SectionTitle>Stepper · horizontal linear</SectionTitle>
+      <Stepper activeStep={activeStep} sx={{ mb: 1 }}>
+        {steps.map((label) => (
+          <Step key={label}><StepLabel>{label}</StepLabel></Step>
+        ))}
+      </Stepper>
+      <Row>
+        <Button variant='outlined' disabled={activeStep === 0} onClick={handleBack}>Back</Button>
+        <Button variant='contained' onClick={handleNext}>
+          {activeStep >= steps.length - 1 ? 'Finish' : 'Next'}
+        </Button>
+        <Button variant='text' onClick={handleReset}>Reset</Button>
+      </Row>
+
+      <SectionTitle>Stepper · alternativeLabel</SectionTitle>
+      <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 1 }}>
+        {steps.map((label) => (
+          <Step key={label}><StepLabel>{label}</StepLabel></Step>
+        ))}
+      </Stepper>
+
+      <SectionTitle>Stepper · states (completed / active / error / disabled)</SectionTitle>
+      <Stepper activeStep={1}>
+        <Step completed><StepLabel>Completed</StepLabel></Step>
+        <Step><StepLabel>Active</StepLabel></Step>
+        <Step><StepLabel error>Error</StepLabel></Step>
+        <Step><StepLabel>Disabled</StepLabel></Step>
+      </Stepper>
+
+      <SectionTitle>Stepper · non-linear (StepButton)</SectionTitle>
+      <Stepper nonLinear activeStep={activeStep}>
+        {steps.map((label, index) => (
+          <Step key={label}>
+            <StepButton onClick={() => { setActiveStep(index) }}>{label}</StepButton>
+          </Step>
+        ))}
+      </Stepper>
+
+      <SectionTitle>Stepper · vertical + StepContent</SectionTitle>
+      <Stepper activeStep={activeStep} orientation='vertical'>
+        {steps.map((label, index) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+            <StepContent>
+              <Typography variant='body2' sx={{ color: 'text.secondary', mb: 1 }}>
+                Content for “{label}”.
+              </Typography>
+              <Row>
+                <Button variant='contained' size='small' onClick={handleNext}>
+                  {index === steps.length - 1 ? 'Finish' : 'Continue'}
+                </Button>
+                <Button variant='text' size='small' disabled={index === 0} onClick={handleBack}>Back</Button>
+              </Row>
+            </StepContent>
+          </Step>
+        ))}
+      </Stepper>
+
+      <SectionTitle>MobileStepper · dots / progress / text</SectionTitle>
+      <MobileStepper
+        variant='dots'
+        steps={maxSteps}
+        position='static'
+        activeStep={mobileStep}
+        backButton={
+          <Button variant='text' size='small' disabled={mobileStep === 0} onClick={() => { setMobileStep((s) => s - 1) }}>Back</Button>
+        }
+        nextButton={
+          <Button variant='text' size='small' disabled={mobileStep === maxSteps - 1} onClick={() => { setMobileStep((s) => s + 1) }}>Next</Button>
+        }
+      />
+      <MobileStepper
+        variant='progress'
+        steps={maxSteps}
+        position='static'
+        activeStep={mobileStep}
+        backButton={
+          <Button variant='text' size='small' disabled={mobileStep === 0} onClick={() => { setMobileStep((s) => s - 1) }}>Back</Button>
+        }
+        nextButton={
+          <Button variant='text' size='small' disabled={mobileStep === maxSteps - 1} onClick={() => { setMobileStep((s) => s + 1) }}>Next</Button>
+        }
+      />
+      <MobileStepper
+        variant='text'
+        steps={maxSteps}
+        position='static'
+        activeStep={mobileStep}
+        backButton={
+          <Button variant='text' size='small' disabled={mobileStep === 0} onClick={() => { setMobileStep((s) => s - 1) }}>Back</Button>
+        }
+        nextButton={
+          <Button variant='text' size='small' disabled={mobileStep === maxSteps - 1} onClick={() => { setMobileStep((s) => s + 1) }}>Next</Button>
+        }
+      />
+    </>
+  )
+}
+
+// Batch P gallery — TextField family (self-contained state).
+function BatchPSection() {
+  const [name, setName] = useState('')
+  const [pwd, setPwd] = useState('')
+  const [multi, setMulti] = useState('')
+  const [fruit, setFruit] = useState('apple')
+  return (
+    <>
+      <SectionTitle>TextField · variants</SectionTitle>
+      <Row>
+        <TextField label='Standard' variant='standard' value={name} onChange={setName} />
+        <TextField label='Filled' variant='filled' value={name} onChange={setName} />
+        <TextField label='Outlined' variant='outlined' value={name} onChange={setName} />
+      </Row>
+
+      <SectionTitle>TextField · states</SectionTitle>
+      <Row>
+        <TextField label='Helper' helperText='Some help text' value={name} onChange={setName} />
+        <TextField label='Error' error helperText='This field is required' value={name} onChange={setName} />
+        <TextField label='Disabled' disabled value='Disabled' />
+        <TextField label='Required' required value={name} onChange={setName} />
+      </Row>
+
+      <SectionTitle>TextField · size & password</SectionTitle>
+      <Row>
+        <TextField label='Small' size='small' value={name} onChange={setName} />
+        <TextField placeholder='Search…' variant='outlined' value={name} onChange={setName} />
+        <TextField label='Password' type='password' value={pwd} onChange={setPwd} />
+      </Row>
+
+      <SectionTitle>TextField · multiline</SectionTitle>
+      <Row>
+        <TextField label='Multiline' multiline rows={3} value={multi} onChange={setMulti} />
+      </Row>
+
+      <SectionTitle>TextField · adornments</SectionTitle>
+      <Row>
+        <TextField
+          label='Weight'
+          variant='outlined'
+          value={name}
+          onChange={setName}
+          startAdornment={<InputAdornment position='start'>kg</InputAdornment>}
+          endAdornment={<InputAdornment position='end'><SearchIcon /></InputAdornment>}
+        />
+      </Row>
+
+      <SectionTitle>FormControl + Input variants</SectionTitle>
+      <Row>
+        <FormControl variant='standard'>
+          <InputLabel>Standard</InputLabel>
+          <Input value={name} onChange={setName} />
+          <FormHelperText>standard input</FormHelperText>
+        </FormControl>
+      </Row>
+      <Row>
+        <FormControl variant='filled'>
+          <InputLabel>Filled</InputLabel>
+          <FilledInput value={name} onChange={setName} />
+        </FormControl>
+        <FormControl variant='outlined'>
+          <InputLabel>Outlined</InputLabel>
+          <OutlinedInput value={name} onChange={setName} />
+        </FormControl>
+      </Row>
+
+      <SectionTitle>FormLabel + RadioGroup</SectionTitle>
+      <FormControl>
+        <FormLabel>Fruit</FormLabel>
+        <RadioGroup value={fruit} onChange={setFruit}>
+          <FormControlLabel value='apple' control={<Radio />} label='Apple' />
+          <FormControlLabel value='banana' control={<Radio />} label='Banana' />
+          <FormControlLabel value='cherry' control={<Radio />} label='Cherry' />
+        </RadioGroup>
+      </FormControl>
+
+      <SectionTitle>RadioGroup · row</SectionTitle>
+      <RadioGroup row value={fruit} onChange={setFruit}>
+        <FormControlLabel value='apple' control={<Radio />} label='Apple' />
+        <FormControlLabel value='banana' control={<Radio />} label='Banana' />
+      </RadioGroup>
+
+      <SectionTitle>FormGroup</SectionTitle>
+      <FormGroup>
+        <FormControlLabel control={<Radio />} label='Option A' />
+        <FormControlLabel control={<Radio />} label='Option B' />
+      </FormGroup>
     </>
   )
 }
