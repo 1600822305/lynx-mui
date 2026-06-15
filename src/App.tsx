@@ -4,8 +4,12 @@ import type { ReactNode } from '@lynx-js/react'
 import './App.css'
 import {
   AddIcon,
+  Alert,
+  AlertTitle,
   AppBar,
   ArrowBackIcon,
+  Avatar,
+  AvatarGroup,
   Badge,
   Box,
   Breadcrumbs,
@@ -18,6 +22,7 @@ import {
   CardMedia,
   Checkbox,
   CheckCircleIcon,
+  CircularProgress,
   Chip,
   CloseIcon,
   Container,
@@ -32,6 +37,7 @@ import {
   FormControlLabel,
   IconButton,
   iconPaths,
+  LinearProgress,
   Link,
   List,
   ListItem,
@@ -567,6 +573,84 @@ export function App() {
           <Link underline='always' color='primary'>Core</Link>
           <Typography variant='body2' sx={{ color: 'text.primary' }}>Breadcrumbs</Typography>
         </Breadcrumbs>
+
+        <SectionTitle>Alert · standard</SectionTitle>
+        <Stack spacing={1}>
+          <Alert severity='success'>This is a success alert — check it out!</Alert>
+          <Alert severity='info'>This is an info alert — check it out!</Alert>
+          <Alert severity='warning'>This is a warning alert — check it out!</Alert>
+          <Alert severity='error'>This is an error alert — check it out!</Alert>
+        </Stack>
+
+        <SectionTitle>Alert · outlined</SectionTitle>
+        <Stack spacing={1}>
+          <Alert variant='outlined' severity='success'>This is a success alert — check it out!</Alert>
+          <Alert variant='outlined' severity='info'>This is an info alert — check it out!</Alert>
+          <Alert variant='outlined' severity='warning'>This is a warning alert — check it out!</Alert>
+          <Alert variant='outlined' severity='error'>This is an error alert — check it out!</Alert>
+        </Stack>
+
+        <SectionTitle>Alert · filled</SectionTitle>
+        <Stack spacing={1}>
+          <Alert variant='filled' severity='success'>This is a success alert — check it out!</Alert>
+          <Alert variant='filled' severity='info'>This is an info alert — check it out!</Alert>
+          <Alert variant='filled' severity='warning'>This is a warning alert — check it out!</Alert>
+          <Alert variant='filled' severity='error'>This is an error alert — check it out!</Alert>
+        </Stack>
+
+        <SectionTitle>Alert · onClose / title / action</SectionTitle>
+        <Stack spacing={1}>
+          <Alert severity='info' onClose={() => { setCount((c) => c + 1) }}>
+            This alert has a close button.
+          </Alert>
+          <Alert severity='warning'>
+            <AlertTitle>Warning</AlertTitle>
+            This is a warning alert with a title and body text.
+          </Alert>
+          <Alert severity='error' action={<Button color='error' size='small'>UNDO</Button>}>
+            This alert has a custom action.
+          </Alert>
+        </Stack>
+
+        <SectionTitle>Avatar · variants</SectionTitle>
+        <Row>
+          <Avatar>K</Avatar>
+          <Avatar src='https://mui.com/static/images/avatar/1.jpg' />
+          <Avatar />
+          <Avatar variant='rounded'>R</Avatar>
+          <Avatar variant='square'>S</Avatar>
+        </Row>
+
+        <SectionTitle>AvatarGroup · max=4</SectionTitle>
+        <Row>
+          <AvatarGroup max={4}>
+            <Avatar>A</Avatar>
+            <Avatar>B</Avatar>
+            <Avatar>C</Avatar>
+            <Avatar>D</Avatar>
+            <Avatar>E</Avatar>
+            <Avatar>F</Avatar>
+          </AvatarGroup>
+        </Row>
+
+        <SectionTitle>CircularProgress</SectionTitle>
+        <Row>
+          <CircularProgress />
+          <CircularProgress variant='determinate' value={75} />
+          <CircularProgress color='secondary' />
+          <CircularProgress size={24} />
+        </Row>
+
+        <SectionTitle>LinearProgress</SectionTitle>
+        <Box sx={{ width: '100%', mb: 1 }}>
+          <LinearProgress />
+        </Box>
+        <Box sx={{ width: '100%', mb: 1 }}>
+          <LinearProgress variant='determinate' value={60} />
+        </Box>
+        <Box sx={{ width: '100%' }}>
+          <LinearProgress color='secondary' />
+        </Box>
       </Box>
     </scroll-view>
   )

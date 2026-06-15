@@ -81,6 +81,18 @@ export { Switch } from './components/Switch.js'
 export type { SwitchProps, SwitchColor, SwitchSize } from './components/Switch.js'
 export { FormControlLabel } from './components/FormControlLabel.js'
 export type { FormControlLabelProps, FormControlLabelPlacement } from './components/FormControlLabel.js'
+export { Alert } from './components/Alert.js'
+export type { AlertProps, AlertSeverity, AlertVariant, AlertColor } from './components/Alert.js'
+export { AlertTitle } from './components/AlertTitle.js'
+export type { AlertTitleProps } from './components/AlertTitle.js'
+export { Avatar } from './components/Avatar.js'
+export type { AvatarProps, AvatarVariant } from './components/Avatar.js'
+export { AvatarGroup } from './components/AvatarGroup.js'
+export type { AvatarGroupProps, AvatarGroupSpacing } from './components/AvatarGroup.js'
+export { CircularProgress } from './components/CircularProgress.js'
+export type { CircularProgressProps, CircularProgressColor, CircularProgressVariant } from './components/CircularProgress.js'
+export { LinearProgress } from './components/LinearProgress.js'
+export type { LinearProgressProps, LinearProgressColor, LinearProgressVariant } from './components/LinearProgress.js'
 
 // Icons — SvgIcon base + createSvgIcon factory + prebuilt set (1:1 with @mui/icons-material).
 export * from './icons/index.js'
@@ -102,6 +114,7 @@ export type {
   ComponentSpec,
 } from './system/createComponent.js'
 export { alpha } from './utils/alpha.js'
+export { lighten, darken } from './utils/lighten.js'
 export type {
   Theme,
   Palette,

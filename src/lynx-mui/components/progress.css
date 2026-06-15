@@ -1,0 +1,45 @@
+/* Keyframes for CircularProgress and LinearProgress.
+   Lynx supports @keyframes natively but inline styles can't declare them,
+   so they live here and are referenced by animation name in component styles. */
+
+/* CircularProgress — continuous rotation (indeterminate). */
+@keyframes mui-circular-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* LinearProgress — bar 1 (indeterminate): slides across track. */
+@keyframes mui-linear-indeterminate1 {
+  0% {
+    left: -35%;
+    right: 100%;
+  }
+  60% {
+    left: 100%;
+    right: -90%;
+  }
+  100% {
+    left: 100%;
+    right: -90%;
+  }
+}
+
+/* LinearProgress — bar 2 (indeterminate): follows bar 1 with delay. */
+@keyframes mui-linear-indeterminate2 {
+  0% {
+    left: -200%;
+    right: 100%;
+  }
+  60% {
+    left: 107%;
+    right: -8%;
+  }
+  100% {
+    left: 107%;
+    right: -8%;
+  }
+}
