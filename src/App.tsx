@@ -30,6 +30,7 @@ import {
   ExpandMoreIcon,
   FavoriteIcon,
   FormControlLabel,
+  IconButton,
   iconPaths,
   Link,
   List,
@@ -508,6 +509,22 @@ export function App() {
           <StarIcon color='primary' fontSize='medium' />
           <StarIcon color='primary' fontSize='large' />
           <SvgIcon pathData={iconPaths.Home} color='primary' size={48} />
+        </Row>
+
+        <SectionTitle>IconButton · colors + sizes</SectionTitle>
+        <Row>
+          <IconButton><DeleteIcon /></IconButton>
+          <IconButton color='primary'><DeleteIcon /></IconButton>
+          <IconButton color='secondary'><FavoriteIcon /></IconButton>
+          <IconButton color='error'><FavoriteIcon /></IconButton>
+          <IconButton color='success'><SettingsIcon /></IconButton>
+          <IconButton disabled><DeleteIcon /></IconButton>
+        </Row>
+        <Row>
+          <IconButton size='small' color='primary'><MenuIcon /></IconButton>
+          <IconButton size='medium' color='primary'><MenuIcon /></IconButton>
+          <IconButton size='large' color='primary'><MenuIcon /></IconButton>
+          <IconButton onClick={() => { setCount((c) => c + 1) }}><CloseIcon /></IconButton>
         </Row>
 
         <SectionTitle>Tabs · standard</SectionTitle>
