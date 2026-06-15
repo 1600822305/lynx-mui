@@ -214,3 +214,30 @@ export { BottomNavigation } from './components/BottomNavigation.js'
 export type { BottomNavigationProps } from './components/BottomNavigation.js'
 export { BottomNavigationAction } from './components/BottomNavigationAction.js'
 export type { BottomNavigationActionProps } from './components/BottomNavigationAction.js'
+
+// Batch N — Stepper family (Stepper, Step, StepLabel, StepConnector, StepIcon,
+// StepButton, StepContent, MobileStepper) — 1:1 with @mui/material v7.3.11.
+export { Stepper } from './components/Stepper.js'
+export type { StepperProps } from './components/Stepper.js'
+export { Step } from './components/Step.js'
+export type { StepProps } from './components/Step.js'
+export { StepLabel } from './components/StepLabel.js'
+export type { StepLabelProps } from './components/StepLabel.js'
+export { StepConnector } from './components/StepConnector.js'
+export type { StepConnectorProps } from './components/StepConnector.js'
+export { StepIcon } from './components/StepIcon.js'
+export type { StepIconProps } from './components/StepIcon.js'
+export { StepButton } from './components/StepButton.js'
+export type { StepButtonProps } from './components/StepButton.js'
+export { StepContent } from './components/StepContent.js'
+export type { StepContentProps } from './components/StepContent.js'
+export { MobileStepper } from './components/MobileStepper.js'
+export type {
+  MobileStepperProps,
+  MobileStepperVariant,
+  MobileStepperPosition,
+} from './components/MobileStepper.js'
+export { StepperContext, useStepperContext } from './components/StepperContext.js'
+export type { StepperContextValue, StepperOrientation } from './components/StepperContext.js'
+export { StepContext, useStepContext } from './components/StepContext.js'
+export type { StepContextValue } from './components/StepContext.js'

@@ -87,6 +87,15 @@ import {
   Pagination,
   PersonIcon,
 } from './lynx-mui/index.js'
+// Batch N — Stepper family.
+import {
+  MobileStepper,
+  Step,
+  StepButton,
+  StepContent,
+  StepLabel,
+  Stepper,
+} from './lynx-mui/index.js'
 
 function SectionTitle(props: { children: string }) {
   return (
@@ -787,6 +796,7 @@ export function App() {
         <BatchJSection />
         <BatchLSection />
         <BatchOSection />
+        <StepperSection />
       </Box>
     </scroll-view>
   )
@@ -1153,6 +1163,117 @@ function BatchOSection() {
         <BottomNavigationAction label='Search' icon={<SearchIcon />} />
         <BottomNavigationAction label='Profile' icon={<PersonIcon />} />
       </BottomNavigation>
+    </>
+  )
+}
+
+// Batch N gallery — Stepper family (self-contained state).
+function StepperSection() {
+  const steps = ['Select campaign', 'Create ad group', 'Create ad']
+  const [activeStep, setActiveStep] = useState(0)
+  const [mobileStep, setMobileStep] = useState(0)
+  const maxSteps = 5
+  const handleNext = () => { setActiveStep((s) => Math.min(s + 1, steps.length)) }
+  const handleBack = () => { setActiveStep((s) => Math.max(s - 1, 0)) }
+  const handleReset = () => { setActiveStep(0) }
+
+  return (
+    <>
+      <SectionTitle>Stepper · horizontal linear</SectionTitle>
+      <Stepper activeStep={activeStep} sx={{ mb: 1 }}>
+        {steps.map((label) => (
+          <Step key={label}><StepLabel>{label}</StepLabel></Step>
+        ))}
+      </Stepper>
+      <Row>
+        <Button variant='outlined' disabled={activeStep === 0} onClick={handleBack}>Back</Button>
+        <Button variant='contained' onClick={handleNext}>
+          {activeStep >= steps.length - 1 ? 'Finish' : 'Next'}
+        </Button>
+        <Button variant='text' onClick={handleReset}>Reset</Button>
+      </Row>
+
+      <SectionTitle>Stepper · alternativeLabel</SectionTitle>
+      <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 1 }}>
+        {steps.map((label) => (
+          <Step key={label}><StepLabel>{label}</StepLabel></Step>
+        ))}
+      </Stepper>
+
+      <SectionTitle>Stepper · states (completed / active / error / disabled)</SectionTitle>
+      <Stepper activeStep={1}>
+        <Step completed><StepLabel>Completed</StepLabel></Step>
+        <Step><StepLabel>Active</StepLabel></Step>
+        <Step><StepLabel error>Error</StepLabel></Step>
+        <Step><StepLabel>Disabled</StepLabel></Step>
+      </Stepper>
+
+      <SectionTitle>Stepper · non-linear (StepButton)</SectionTitle>
+      <Stepper nonLinear activeStep={activeStep}>
+        {steps.map((label, index) => (
+          <Step key={label}>
+            <StepButton onClick={() => { setActiveStep(index) }}>{label}</StepButton>
+          </Step>
+        ))}
+      </Stepper>
+
+      <SectionTitle>Stepper · vertical + StepContent</SectionTitle>
+      <Stepper activeStep={activeStep} orientation='vertical'>
+        {steps.map((label, index) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+            <StepContent>
+              <Typography variant='body2' sx={{ color: 'text.secondary', mb: 1 }}>
+                Content for “{label}”.
+              </Typography>
+              <Row>
+                <Button variant='contained' size='small' onClick={handleNext}>
+                  {index === steps.length - 1 ? 'Finish' : 'Continue'}
+                </Button>
+                <Button variant='text' size='small' disabled={index === 0} onClick={handleBack}>Back</Button>
+              </Row>
+            </StepContent>
+          </Step>
+        ))}
+      </Stepper>
+
+      <SectionTitle>MobileStepper · dots / progress / text</SectionTitle>
+      <MobileStepper
+        variant='dots'
+        steps={maxSteps}
+        position='static'
+        activeStep={mobileStep}
+        backButton={
+          <Button variant='text' size='small' disabled={mobileStep === 0} onClick={() => { setMobileStep((s) => s - 1) }}>Back</Button>
+        }
+        nextButton={
+          <Button variant='text' size='small' disabled={mobileStep === maxSteps - 1} onClick={() => { setMobileStep((s) => s + 1) }}>Next</Button>
+        }
+      />
+      <MobileStepper
+        variant='progress'
+        steps={maxSteps}
+        position='static'
+        activeStep={mobileStep}
+        backButton={
+          <Button variant='text' size='small' disabled={mobileStep === 0} onClick={() => { setMobileStep((s) => s - 1) }}>Back</Button>
+        }
+        nextButton={
+          <Button variant='text' size='small' disabled={mobileStep === maxSteps - 1} onClick={() => { setMobileStep((s) => s + 1) }}>Next</Button>
+        }
+      />
+      <MobileStepper
+        variant='text'
+        steps={maxSteps}
+        position='static'
+        activeStep={mobileStep}
+        backButton={
+          <Button variant='text' size='small' disabled={mobileStep === 0} onClick={() => { setMobileStep((s) => s - 1) }}>Back</Button>
+        }
+        nextButton={
+          <Button variant='text' size='small' disabled={mobileStep === maxSteps - 1} onClick={() => { setMobileStep((s) => s + 1) }}>Next</Button>
+        }
+      />
     </>
   )
 }
