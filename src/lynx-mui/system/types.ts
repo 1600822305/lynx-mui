@@ -50,6 +50,18 @@ export type TypographyVariant =
   | 'body1' | 'body2'
   | 'button' | 'caption' | 'overline'
 
+/** Stacking order for overlay layers (mirrors MUI's `theme.zIndex`). */
+export interface ZIndex {
+  mobileStepper: number
+  fab: number
+  speedDial: number
+  appBar: number
+  drawer: number
+  modal: number
+  snackbar: number
+  tooltip: number
+}
+
 export interface Theme {
   /** Returns spacing in px. `spacing(2)` -> 16 by default. */
   spacing: (factor: number) => number
@@ -58,6 +70,8 @@ export interface Theme {
   typography: Record<TypographyVariant, TypographyStyle> & { fontFamily: string }
   /** elevation -> box-shadow string. Index 0 is 'none'. */
   shadows: string[]
+  /** Stacking order for overlays (AppBar/Drawer/Modal/Snackbar/Tooltip/...). */
+  zIndex: ZIndex
 }
 
 /** A value inside an sx object: a raw style value, or a nested object (state selectors). */
