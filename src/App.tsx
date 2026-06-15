@@ -117,6 +117,7 @@ import {
   useTheme,
   useMediaQuery,
   getScreenWidth,
+  styled,
 } from './lynx-mui/index.js'
 // Batch B — floating components (Snackbar, Drawer).
 import { Drawer, Snackbar } from './lynx-mui/index.js'
@@ -826,6 +827,7 @@ export function App() {
         <BatchPSection />
         <ThemeMechanismSection />
         <ResponsiveSection />
+        <StyledSection />
         <BatchBSection />
         <BatchQSection />
       </Box>
@@ -876,6 +878,35 @@ function ThemeMechanismSection() {
           <PrimarySwatch label='useTheme()' />
         </Row>
       </ThemeProvider>
+    </>
+  )
+}
+
+// styled() demo — object styles + a (theme, ownerState) callback, defined at module scope (MUI style).
+const StyledBox = styled('view', { name: 'StyledBox' })(
+  { padding: 12, borderRadius: 8, marginBottom: 8 },
+  ({ theme }) => ({ backgroundColor: theme.palette.primary.main }),
+)
+
+const StyledStateText = styled('text', { name: 'StyledStateText' })(
+  ({ theme, ownerState }) => ({
+    color: (ownerState as { active?: boolean } | undefined)?.active
+      ? theme.palette.secondary.main
+      : theme.palette.primary.contrastText,
+    fontWeight: '500',
+  }),
+)
+
+function StyledSection() {
+  return (
+    <>
+      <SectionTitle>styled() · object + (theme, ownerState) callback</SectionTitle>
+      <StyledBox>
+        <StyledStateText ownerState={{ active: true }}>active → secondary</StyledStateText>
+      </StyledBox>
+      <StyledBox sx={{ bgcolor: 'success.main' }}>
+        <StyledStateText>sx overrides bg → success</StyledStateText>
+      </StyledBox>
     </>
   )
 }
