@@ -87,9 +87,9 @@ Lynx 是预编译 CSS、不适合运行时动态注入任意规则 → 放弃。
 ---
 
 ## 6. 浮层系统（Tooltip / Menu / Popover / Dialog / Snackbar / Drawer）
-- 基座：`<overlay>` 元素 + `OverlayManager`（层级栈、点击外部关闭、ESC/返回键）。
-- 定位：`boundingClientRect` 测锚点（无 `useLayoutEffect` → 用 layout 事件 / 主线程 ref）。
-- 自造 Portal 语义（无 DOM Portal）。
+- 基座：`position: fixed` + `OverlayManager`（层级栈 / zIndex、点击外部关闭、返回键）。纯 Lynx 应用里 `fixed` **受支持**且 fixed 节点**提升到 root**（= 天然 portal）；内置 `<overlay>` 元素**仅用于把 Lynx 嵌进原生页**，整页 Lynx 项目官方建议不用，本项目不用。
+- 定位：全屏遮罩 / 居中直接 `fixed` + `inset:0`；锚定浮层用 `boundingClientRect` 测锚点（无 `useLayoutEffect` → `NodesRef.invoke` 异步 / `main-thread:bindlayoutchange` 事件 / 主线程 ref），再用 `fixed` + 计算坐标定位。
+- Portal 语义：靠 `fixed` 自动提升到 root 实现（无 DOM Portal）。
 
 ---
 

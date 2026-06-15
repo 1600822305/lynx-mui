@@ -76,7 +76,7 @@ L0 适配        Lynx intrinsic 元素 <view>/<text>/<image>/<scroll-view>/<svg>
 4. **所有非 0 长度必须带单位**:sx 运行时会自动补 px,但裸 `style={{}}` 必须自己写 `'4px'`(PR#7 专门修过 "CSS length need units")。
 5. **不要用 `%` 圆角**:仓库约定用 px = 盒子一半(Chip `'16px'`、IconButton `padding+12`、Avatar 40→`'20px'`、Switch thumb `thumb/2`)。
 6. **没有 `@media` / `:hover` / 兄弟选择子**:hover 移动端丢弃 → 映射成 `&:active`(press,走工厂 `stateful:{active:true}`)。
-7. **不能动态测量 DOM 布局** → 没有滑动指示条(Tabs 改成每个选中 Tab 内画 2px 条)、浮层定位要靠 `boundingClientRect`/OverlayManager(待建)。
+7. **浮层定位(已更正:用 `position: fixed`)**:纯 Lynx 应用里 `fixed` **受支持**,且 fixed 节点会**提升到 root**(= 天然 portal)→ 全屏遮罩/居中直接 `fixed` + `inset:0`。内置 `<overlay>` 元素**仅用于把 Lynx 嵌进原生页**,整页 Lynx 项目官方明确建议**不用** `<overlay>`、直接 fixed。锚定浮层(Tooltip/Menu/Popover/Select)用 `boundingClientRect`(`NodesRef.invoke({method:'boundingClientRect',params:{relativeTo:'screen'}}).exec()`,后台线程**异步**;无 `useLayoutEffect`)测锚点坐标再 fixed 定位。**无法实时测量**的场景(如滑动指示条)仍降级(Tabs 改成每个选中 Tab 内画 2px 条)。
 8. **动画**:Lynx **原生支持** `@keyframes` + `animation` + `transition` + `transform`(已确认)。但 `<svg content>` 是静态字符串,**不能动画 svg 内部属性**(如 stroke-dasharray 形变)→ 改成动画外层 `<view>` 的 transform。inline style 不能定义 `@keyframes` → 写进 `.css` 文件再 import。
 
 ---
@@ -90,7 +90,7 @@ L0 适配        Lynx intrinsic 元素 <view>/<text>/<image>/<scroll-view>/<svg>
 - **图标**:SvgIcon + createSvgIcon 工厂 + 33 个预制(Close/Check/Menu/Search/ExpandMore/Delete/Star/Info/Warning/CheckCircle/Favorite/Settings/Add/ArrowBack/Home/Visibility… + CheckBox/CheckBoxOutlineBlank/RadioButtonChecked/RadioButtonUnchecked + CheckCircleOutline/ReportProblemOutlined/ErrorOutline/InfoOutlined/Person)。
 - **PR 历史**:#1 文档清单 / #2 工厂内核+Box/Typography/Button / #3 中文字体修复 / #4 Stack/Paper/Divider/Chip / #5 1:1 源码修正 / #6 12 组件(布局+AppBar 族+Dialog 片) / #7 px 单位修复 / #8 图标系统 / #9 Card 家族+导航+选择控件 / #10 IconButton / #11 本统筹文档 / #12 批次 G/H/I 6 组件(Alert/Avatar/Progress)。**全部已合并。**
 
-> **已知降级点**(代码里有注释):AppBar `position:fixed`→static;Link hover 丢弃;DialogActions 用 gap;Tabs 指示条逐 Tab 画;Breadcrumbs 不做 `maxItems` 折叠;选择控件 onChange 上报 next checked 值(无 DOM event);**CircularProgress indeterminate = 固定弧 + 整体旋转(svg content 静态串不能 morph dasharray);LinearProgress indeterminate = 双 bar 滑动近似;动画 `@keyframes` 写在 `components/progress.css` 里再 import(inline style 不能声明 keyframes)**。
+> **已知降级点**(代码里有注释):~~AppBar `position:fixed`→static~~(**旧假设,已更正**:fixed 在 Lynx 受支持,恢复 AppBar fixed 列入 backlog);Link hover 丢弃;DialogActions 用 gap;Tabs 指示条逐 Tab 画;Breadcrumbs 不做 `maxItems` 折叠;选择控件 onChange 上报 next checked 值(无 DOM event);**CircularProgress indeterminate = 固定弧 + 整体旋转(svg content 静态串不能 morph dasharray);LinearProgress indeterminate = 双 bar 滑动近似;动画 `@keyframes` 写在 `components/progress.css` 里再 import(inline style 不能声明 keyframes)**。
 
 ---
 
@@ -140,7 +140,8 @@ git commit -m "feat: ..." && git push -u origin HEAD
 > ③ CircularProgress 去掉 `stroke-linecap='round'`(MUI 默认 butt)。
 
 **Backlog(下一步,多数需要先建基座,适合你亲自做或谨慎外包)**:
-- **OverlayManager 基座**(浮层定位 + 遮罩 + 居中,靠 `boundingClientRect`,无 fixed)→ 解锁 **Tooltip / Menu / MenuItem / Dialog 壳 / Snackbar / Select / Popover**。
+- **OverlayManager 基座**(浮层定位 + 遮罩 + 居中,**基于 `position: fixed`**;锚定浮层用 `boundingClientRect` 测锚点)→ 解锁 **Tooltip / Menu / MenuItem / Dialog 壳 / Snackbar / Select / Popover**。
+- **恢复 AppBar `position:fixed`**(之前按"fixed 不可靠"的旧假设降级成 static;fixed 实际受支持)。
 - **TextField**(Tier S,85 处):input + label 浮动 + outline/filled/standard + helperText + adornment 图标。Lynx 输入用 `<input>`,需要查 Lynx input 能力。
 - 其它高频未做:FormControl / InputLabel / InputAdornment / Collapse / Slider / Snackbar / LinearProgress(在批次 I) / Menu 族。
 - 组件优先级看 `/home/ubuntu/aetherlink-mui-components.md`(Tier S→A→B→C 的频次清单)。
