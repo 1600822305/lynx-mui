@@ -8,10 +8,15 @@ import {
   ArrowBackIcon,
   Badge,
   Box,
+  Breadcrumbs,
   Button,
   Card,
+  CardActionArea,
   CardActions,
   CardContent,
+  CardHeader,
+  CardMedia,
+  Checkbox,
   CheckCircleIcon,
   Chip,
   CloseIcon,
@@ -24,6 +29,7 @@ import {
   Divider,
   ExpandMoreIcon,
   FavoriteIcon,
+  FormControlLabel,
   iconPaths,
   Link,
   List,
@@ -31,11 +37,15 @@ import {
   ListItemText,
   MenuIcon,
   Paper,
+  Radio,
   SearchIcon,
   SettingsIcon,
   Stack,
   StarIcon,
   SvgIcon,
+  Switch,
+  Tab,
+  Tabs,
   ToggleButton,
   Toolbar,
   Typography,
@@ -63,6 +73,10 @@ function Row(props: { children: ReactNode }) {
 
 export function App() {
   const [count, setCount] = useState(0)
+  const [tabValue, setTabValue] = useState(0)
+  const [checkboxOn, setCheckboxOn] = useState(true)
+  const [radioValue, setRadioValue] = useState('a')
+  const [switchOn, setSwitchOn] = useState(true)
 
   return (
     <scroll-view scroll-orientation='vertical' style={{ height: '100vh' }}>
@@ -223,6 +237,48 @@ export function App() {
           </Card>
         </Row>
 
+        <SectionTitle>Card · CardHeader + CardMedia + CardActionArea</SectionTitle>
+        <Card sx={{ width: '280px', mb: 2 }}>
+          <CardHeader
+            avatar={
+              <Box sx={{ width: 40, height: 40, bgcolor: 'error.main', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Typography variant='body2' sx={{ color: 'error.contrastText' }}>R</Typography>
+              </Box>
+            }
+            title='Shrimp and Chorizo Paella'
+            subheader='September 14, 2024'
+          />
+          <CardMedia
+            image='https://mui.com/static/images/cards/paella.jpg'
+            height={194}
+          />
+          <CardContent>
+            <Typography variant='body2' sx={{ color: 'text.secondary' }}>
+              This impressive paella is a perfect party dish.
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size='small'>Share</Button>
+            <Button size='small'>Learn More</Button>
+          </CardActions>
+        </Card>
+
+        <SectionTitle>CardActionArea · pressable</SectionTitle>
+        <Card sx={{ width: '280px' }}>
+          <CardActionArea onClick={() => { setCount((c) => c + 1) }}>
+            <CardMedia
+              image='https://mui.com/static/images/cards/contemplative-reptile.jpg'
+              height={140}
+            />
+            <CardContent>
+              <Typography variant='h6'>Lizard</Typography>
+              <Typography variant='body2' sx={{ color: 'text.secondary' }}>
+                Lizards are a widespread group of squamate reptiles. Tapped: {`${count}`}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+
         <SectionTitle>Toolbar · regular + dense</SectionTitle>
         <Paper variant='outlined' sx={{ mb: 1 }}>
           <Toolbar>
@@ -355,6 +411,73 @@ export function App() {
           </DialogActions>
         </Paper>
 
+        <SectionTitle>Checkbox · colors + sizes</SectionTitle>
+        <Row>
+          <Checkbox defaultChecked />
+          <Checkbox defaultChecked color='secondary' />
+          <Checkbox defaultChecked color='success' />
+          <Checkbox defaultChecked color='error' />
+          <Checkbox />
+          <Checkbox defaultChecked size='small' />
+          <Checkbox defaultChecked disabled />
+          <Checkbox disabled />
+        </Row>
+        <Row>
+          <FormControlLabel
+            control={<Checkbox checked={checkboxOn} onChange={setCheckboxOn} />}
+            label={checkboxOn ? 'Checked (tap me)' : 'Unchecked (tap me)'}
+          />
+        </Row>
+
+        <SectionTitle>Radio · controlled group</SectionTitle>
+        <Row>
+          <FormControlLabel
+            control={<Radio checked={radioValue === 'a'} onChange={() => { setRadioValue('a') }} />}
+            label='Option A'
+          />
+          <FormControlLabel
+            control={<Radio checked={radioValue === 'b'} onChange={() => { setRadioValue('b') }} />}
+            label='Option B'
+          />
+          <FormControlLabel
+            control={<Radio checked={radioValue === 'c'} onChange={() => { setRadioValue('c') }} color='secondary' />}
+            label='Option C'
+          />
+        </Row>
+        <Row>
+          <Radio defaultChecked />
+          <Radio defaultChecked color='success' size='small' />
+          <Radio defaultChecked disabled />
+          <Radio disabled />
+        </Row>
+
+        <SectionTitle>Switch · colors + sizes</SectionTitle>
+        <Row>
+          <Switch defaultChecked />
+          <Switch defaultChecked color='secondary' />
+          <Switch defaultChecked color='success' />
+          <Switch defaultChecked color='error' />
+          <Switch />
+          <Switch defaultChecked size='small' />
+          <Switch defaultChecked disabled />
+          <Switch disabled />
+        </Row>
+        <Row>
+          <FormControlLabel
+            control={<Switch checked={switchOn} onChange={setSwitchOn} />}
+            label={switchOn ? 'On' : 'Off'}
+          />
+        </Row>
+
+        <SectionTitle>FormControlLabel · labelPlacement</SectionTitle>
+        <Row>
+          <FormControlLabel control={<Checkbox defaultChecked />} label='end' labelPlacement='end' />
+          <FormControlLabel control={<Checkbox defaultChecked />} label='start' labelPlacement='start' />
+          <FormControlLabel control={<Checkbox defaultChecked />} label='top' labelPlacement='top' />
+          <FormControlLabel control={<Checkbox defaultChecked />} label='bottom' labelPlacement='bottom' />
+          <FormControlLabel control={<Checkbox />} label='disabled' disabled />
+        </Row>
+
         <SectionTitle>Icons · set (action color)</SectionTitle>
         <Row>
           <MenuIcon color='action' />
@@ -386,6 +509,47 @@ export function App() {
           <StarIcon color='primary' fontSize='large' />
           <SvgIcon pathData={iconPaths.Home} color='primary' size={48} />
         </Row>
+
+        <SectionTitle>Tabs · standard</SectionTitle>
+        <Paper variant='outlined'>
+          <Tabs value={tabValue} onChange={(v) => { setTabValue(v as number) }}>
+            <Tab label='Item One' value={0} />
+            <Tab label='Item Two' value={1} />
+            <Tab label='Item Three' value={2} />
+          </Tabs>
+        </Paper>
+
+        <SectionTitle>Tabs · fullWidth + secondary</SectionTitle>
+        <Paper variant='outlined'>
+          <Tabs value={tabValue} onChange={(v) => { setTabValue(v as number) }} variant='fullWidth' textColor='secondary'>
+            <Tab label='Full A' value={0} />
+            <Tab label='Full B' value={1} />
+            <Tab label='Full C' value={2} />
+          </Tabs>
+        </Paper>
+
+        <SectionTitle>Tabs · disabled tab</SectionTitle>
+        <Paper variant='outlined'>
+          <Tabs value={0}>
+            <Tab label='Active' value={0} />
+            <Tab label='Disabled' value={1} disabled />
+            <Tab label='Other' value={2} />
+          </Tabs>
+        </Paper>
+
+        <SectionTitle>Breadcrumbs</SectionTitle>
+        <Breadcrumbs>
+          <Link underline='always' color='primary'>Home</Link>
+          <Link underline='always' color='primary'>Category</Link>
+          <Typography variant='body2' sx={{ color: 'text.primary' }}>Current Page</Typography>
+        </Breadcrumbs>
+
+        <SectionTitle>Breadcrumbs · custom separator</SectionTitle>
+        <Breadcrumbs separator='›'>
+          <Link underline='always' color='primary'>MUI</Link>
+          <Link underline='always' color='primary'>Core</Link>
+          <Typography variant='body2' sx={{ color: 'text.primary' }}>Breadcrumbs</Typography>
+        </Breadcrumbs>
       </Box>
     </scroll-view>
   )
