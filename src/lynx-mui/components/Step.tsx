@@ -33,7 +33,13 @@ function rootSx(orientation: 'horizontal' | 'vertical', alternativeLabel: boolea
     sx.paddingRight = '8px'
   }
   if (alternativeLabel) {
-    sx.flex = 1
+    // Equal-width steps. Lynx does not apply the `flex: 1` shorthand given as a
+    // number, so use the longhands instead (otherwise the step collapses to its
+    // content and the label text renders one character per line).
+    sx.flexGrow = 1
+    sx.flexShrink = 1
+    sx.flexBasis = 0
+    sx.minWidth = 0
     sx.position = 'relative'
   }
   return sx
