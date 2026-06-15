@@ -27,6 +27,7 @@ import {
   CloseIcon,
   Container,
   DeleteIcon,
+  Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
@@ -55,6 +56,7 @@ import {
   Tabs,
   ToggleButton,
   Toolbar,
+  Tooltip,
   Typography,
   WarningIcon,
 } from './lynx-mui/index.js'
@@ -84,6 +86,7 @@ export function App() {
   const [checkboxOn, setCheckboxOn] = useState(true)
   const [radioValue, setRadioValue] = useState('a')
   const [switchOn, setSwitchOn] = useState(true)
+  const [dialogOpen, setDialogOpen] = useState(false)
 
   return (
     <scroll-view scroll-orientation='vertical' style={{ height: '100vh' }}>
@@ -651,6 +654,36 @@ export function App() {
         <Box sx={{ width: '100%' }}>
           <LinearProgress color='secondary' />
         </Box>
+
+        <SectionTitle>Dialog</SectionTitle>
+        <Row>
+          <Button variant='contained' onClick={() => { setDialogOpen(true) }}>Open dialog</Button>
+        </Row>
+        <Dialog open={dialogOpen} onClose={() => { setDialogOpen(false) }}>
+          <DialogTitle>Use Google's location service?</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button variant='text' color='primary' onClick={() => { setDialogOpen(false) }}>Disagree</Button>
+            <Button variant='text' color='primary' onClick={() => { setDialogOpen(false) }}>Agree</Button>
+          </DialogActions>
+        </Dialog>
+
+        <SectionTitle>Tooltip · tap to toggle</SectionTitle>
+        <Row>
+          <Tooltip title='Delete'>
+            <IconButton><DeleteIcon /></IconButton>
+          </Tooltip>
+          <Tooltip title='Add' placement='top'>
+            <Button variant='outlined'>Top</Button>
+          </Tooltip>
+          <Tooltip title='Right side' placement='right'>
+            <Button variant='outlined'>Right</Button>
+          </Tooltip>
+        </Row>
       </Box>
     </scroll-view>
   )
