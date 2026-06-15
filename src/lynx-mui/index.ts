@@ -107,6 +107,7 @@ export { Tooltip } from './components/Tooltip.js'
 export type { TooltipProps, TooltipPlacement } from './components/Tooltip.js'
 export { useAnchorRect } from './hooks/useAnchorRect.js'
 export type { AnchorRect } from './hooks/useAnchorRect.js'
+export { useMediaQuery } from './hooks/useMediaQuery.js'
 
 // Icons — SvgIcon base + createSvgIcon factory + prebuilt set (1:1 with @mui/icons-material).
 export * from './icons/index.js'
@@ -118,6 +119,7 @@ export { ThemeProvider, useTheme, ThemeContext } from './system/ThemeContext.js'
 export type { ThemeProviderProps } from './system/ThemeContext.js'
 export { createBreakpoints } from './system/createBreakpoints.js'
 export type { BreakpointsOptions } from './system/createBreakpoints.js'
+export { getScreenWidth } from './system/screen.js'
 export {
   resolveSx,
   sxToStyle,

@@ -1,6 +1,7 @@
 import type { CSSProperties } from '@lynx-js/types'
 
 import { defaultTheme } from './defaultTheme.js'
+import { getScreenWidth } from './screen.js'
 import {
   aliasProps,
   colorProps,
@@ -13,6 +14,7 @@ import type {
   ResolvedSx,
   SxObject,
   SxProp,
+  SxValue,
   StyleBag,
   Theme,
 } from './types.js'
@@ -58,6 +60,34 @@ export function resolveColor(value: string, theme: Theme): string {
 
 function spacingToCss(value: string | number, theme: Theme): string | number {
   return typeof value === 'number' ? `${theme.spacing(value)}px` : value
+}
+
+/** A value like `{ xs: '100%', md: 600 }` — every key is a known breakpoint. */
+function isResponsiveObject(value: SxObject, theme: Theme): boolean {
+  const keys = Object.keys(value)
+  if (keys.length === 0) return false
+  return keys.every((k) => k in theme.breakpoints.values)
+}
+
+/**
+ * Collapse an MUI responsive value `{ xs, sm, md, ... }` to the single value for
+ * the current screen width: the largest breakpoint whose min-width <= width
+ * wins (mobile-first), falling back to the smallest defined key.
+ */
+function resolveResponsive(value: SxObject, theme: Theme): SxValue {
+  const width = getScreenWidth()
+  let picked: SxValue
+  for (const key of theme.breakpoints.keys) {
+    const v = value[key]
+    if (v === undefined) continue
+    if (theme.breakpoints.values[key] <= width) picked = v
+  }
+  if (picked === undefined) {
+    for (const key of theme.breakpoints.keys) {
+      if (value[key] !== undefined) return value[key]
+    }
+  }
+  return picked
 }
 
 /**
@@ -139,6 +169,14 @@ function walk(obj: SxObject, target: StyleBag, out: ResolvedSx, theme: Theme): v
     }
 
     if (typeof value === 'object') {
+      // responsive value: { xs, sm, md, ... } -> pick the value for current width
+      if (isResponsiveObject(value, theme)) {
+        const picked = resolveResponsive(value, theme)
+        if (typeof picked === 'string' || typeof picked === 'number') {
+          applyEntry(target, key, picked, theme)
+        }
+        continue
+      }
       // unknown nested object (e.g. other selector) — flatten into base for now
       walk(value, target, out, theme)
       continue
