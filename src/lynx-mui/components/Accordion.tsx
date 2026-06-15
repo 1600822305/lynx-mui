@@ -6,15 +6,6 @@ import { defaultTheme } from '../system/defaultTheme.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp } from '../system/types.js'
 
-/**
- * Hardcoded transition values — theme.transitions is missing from current
- * defaultTheme. FLAG to orchestrator: need theme.transitions.duration.shortest
- * (150ms) and easing.easeInOut ('cubic-bezier(0.4,0,0.2,1)').
- */
-const DURATION_SHORTEST = '150ms'
-const DURATION_STANDARD = '300ms'
-const EASING = 'cubic-bezier(0.4, 0, 0.2, 1)'
-
 export interface AccordionProps {
   children?: ReactNode
   /** Controlled expanded state. */
@@ -53,6 +44,8 @@ export function Accordion(props: AccordionProps) {
   const disableGutters = props.disableGutters === true
   const square = props.square === true
 
+  const { duration, easing } = theme.transitions
+
   const [expanded, setExpanded] = useControlled(props.expanded, props.defaultExpanded ?? false)
 
   const handleToggle = () => {
@@ -82,7 +75,7 @@ export function Accordion(props: AccordionProps) {
     backgroundColor: theme.palette.background.paper,
     color: theme.palette.text.primary,
     boxShadow: theme.shadows[1],
-    transition: `box-shadow 0.3s, margin ${DURATION_SHORTEST} ${EASING}`,
+    transition: `box-shadow ${duration.standard}ms ${easing.easeInOut}, margin ${duration.shortest}ms ${easing.easeInOut}`,
   }
   if (!square) rootSx.borderRadius = `${theme.shape.borderRadius}px`
   if (!disableGutters && expanded) rootSx.margin = '16px 0'
@@ -93,7 +86,7 @@ export function Accordion(props: AccordionProps) {
   // Region transition wrapper (degradation: maxHeight instead of Collapse)
   const regionStyle: LynxStyle = {
     overflow: 'hidden',
-    transition: `max-height ${DURATION_STANDARD} ${EASING}`,
+    transition: `max-height ${duration.standard}ms ${easing.easeInOut}`,
     maxHeight: expanded ? '2000px' : '0px',
   }
 

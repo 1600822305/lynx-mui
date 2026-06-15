@@ -28,10 +28,15 @@ export interface Palette {
   action: {
     active: string
     hover: string
+    hoverOpacity: number
     selected: string
+    selectedOpacity: number
     disabled: string
     disabledBackground: string
     disabledOpacity: number
+    focus: string
+    focusOpacity: number
+    activatedOpacity: number
   }
 }
 
@@ -49,6 +54,25 @@ export type TypographyVariant =
   | 'subtitle1' | 'subtitle2'
   | 'body1' | 'body2'
   | 'button' | 'caption' | 'overline'
+
+/** Animation timing scale, mirrors MUI's `theme.transitions` (durations in ms). */
+export interface Transitions {
+  duration: {
+    shortest: number
+    shorter: number
+    short: number
+    standard: number
+    complex: number
+    enteringScreen: number
+    leavingScreen: number
+  }
+  easing: {
+    easeInOut: string
+    easeOut: string
+    easeIn: string
+    sharp: string
+  }
+}
 
 /** Stacking order for overlay layers (mirrors MUI's `theme.zIndex`). */
 export interface ZIndex {
@@ -72,6 +96,8 @@ export interface Theme {
   shadows: string[]
   /** Stacking order for overlays (AppBar/Drawer/Modal/Snackbar/Tooltip/...). */
   zIndex: ZIndex
+  /** Animation duration/easing scale (mirrors MUI's `theme.transitions`). */
+  transitions: Transitions
 }
 
 /** A value inside an sx object: a raw style value, or a nested object (state selectors). */
