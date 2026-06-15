@@ -31,6 +31,7 @@ export interface Palette {
     selected: string
     disabled: string
     disabledBackground: string
+    disabledOpacity: number
   }
 }
 

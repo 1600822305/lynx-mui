@@ -1,0 +1,31 @@
+/* Keyframes for Skeleton (1:1 with @mui/material@7.3.11 Skeleton.js).
+   Lynx supports @keyframes natively but inline styles can't declare them,
+   so they live here and are referenced by animation name in component styles. */
+
+/* pulse — fade the whole skeleton in and out. */
+@keyframes mui-skeleton-pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* wave — sweep a translucent highlight across the skeleton.
+   MUI animates a ::after pseudo-element; Lynx has no pseudo-elements, so the
+   component renders a real overlay <view> and translates it (see Skeleton.tsx). */
+@keyframes mui-skeleton-wave {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

@@ -3,6 +3,10 @@ import type { ReactNode } from '@lynx-js/react'
 
 import './App.css'
 import {
+  Accordion,
+  AccordionActions,
+  AccordionDetails,
+  AccordionSummary,
   AddIcon,
   Alert,
   AlertTitle,
@@ -46,8 +50,10 @@ import {
   MenuIcon,
   Paper,
   Radio,
+  Rating,
   SearchIcon,
   SettingsIcon,
+  Skeleton,
   Stack,
   StarIcon,
   SvgIcon,
@@ -60,6 +66,8 @@ import {
   Typography,
   WarningIcon,
 } from './lynx-mui/index.js'
+// Batch J — Button family.
+import { ButtonGroup, Fab, ToggleButtonGroup } from './lynx-mui/index.js'
 
 function SectionTitle(props: { children: string }) {
   return (
@@ -87,6 +95,7 @@ export function App() {
   const [radioValue, setRadioValue] = useState('a')
   const [switchOn, setSwitchOn] = useState(true)
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [accordionExpanded, setAccordionExpanded] = useState(false)
 
   return (
     <scroll-view scroll-orientation='vertical' style={{ height: '100vh' }}>
@@ -684,7 +693,164 @@ export function App() {
             <Button variant='outlined'>Right</Button>
           </Tooltip>
         </Row>
+
+        <SectionTitle>Rating · press to select</SectionTitle>
+        <Row>
+          <Rating defaultValue={3} />
+          <Rating defaultValue={2} size='small' />
+          <Rating defaultValue={4} size='large' />
+        </Row>
+
+        <SectionTitle>Rating · read only + fractional + disabled</SectionTitle>
+        <Row>
+          <Rating value={3.5} readOnly />
+          <Rating value={4} readOnly max={6} />
+          <Rating value={2} disabled />
+        </Row>
+
+        <SectionTitle>Skeleton · variants</SectionTitle>
+        <Box sx={{ width: '100%', mb: 1 }}>
+          <Skeleton variant='text' />
+        </Box>
+        <Row>
+          <Skeleton variant='circular' width={40} height={40} />
+          <Skeleton variant='rounded' width={120} height={40} />
+          <Skeleton variant='rectangular' width={120} height={40} />
+        </Row>
+
+        <SectionTitle>Skeleton · wave + no animation</SectionTitle>
+        <Box sx={{ width: '100%', mb: 1 }}>
+          <Skeleton variant='rectangular' width='100%' height={48} animation='wave' />
+        </Box>
+        <Box sx={{ width: '100%' }}>
+          <Skeleton variant='rectangular' width='100%' height={48} animation={false} />
+        </Box>
+
+        <SectionTitle>Accordion</SectionTitle>
+        <Accordion>
+          <AccordionSummary>Accordion 1 (uncontrolled)</AccordionSummary>
+          <AccordionDetails>
+            <Typography variant='body2'>
+              Content for the first accordion panel.
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary>Accordion 2</AccordionSummary>
+          <AccordionDetails>
+            <Typography variant='body2'>
+              Content for the second accordion panel.
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion disabled>
+          <AccordionSummary>Accordion 3 (disabled)</AccordionSummary>
+          <AccordionDetails>
+            <Typography variant='body2'>This is disabled.</Typography>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion
+          expanded={accordionExpanded}
+          onChange={(exp) => setAccordionExpanded(exp)}
+        >
+          <AccordionSummary>Controlled Accordion</AccordionSummary>
+          <AccordionDetails>
+            <Typography variant='body2'>
+              This accordion is controlled via state.
+            </Typography>
+          </AccordionDetails>
+          <AccordionActions>
+            <Button onClick={() => setAccordionExpanded(false)}>Cancel</Button>
+            <Button onClick={() => setAccordionExpanded(false)}>OK</Button>
+          </AccordionActions>
+        </Accordion>
+
+        <BatchJSection />
       </Box>
     </scroll-view>
+  )
+}
+
+// Batch J gallery — Fab, ButtonGroup, ToggleButtonGroup (self-contained state).
+function BatchJSection() {
+  const [alignment, setAlignment] = useState<string | null>('left')
+  const [formats, setFormats] = useState<string[]>(['bold'])
+  return (
+    <>
+      <SectionTitle>Fab · colors</SectionTitle>
+      <Row>
+        <Fab color='primary'><AddIcon /></Fab>
+        <Fab color='secondary'><FavoriteIcon /></Fab>
+        <Fab color='default'><SettingsIcon /></Fab>
+        <Fab color='error'><DeleteIcon /></Fab>
+        <Fab disabled><AddIcon /></Fab>
+      </Row>
+
+      <SectionTitle>Fab · sizes & extended</SectionTitle>
+      <Row>
+        <Fab size='small' color='primary'><AddIcon /></Fab>
+        <Fab size='medium' color='primary'><AddIcon /></Fab>
+        <Fab size='large' color='primary'><AddIcon /></Fab>
+        <Fab variant='extended' color='primary'><ArrowBackIcon />navigate</Fab>
+      </Row>
+
+      <SectionTitle>ButtonGroup · variants</SectionTitle>
+      <Row>
+        <ButtonGroup variant='outlined'>
+          <Button>One</Button>
+          <Button>Two</Button>
+          <Button>Three</Button>
+        </ButtonGroup>
+      </Row>
+      <Row>
+        <ButtonGroup variant='contained' color='secondary'>
+          <Button>One</Button>
+          <Button>Two</Button>
+          <Button>Three</Button>
+        </ButtonGroup>
+      </Row>
+      <Row>
+        <ButtonGroup variant='text' color='primary'>
+          <Button>One</Button>
+          <Button>Two</Button>
+          <Button>Three</Button>
+        </ButtonGroup>
+      </Row>
+
+      <SectionTitle>ButtonGroup · vertical</SectionTitle>
+      <Row>
+        <ButtonGroup orientation='vertical' variant='outlined'>
+          <Button>Top</Button>
+          <Button>Middle</Button>
+          <Button>Bottom</Button>
+        </ButtonGroup>
+      </Row>
+
+      <SectionTitle>ToggleButtonGroup · exclusive</SectionTitle>
+      <Row>
+        <ToggleButtonGroup
+          exclusive
+          value={alignment}
+          onChange={(v) => { setAlignment(v as string | null) }}
+        >
+          <ToggleButton value='left'>Left</ToggleButton>
+          <ToggleButton value='center'>Center</ToggleButton>
+          <ToggleButton value='right'>Right</ToggleButton>
+        </ToggleButtonGroup>
+      </Row>
+
+      <SectionTitle>ToggleButtonGroup · multiple</SectionTitle>
+      <Row>
+        <ToggleButtonGroup
+          color='primary'
+          value={formats}
+          onChange={(v) => { setFormats(v as string[]) }}
+        >
+          <ToggleButton value='bold'>Bold</ToggleButton>
+          <ToggleButton value='italic'>Italic</ToggleButton>
+          <ToggleButton value='underline'>Underline</ToggleButton>
+        </ToggleButtonGroup>
+      </Row>
+    </>
   )
 }

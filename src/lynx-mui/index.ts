@@ -140,3 +140,34 @@ export type {
   LynxStyle,
   ResolvedSx,
 } from './system/types.js'
+
+export { Accordion } from './components/Accordion.js'
+export type { AccordionProps } from './components/Accordion.js'
+export { AccordionSummary } from './components/AccordionSummary.js'
+export type { AccordionSummaryProps } from './components/AccordionSummary.js'
+export { AccordionDetails } from './components/AccordionDetails.js'
+export type { AccordionDetailsProps } from './components/AccordionDetails.js'
+export { AccordionActions } from './components/AccordionActions.js'
+export type { AccordionActionsProps } from './components/AccordionActions.js'
+
+export { Rating } from './components/Rating.js'
+export type { RatingProps, RatingSize } from './components/Rating.js'
+export { Skeleton } from './components/Skeleton.js'
+export type { SkeletonProps, SkeletonVariant, SkeletonAnimation } from './components/Skeleton.js'
+
+// Batch J — Button family (Fab, ButtonGroup, ToggleButtonGroup).
+export { Fab } from './components/Fab.js'
+export type { FabProps, FabVariant, FabColor, FabSize } from './components/Fab.js'
+export { ButtonGroup } from './components/ButtonGroup.js'
+export type {
+  ButtonGroupProps,
+  ButtonGroupVariant,
+  ButtonGroupColor,
+  ButtonGroupSize,
+  ButtonGroupOrientation,
+} from './components/ButtonGroup.js'
+export { ToggleButtonGroup } from './components/ToggleButtonGroup.js'
+export type {
+  ToggleButtonGroupProps,
+  ToggleButtonGroupOrientation,
+} from './components/ToggleButtonGroup.js'
