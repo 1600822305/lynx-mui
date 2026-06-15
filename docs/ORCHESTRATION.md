@@ -83,14 +83,14 @@ L0 适配        Lynx intrinsic 元素 <view>/<text>/<image>/<scroll-view>/<svg>
 
 ## 6. 当前进度(已合并进 main)
 
-**34 个组件 + SvgIcon 基座 + 28 个预制图标。** 导出见 `src/lynx-mui/index.ts`。
+**40 个组件 + SvgIcon 基座 + 33 个预制图标。** 导出见 `src/lynx-mui/index.ts`。
 
-- **基座/核心**:sx 运行时、`createComponent` 工厂、最小默认主题、`usePressState`、`useControlled`、`alpha`。
-- **已合并组件**:Box, Typography, Button, IconButton, Stack, Paper, Divider, Chip, Container, Card, CardContent, CardActions, CardHeader, CardMedia, CardActionArea, Toolbar, List, ListItem, ListItemText, AppBar, ToggleButton, Link, Badge, DialogTitle, DialogContent, DialogContentText, DialogActions, Tab, Tabs, Breadcrumbs, Checkbox, Radio, Switch, FormControlLabel。
-- **图标**:SvgIcon + createSvgIcon 工厂 + 28 个预制(Close/Check/Menu/Search/ExpandMore/Delete/Star/Info/Warning/CheckCircle/Favorite/Settings/Add/ArrowBack/Home/Visibility… + CheckBox/CheckBoxOutlineBlank/RadioButtonChecked/RadioButtonUnchecked)。
-- **PR 历史**:#1 文档清单 / #2 工厂内核+Box/Typography/Button / #3 中文字体修复 / #4 Stack/Paper/Divider/Chip / #5 1:1 源码修正 / #6 12 组件(布局+AppBar 族+Dialog 片) / #7 px 单位修复 / #8 图标系统 / #9 Card 家族+导航+选择控件 / #10 IconButton。**全部已合并。**
+- **基座/核心**:sx 运行时、`createComponent` 工厂、最小默认主题、`usePressState`、`useControlled`、`alpha`、`lighten`/`darken`(`utils/lighten.ts`)。
+- **已合并组件**:Box, Typography, Button, IconButton, Stack, Paper, Divider, Chip, Container, Card, CardContent, CardActions, CardHeader, CardMedia, CardActionArea, Toolbar, List, ListItem, ListItemText, AppBar, ToggleButton, Link, Badge, DialogTitle, DialogContent, DialogContentText, DialogActions, Tab, Tabs, Breadcrumbs, Checkbox, Radio, Switch, FormControlLabel, **Alert, AlertTitle, Avatar, AvatarGroup, CircularProgress, LinearProgress**。
+- **图标**:SvgIcon + createSvgIcon 工厂 + 33 个预制(Close/Check/Menu/Search/ExpandMore/Delete/Star/Info/Warning/CheckCircle/Favorite/Settings/Add/ArrowBack/Home/Visibility… + CheckBox/CheckBoxOutlineBlank/RadioButtonChecked/RadioButtonUnchecked + CheckCircleOutline/ReportProblemOutlined/ErrorOutline/InfoOutlined/Person)。
+- **PR 历史**:#1 文档清单 / #2 工厂内核+Box/Typography/Button / #3 中文字体修复 / #4 Stack/Paper/Divider/Chip / #5 1:1 源码修正 / #6 12 组件(布局+AppBar 族+Dialog 片) / #7 px 单位修复 / #8 图标系统 / #9 Card 家族+导航+选择控件 / #10 IconButton / #11 本统筹文档 / #12 批次 G/H/I 6 组件(Alert/Avatar/Progress)。**全部已合并。**
 
-> **已知降级点**(代码里有注释):AppBar `position:fixed`→static;Link hover 丢弃;DialogActions 用 gap;Tabs 指示条逐 Tab 画;Breadcrumbs 不做 `maxItems` 折叠;选择控件 onChange 上报 next checked 值(无 DOM event)。
+> **已知降级点**(代码里有注释):AppBar `position:fixed`→static;Link hover 丢弃;DialogActions 用 gap;Tabs 指示条逐 Tab 画;Breadcrumbs 不做 `maxItems` 折叠;选择控件 onChange 上报 next checked 值(无 DOM event);**CircularProgress indeterminate = 固定弧 + 整体旋转(svg content 静态串不能 morph dasharray);LinearProgress indeterminate = 双 bar 滑动近似;动画 `@keyframes` 写在 `components/progress.css` 里再 import(inline style 不能声明 keyframes)**。
 
 ---
 
@@ -132,11 +132,12 @@ git commit -m "feat: ..." && git push -u origin HEAD
 
 ## 9. 在途 + 待办
 
-**在途(已发用户,等子模型交 patch)**:
-- **批次 G** — Alert + AlertTitle(`docs/handoff-batchG-alert.md`)
-- **批次 H** — Avatar + AvatarGroup(`docs/handoff-batchH-avatar.md`)
-- **批次 I** — CircularProgress + LinearProgress(`docs/handoff-batchI-progress.md`)
-> 收到对应 patch 就按 §8 整合、复核、各开/合 PR。
+**在途**:无。批次 G/H/I 已全部整合并合并(PR #12)。下一批待切。
+
+> 整合 G/H/I 时复核改掉的真实偏差(供参考,说明子模型 patch 仍需亲自核):
+> ① Avatar `colorDefault`(灰底+白字)应在"无图片"时就上,跟有无 children 无关;字母 `<text>` 用了 `color:'inherit'`(Lynx 不继承)→ 改显式白色。
+> ② AvatarGroup 描边 `box-sizing` content-box → border-box(对齐 MUI 的 CssBaseline 默认,头像保持 40px)。
+> ③ CircularProgress 去掉 `stroke-linecap='round'`(MUI 默认 butt)。
 
 **Backlog(下一步,多数需要先建基座,适合你亲自做或谨慎外包)**:
 - **OverlayManager 基座**(浮层定位 + 遮罩 + 居中,靠 `boundingClientRect`,无 fixed)→ 解锁 **Tooltip / Menu / MenuItem / Dialog 壳 / Snackbar / Select / Popover**。
