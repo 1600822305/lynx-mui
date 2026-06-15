@@ -10,6 +10,13 @@ export type {
   ButtonColor,
   ButtonSize,
 } from './components/Button.js'
+export { IconButton } from './components/IconButton.js'
+export type {
+  IconButtonProps,
+  IconButtonColor,
+  IconButtonSize,
+  IconButtonEdge,
+} from './components/IconButton.js'
 export { Stack } from './components/Stack.js'
 export type { StackProps, StackDirection } from './components/Stack.js'
 export { Paper } from './components/Paper.js'
