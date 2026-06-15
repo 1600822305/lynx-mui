@@ -119,6 +119,10 @@ import {
   getScreenWidth,
   styled,
 } from './lynx-mui/index.js'
+// Batch B — floating components (Snackbar, Drawer).
+import { Drawer, Snackbar } from './lynx-mui/index.js'
+// Batch Q — Popover + Menu family.
+import { Menu, MenuItem, MenuList, Popover, useAnchorRect } from './lynx-mui/index.js'
 
 function SectionTitle(props: { children: string }) {
   return (
@@ -824,6 +828,8 @@ export function App() {
         <ThemeMechanismSection />
         <ResponsiveSection />
         <StyledSection />
+        <BatchBSection />
+        <BatchQSection />
       </Box>
     </scroll-view>
   )
@@ -1507,6 +1513,121 @@ function BatchPSection() {
         <FormControlLabel control={<Radio />} label='Option A' />
         <FormControlLabel control={<Radio />} label='Option B' />
       </FormGroup>
+    </>
+  )
+}
+
+// Batch B gallery — Snackbar + Drawer (floating overlays via base #16).
+function BatchBSection() {
+  const [snackOpen, setSnackOpen] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [drawerAnchor, setDrawerAnchor] = useState<'left' | 'right' | 'top' | 'bottom'>('left')
+
+  const openDrawer = (anchor: 'left' | 'right' | 'top' | 'bottom') => {
+    setDrawerAnchor(anchor)
+    setDrawerOpen(true)
+  }
+  const horizontal = drawerAnchor === 'left' || drawerAnchor === 'right'
+
+  return (
+    <>
+      <SectionTitle>Snackbar · message + action (autoHide 4s)</SectionTitle>
+      <Row>
+        <Button variant='outlined' onClick={() => setSnackOpen(true)}>Show snackbar</Button>
+      </Row>
+      <Snackbar
+        open={snackOpen}
+        message='Note archived'
+        autoHideDuration={4000}
+        onClose={() => setSnackOpen(false)}
+        action={<Button onClick={() => setSnackOpen(false)}>UNDO</Button>}
+      />
+
+      <SectionTitle>Drawer · anchors (temporary)</SectionTitle>
+      <Row>
+        <Button variant='outlined' onClick={() => openDrawer('left')}>Left</Button>
+        <Button variant='outlined' onClick={() => openDrawer('right')}>Right</Button>
+        <Button variant='outlined' onClick={() => openDrawer('top')}>Top</Button>
+        <Button variant='outlined' onClick={() => openDrawer('bottom')}>Bottom</Button>
+      </Row>
+      <Drawer
+        open={drawerOpen}
+        anchor={drawerAnchor}
+        onClose={() => setDrawerOpen(false)}
+        paperSx={horizontal ? { width: 240 } : {}}
+      >
+        <view style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <Typography variant='h6'>Drawer</Typography>
+          <Typography variant='body2' sx={{ color: 'text.secondary' }}>
+            {`anchor: ${drawerAnchor}`}
+          </Typography>
+          <Button variant='contained' onClick={() => setDrawerOpen(false)}>Close</Button>
+        </view>
+      </Drawer>
+    </>
+  )
+}
+
+// Batch Q gallery — Popover + Menu (anchored overlays via useAnchorRect).
+function BatchQSection() {
+  const menuAnchor = useAnchorRect()
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [selected, setSelected] = useState('My account')
+
+  const popoverAnchor = useAnchorRect()
+  const [popoverOpen, setPopoverOpen] = useState(false)
+
+  const openMenu = () => { menuAnchor.measure(); setMenuOpen(true) }
+  const openPopover = () => { popoverAnchor.measure(); setPopoverOpen(true) }
+  const choose = (label: string) => { setSelected(label); setMenuOpen(false) }
+
+  return (
+    <>
+      <SectionTitle>Menu · anchored (selected / divider / disabled)</SectionTitle>
+      <Row>
+        <view ref={menuAnchor.ref}>
+          <Button variant='outlined' onClick={openMenu}>Open menu</Button>
+        </view>
+        <Typography variant='body2' sx={{ color: 'text.secondary' }}>
+          {`Selected: ${selected}`}
+        </Typography>
+      </Row>
+      <Menu open={menuOpen} anchorRect={menuAnchor.rect} onClose={() => setMenuOpen(false)}>
+        <MenuItem selected={selected === 'Profile'} onClick={() => choose('Profile')}>Profile</MenuItem>
+        <MenuItem selected={selected === 'My account'} onClick={() => choose('My account')}>My account</MenuItem>
+        <MenuItem divider onClick={() => choose('Settings')}>Settings</MenuItem>
+        <MenuItem disabled>Disabled item</MenuItem>
+        <MenuItem onClick={() => setMenuOpen(false)}>Logout</MenuItem>
+      </Menu>
+
+      <SectionTitle>Popover · anchored content</SectionTitle>
+      <Row>
+        <view ref={popoverAnchor.ref}>
+          <Button variant='contained' onClick={openPopover}>Open popover</Button>
+        </view>
+      </Row>
+      <Popover
+        open={popoverOpen}
+        anchorRect={popoverAnchor.rect}
+        onClose={() => setPopoverOpen(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+      >
+        <view style={{ padding: '16px' }}>
+          <Typography variant='body2'>The content of the Popover.</Typography>
+        </view>
+      </Popover>
+
+      <SectionTitle>MenuList · inline states</SectionTitle>
+      <Paper sx={{ maxWidth: 280 }}>
+        <MenuList>
+          <MenuItem>Inbox</MenuItem>
+          <MenuItem selected>Starred</MenuItem>
+          <MenuItem dense>Dense item</MenuItem>
+          <MenuItem divider>With divider</MenuItem>
+          <MenuItem disabled>Disabled</MenuItem>
+        </MenuList>
+      </Paper>
     </>
   )
 }

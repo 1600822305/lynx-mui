@@ -300,3 +300,40 @@ export { TextField } from './components/TextField.js'
 export type { TextFieldProps } from './components/TextField.js'
 export { RadioGroup } from './components/RadioGroup.js'
 export type { RadioGroupProps } from './components/RadioGroup.js'
+
+// Batch B — floating components (reuses overlay base #16).
+export { Snackbar } from './components/Snackbar.js'
+export type {
+  SnackbarProps,
+  SnackbarOrigin,
+  SnackbarVertical,
+  SnackbarHorizontal,
+  SnackbarCloseReason,
+} from './components/Snackbar.js'
+export { SnackbarContent } from './components/SnackbarContent.js'
+export type { SnackbarContentProps } from './components/SnackbarContent.js'
+export { Drawer } from './components/Drawer.js'
+export type {
+  DrawerProps,
+  DrawerAnchor,
+  DrawerVariant,
+  DrawerCloseReason,
+} from './components/Drawer.js'
+
+// Batch Q — Popover + Menu family (reuses overlay base #16 + useAnchorRect).
+export { Popover } from './components/Popover.js'
+export type {
+  PopoverProps,
+  PopoverOrigin,
+  PopoverVertical,
+  PopoverHorizontal,
+  PopoverReference,
+  PopoverPosition,
+  PopoverCloseReason,
+} from './components/Popover.js'
+export { Menu } from './components/Menu.js'
+export type { MenuProps } from './components/Menu.js'
+export { MenuList } from './components/MenuList.js'
+export type { MenuListProps, MenuListVariant } from './components/MenuList.js'
+export { MenuItem } from './components/MenuItem.js'
+export type { MenuItemProps } from './components/MenuItem.js'
