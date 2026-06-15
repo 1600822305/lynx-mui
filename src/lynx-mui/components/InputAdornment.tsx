@@ -1,6 +1,6 @@
 import type { ReactNode } from '@lynx-js/react'
 
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp } from '../system/types.js'
 import {
@@ -31,7 +31,7 @@ export interface InputAdornmentProps {
  * is set but has no hover/cursor effect on Lynx.
  */
 export function InputAdornment(props: InputAdornmentProps) {
-  const theme = defaultTheme
+  const theme = useTheme()
   const fcs = useFormControl()
   const variant = formControlState<FormControlVariant>(props.variant, fcs?.variant, 'standard')
   const hiddenLabel = fcs?.hiddenLabel ?? false

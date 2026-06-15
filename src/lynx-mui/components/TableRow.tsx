@@ -2,7 +2,7 @@ import { useContext } from '@lynx-js/react'
 import type { ReactNode } from '@lynx-js/react'
 
 import { usePressState } from '../hooks/usePressState.js'
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp } from '../system/types.js'
 import { alpha } from '../utils/alpha.js'
@@ -32,7 +32,7 @@ export interface TableRowProps {
  * - `selected` shading uses `alpha(primary.main, action.selectedOpacity)`.
  */
 export function TableRow(props: TableRowProps) {
-  const theme = defaultTheme
+  const theme = useTheme()
   const hover = props.hover === true
   const selected = props.selected === true
   // Read for parity with MUI ownerState (head/footer); does not change visuals.

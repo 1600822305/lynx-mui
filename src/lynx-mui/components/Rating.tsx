@@ -2,7 +2,7 @@ import { useState } from '@lynx-js/react'
 
 import { SvgIcon } from './SvgIcon.js'
 import { useControlled } from '../hooks/useControlled.js'
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp, Theme } from '../system/types.js'
 
@@ -73,7 +73,7 @@ export function Rating(props: RatingProps) {
     className,
   } = props
 
-  const theme: Theme = defaultTheme
+  const theme: Theme = useTheme()
   const [value, setValue] = useControlled<number | null>(valueProp, defaultValue)
   const [pressedIndex, setPressedIndex] = useState(-1)
 

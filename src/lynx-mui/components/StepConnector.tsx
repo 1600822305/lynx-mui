@@ -1,4 +1,4 @@
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp, Theme } from '../system/types.js'
 import { useStepperContext } from './StepperContext.js'
@@ -55,7 +55,7 @@ function connectorLineSx(orientation: 'horizontal' | 'vertical', theme: Theme): 
  */
 export function StepConnector(props: StepConnectorProps) {
   const { className, style, sx } = props
-  const theme = defaultTheme
+  const theme = useTheme()
   const { alternativeLabel, orientation } = useStepperContext()
 
   const rootStyle: LynxStyle = {

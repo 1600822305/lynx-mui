@@ -1,4 +1,4 @@
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import type { SxObject } from '../system/types.js'
 import { useFormControl } from './FormControlContext.js'
 import {
@@ -26,12 +26,12 @@ export interface FilledInputProps extends InputBaseProps {
 export function FilledInput(props: FilledInputProps) {
   const fcs = useFormControl()
   const disableUnderline = props.disableUnderline === true
+  const theme = useTheme()
 
   const isHiddenLabel = (state: InputBaseState) =>
     props.hiddenLabel ?? fcs?.hiddenLabel ?? state.hiddenLabel
 
   const getRootSx = (state: InputBaseState): SxObject => {
-    const theme = defaultTheme
     const hiddenLabel = isHiddenLabel(state)
     const small = state.size === 'small'
     const sx: SxObject = {

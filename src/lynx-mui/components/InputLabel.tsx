@@ -1,6 +1,6 @@
 import type { ReactNode } from '@lynx-js/react'
 
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp } from '../system/types.js'
 import {
@@ -45,7 +45,7 @@ export interface InputLabelProps {
  *  - transform/scale are supported natively; transitions animate color+transform.
  */
 export function InputLabel(props: InputLabelProps) {
-  const theme = defaultTheme
+  const theme = useTheme()
   const fcs = useFormControl()
   const inFormControl = fcs !== undefined
 

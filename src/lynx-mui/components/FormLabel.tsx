@@ -1,6 +1,6 @@
 import type { ReactNode } from '@lynx-js/react'
 
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp, Theme } from '../system/types.js'
 import { formControlState, useFormControl, type FormControlColor } from './FormControlContext.js'
@@ -59,7 +59,7 @@ export function formLabelRootSx(theme: Theme): SxObject {
  * rather than via a `::after`-style span.
  */
 export function FormLabel(props: FormLabelProps) {
-  const theme = defaultTheme
+  const theme = useTheme()
   const fcs = useFormControl()
 
   const color = formControlState<FormControlColor>(props.color, fcs?.color, 'primary')

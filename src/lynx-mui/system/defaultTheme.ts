@@ -1,3 +1,4 @@
+import { createBreakpoints } from './createBreakpoints.js'
 import type { Theme } from './types.js'
 
 // Empty = use the platform's system font. Forcing a Latin-only stack (e.g.
@@ -129,4 +130,6 @@ export const defaultTheme: Theme = {
       sharp: 'cubic-bezier(0.4, 0, 0.6, 1)',
     },
   },
+  // MUI default breakpoints (styles/createBreakpoints.js): xs0/sm600/md900/lg1200/xl1536.
+  breakpoints: createBreakpoints(),
 }

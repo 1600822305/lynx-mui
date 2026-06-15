@@ -1,6 +1,6 @@
 import './progress.css'
 
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { resolveColor, sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp, Theme } from '../system/types.js'
 
@@ -55,7 +55,7 @@ export function CircularProgress(props: CircularProgressProps) {
     className,
   } = props
 
-  const theme = defaultTheme
+  const theme = useTheme()
   const stroke = resolveStrokeColor(color, theme)
   const r = (SIZE - thickness) / 2
 

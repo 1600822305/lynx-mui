@@ -1,7 +1,7 @@
 import { createContext, useMemo } from '@lynx-js/react'
 import type { ReactNode } from '@lynx-js/react'
 
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp } from '../system/types.js'
 
@@ -53,7 +53,7 @@ export interface TableProps {
  * - `borderCollapse` / `borderSpacing` are no-ops (handled by cell borderBottom).
  */
 export function Table(props: TableProps) {
-  const theme = defaultTheme
+  const theme = useTheme()
   const padding = props.padding ?? 'normal'
   const size = props.size ?? 'medium'
   const stickyHeader = props.stickyHeader === true

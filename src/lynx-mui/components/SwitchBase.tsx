@@ -3,7 +3,7 @@ import type { ComponentType } from '@lynx-js/react'
 import { useControlled } from '../hooks/useControlled.js'
 import { usePressState } from '../hooks/usePressState.js'
 import type { IconProps } from '../icons/createSvgIcon.js'
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, Theme } from '../system/types.js'
 import { alpha } from '../utils/alpha.js'
@@ -81,7 +81,7 @@ function rootStyle(
 
 /** MUI `internal/SwitchBase` -> Lynx `<view>` wrapping a single icon, with controllable checked state. */
 export function SwitchBase(props: SwitchBaseProps) {
-  const theme = defaultTheme
+  const theme = useTheme()
   const color = props.color ?? 'primary'
   const size = props.size ?? 'medium'
   const edge = props.edge ?? false

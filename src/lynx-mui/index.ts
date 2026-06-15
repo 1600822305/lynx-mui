@@ -113,6 +113,11 @@ export * from './icons/index.js'
 
 // System / theming.
 export { defaultTheme } from './system/defaultTheme.js'
+export { createTheme } from './system/createTheme.js'
+export { ThemeProvider, useTheme, ThemeContext } from './system/ThemeContext.js'
+export type { ThemeProviderProps } from './system/ThemeContext.js'
+export { createBreakpoints } from './system/createBreakpoints.js'
+export type { BreakpointsOptions } from './system/createBreakpoints.js'
 export {
   resolveSx,
   sxToStyle,
@@ -131,8 +136,15 @@ export { alpha } from './utils/alpha.js'
 export { lighten, darken } from './utils/lighten.js'
 export type {
   Theme,
+  ThemeOptions,
   Palette,
   PaletteColor,
+  PaletteColorOptions,
+  PaletteOptions,
+  TypographyOptions,
+  Breakpoint,
+  Breakpoints,
+  BreakpointValues,
   SxObject,
   SxProp,
   TypographyVariant,

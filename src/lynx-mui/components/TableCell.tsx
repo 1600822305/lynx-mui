@@ -1,7 +1,7 @@
 import { useContext } from '@lynx-js/react'
 import type { ReactNode } from '@lynx-js/react'
 
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp } from '../system/types.js'
 import { alpha } from '../utils/alpha.js'
@@ -78,7 +78,7 @@ function alignToTextAlign(align: TableCellAlign): 'left' | 'center' | 'right' {
  *   header still renders, just non-floating.
  */
 export function TableCell(props: TableCellProps) {
-  const theme = defaultTheme
+  const theme = useTheme()
   const table = useContext(TableContext)
   const tablelvl2 = useContext(Tablelvl2Context)
 

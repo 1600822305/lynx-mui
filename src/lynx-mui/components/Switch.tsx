@@ -1,5 +1,5 @@
 import { useControlled } from '../hooks/useControlled.js'
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, Theme } from '../system/types.js'
 
@@ -42,7 +42,7 @@ function mainColor(color: SwitchColor, theme: Theme): string | undefined {
 
 /** MUI `Switch` -> Lynx `<view>` (relative) + track `<view>` + thumb `<view>`. */
 export function Switch(props: SwitchProps) {
-  const theme = defaultTheme
+  const theme = useTheme()
   const color = props.color ?? 'primary'
   const size = props.size ?? 'medium'
   const disabled = props.disabled === true

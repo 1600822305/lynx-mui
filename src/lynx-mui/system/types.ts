@@ -74,6 +74,28 @@ export interface Transitions {
   }
 }
 
+export type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+
+export interface BreakpointValues {
+  xs: number
+  sm: number
+  md: number
+  lg: number
+  xl: number
+}
+
+/** Mirrors MUI's `theme.breakpoints`. Methods return `@media (...)` strings. */
+export interface Breakpoints {
+  keys: Breakpoint[]
+  values: BreakpointValues
+  unit: string
+  up: (key: Breakpoint | number) => string
+  down: (key: Breakpoint | number) => string
+  between: (start: Breakpoint | number, end: Breakpoint | number) => string
+  only: (key: Breakpoint) => string
+  not: (key: Breakpoint) => string
+}
+
 /** Stacking order for overlay layers (mirrors MUI's `theme.zIndex`). */
 export interface ZIndex {
   mobileStepper: number
@@ -115,6 +137,55 @@ export interface Theme {
   zIndex: ZIndex
   /** Animation duration/easing scale (mirrors MUI's `theme.transitions`). */
   transitions: Transitions
+  /** Responsive breakpoints (mirrors MUI's `theme.breakpoints`). */
+  breakpoints: Breakpoints
+}
+
+/** A palette color supplied to `createTheme` — only `main` is required. */
+export interface PaletteColorOptions {
+  main: string
+  light?: string
+  dark?: string
+  contrastText?: string
+}
+
+export interface PaletteOptions {
+  mode?: 'light' | 'dark'
+  primary?: PaletteColorOptions
+  secondary?: PaletteColorOptions
+  error?: PaletteColorOptions
+  warning?: PaletteColorOptions
+  info?: PaletteColorOptions
+  success?: PaletteColorOptions
+  text?: Partial<Palette['text']>
+  background?: Partial<Palette['background']>
+  divider?: string
+  grey?: Partial<Record<string, string>>
+  action?: Partial<Palette['action']>
+  contrastThreshold?: number
+  tonalOffset?: number | { light: number; dark: number }
+}
+
+export type TypographyOptions = Partial<TypographyGlobals> &
+  Partial<Record<TypographyVariant, Partial<TypographyStyle>>>
+
+/** Options accepted by `createTheme` (mirrors MUI's `ThemeOptions`). */
+export interface ThemeOptions {
+  spacing?: number | ((factor: number) => number)
+  shape?: Partial<{ borderRadius: number }>
+  palette?: PaletteOptions
+  typography?: TypographyOptions
+  shadows?: string[]
+  zIndex?: Partial<ZIndex>
+  transitions?: {
+    duration?: Partial<Transitions['duration']>
+    easing?: Partial<Transitions['easing']>
+  }
+  breakpoints?: {
+    values?: Partial<BreakpointValues>
+    unit?: string
+    step?: number
+  }
 }
 
 /** A value inside an sx object: a raw style value, or a nested object (state selectors). */

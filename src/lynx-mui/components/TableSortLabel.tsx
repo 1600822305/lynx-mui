@@ -3,7 +3,7 @@ import type { ComponentType, ReactNode } from '@lynx-js/react'
 import { usePressState } from '../hooks/usePressState.js'
 import { createSvgIcon } from '../icons/createSvgIcon.js'
 import type { IconProps } from '../icons/createSvgIcon.js'
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp } from '../system/types.js'
 
@@ -49,7 +49,7 @@ export interface TableSortLabelProps {
  *   because Lynx `<text>` cannot inherit font from the surrounding TableCell.
  */
 export function TableSortLabel(props: TableSortLabelProps) {
-  const theme = defaultTheme
+  const theme = useTheme()
   const active = props.active === true
   const direction: TableSortDirection = props.direction ?? 'asc'
   const hideSortIcon = props.hideSortIcon === true

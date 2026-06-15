@@ -1,4 +1,4 @@
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import type { SxObject } from '../system/types.js'
 import { useFormControl } from './FormControlContext.js'
 import {
@@ -28,9 +28,9 @@ export interface InputProps extends InputBaseProps {
 export function Input(props: InputProps) {
   const inFormControl = useFormControl() !== undefined
   const disableUnderline = props.disableUnderline === true
+  const theme = useTheme()
 
   const getRootSx = (state: InputBaseState): SxObject => {
-    const theme = defaultTheme
     const sx: SxObject = { position: 'relative' }
     if (inFormControl) sx.marginTop = '16px'
     if (!disableUnderline) {

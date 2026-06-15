@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useState } from '@lynx-js/react'
 import type { ReactNode } from '@lynx-js/react'
 
-import { defaultTheme } from '../system/defaultTheme.js'
 import { sxToStyle } from '../system/resolveSx.js'
-import type { LynxStyle, SxObject, SxProp } from '../system/types.js'
+import { useTheme } from '../system/ThemeContext.js'
+import type { LynxStyle, SxObject, SxProp, Theme } from '../system/types.js'
 import {
   FormControlContext,
   type FormControlColor,
@@ -32,7 +32,7 @@ export interface FormControlProps {
 }
 
 /** v7 FormControlRoot: inline-flex column, plus margin/fullWidth variants. */
-function rootStyle(margin: FormControlMargin, fullWidth: boolean): LynxStyle {
+function rootStyle(margin: FormControlMargin, fullWidth: boolean, theme: Theme): LynxStyle {
   const sx: SxObject = {
     display: 'inline-flex',
     flexDirection: 'column',
@@ -51,7 +51,7 @@ function rootStyle(margin: FormControlMargin, fullWidth: boolean): LynxStyle {
     sx.marginBottom = '4px'
   }
   if (fullWidth) sx.width = '100%'
-  return sxToStyle(sx, defaultTheme)
+  return sxToStyle(sx, theme)
 }
 
 /**
@@ -72,6 +72,7 @@ export function FormControl(props: FormControlProps) {
   const required = props.required === true
   const size = props.size ?? 'medium'
   const variant = props.variant ?? 'outlined'
+  const theme = useTheme()
 
   const [adornedStart, setAdornedStart] = useState(false)
   const [filled, setFilled] = useState(false)
@@ -124,8 +125,8 @@ export function FormControl(props: FormControlProps) {
   )
 
   const style: LynxStyle = {
-    ...rootStyle(margin, fullWidth),
-    ...sxToStyle(props.sx, defaultTheme),
+    ...rootStyle(margin, fullWidth, theme),
+    ...sxToStyle(props.sx, theme),
     ...props.style,
   }
 

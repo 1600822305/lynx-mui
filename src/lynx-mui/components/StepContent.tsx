@@ -1,8 +1,8 @@
 import type { ReactNode } from '@lynx-js/react'
 
-import { defaultTheme } from '../system/defaultTheme.js'
 import { sxToStyle } from '../system/resolveSx.js'
-import type { LynxStyle, SxObject, SxProp } from '../system/types.js'
+import { useTheme } from '../system/ThemeContext.js'
+import type { LynxStyle, SxObject, SxProp, Theme } from '../system/types.js'
 import { useStepContext } from './StepContext.js'
 
 export interface StepContentProps {
@@ -12,7 +12,7 @@ export interface StepContentProps {
   sx?: SxProp
 }
 
-function rootSx(last: boolean): SxObject {
+function rootSx(last: boolean, theme: Theme): SxObject {
   const sx: SxObject = {
     marginLeft: '12px', // half icon
     paddingLeft: '20px', // 8 + 12
@@ -22,7 +22,7 @@ function rootSx(last: boolean): SxObject {
     // light mode border (dark mode would use grey[600])
     sx.borderLeftStyle = 'solid'
     sx.borderLeftWidth = '1px'
-    sx.borderLeftColor = defaultTheme.palette.grey['400']
+    sx.borderLeftColor = theme.palette.grey['400']
   }
   return sx
 }
@@ -37,14 +37,14 @@ function rootSx(last: boolean): SxObject {
  */
 export function StepContent(props: StepContentProps) {
   const { children, className, style, sx } = props
-  const theme = defaultTheme
+  const theme = useTheme()
   const { active, expanded, last } = useStepContext()
 
   const open = active || expanded
   const { duration, easing } = theme.transitions
 
   const rootStyle: LynxStyle = {
-    ...sxToStyle(rootSx(last), theme),
+    ...sxToStyle(rootSx(last, theme), theme),
     ...(sx ? sxToStyle(sx, theme) : {}),
     ...style,
   }

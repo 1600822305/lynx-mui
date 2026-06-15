@@ -3,7 +3,8 @@ import type { ReactNode } from '@lynx-js/react'
 
 import { defaultTheme } from '../system/defaultTheme.js'
 import { sxToStyle } from '../system/resolveSx.js'
-import type { LynxStyle, SxObject, SxProp } from '../system/types.js'
+import { useTheme } from '../system/ThemeContext.js'
+import type { LynxStyle, SxObject, SxProp, Theme } from '../system/types.js'
 import {
   formControlState,
   useFormControl,
@@ -95,8 +96,7 @@ function toLynxInputType(type: string | undefined, multiline: boolean): LynxInpu
 }
 
 /** v7 InputBaseRoot (bare; variants layer border/underline/background on top). */
-function baseRootSx(state: InputBaseState): SxObject {
-  const theme = defaultTheme
+function baseRootSx(state: InputBaseState, theme: Theme): SxObject {
   const body1 = theme.typography.body1
   const sx: SxObject = {
     fontSize: `${body1.fontSize}px`,
@@ -120,8 +120,7 @@ function baseRootSx(state: InputBaseState): SxObject {
 }
 
 /** v7 InputBaseInput (the native `<input>`/`<textarea>`). */
-function baseInputSx(state: InputBaseState): SxObject {
-  const theme = defaultTheme
+function baseInputSx(state: InputBaseState, theme: Theme): SxObject {
   const body1 = theme.typography.body1
   const sx: SxObject = {
     fontSize: `${body1.fontSize}px`,
@@ -163,7 +162,7 @@ function baseInputSx(state: InputBaseState): SxObject {
  *    tap the field itself.
  */
 export function InputBase(props: InputBaseProps) {
-  const theme = defaultTheme
+  const theme = useTheme()
   const fcs = useFormControl()
 
   const disabled = formControlState<boolean>(props.disabled, fcs?.disabled, false)
@@ -207,13 +206,13 @@ export function InputBase(props: InputBaseProps) {
   }
 
   const rootStyle: LynxStyle = {
-    ...sxToStyle(baseRootSx(state), theme),
+    ...sxToStyle(baseRootSx(state, theme), theme),
     ...sxToStyle(props.getRootSx ? props.getRootSx(state) : {}, theme),
     ...sxToStyle(props.sx, theme),
     ...props.style,
   }
   const inputStyle: LynxStyle = {
-    ...sxToStyle(baseInputSx(state), theme),
+    ...sxToStyle(baseInputSx(state, theme), theme),
     ...sxToStyle(props.getInputSx ? props.getInputSx(state) : {}, theme),
   }
   if (multiline && props.rows && props.rows > 0) {

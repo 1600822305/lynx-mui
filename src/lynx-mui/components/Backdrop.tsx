@@ -1,6 +1,6 @@
 import type { ReactNode } from '@lynx-js/react'
 
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp } from '../system/types.js'
 import { FixedLayer } from './Portal.js'
@@ -27,7 +27,7 @@ export interface BackdropProps {
  */
 export function Backdrop(props: BackdropProps) {
   if (!props.open) return null
-  const theme = defaultTheme
+  const theme = useTheme()
   const base: SxObject = {
     display: 'flex',
     flexDirection: 'row',
