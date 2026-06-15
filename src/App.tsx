@@ -123,6 +123,10 @@ import {
 import { Drawer, Snackbar } from './lynx-mui/index.js'
 // Batch Q — Popover + Menu family.
 import { Menu, MenuItem, MenuList, Popover, useAnchorRect } from './lynx-mui/index.js'
+// Batch C — transitions (Collapse, Fade, Slide).
+import { Collapse, Fade, Slide } from './lynx-mui/index.js'
+// Batch D — leaf components (ButtonBase, ListItemIcon, Grid, CssBaseline).
+import { ButtonBase, CssBaseline, Grid, ListItemIcon } from './lynx-mui/index.js'
 
 function SectionTitle(props: { children: string }) {
   return (
@@ -830,6 +834,8 @@ export function App() {
         <StyledSection />
         <BatchBSection />
         <BatchQSection />
+        <BatchCSection />
+        <BatchDSection />
       </Box>
     </scroll-view>
   )
@@ -1628,6 +1634,196 @@ function BatchQSection() {
           <MenuItem disabled>Disabled</MenuItem>
         </MenuList>
       </Paper>
+    </>
+  )
+}
+
+function BatchCSection() {
+  const [collapseOpen, setCollapseOpen] = useState(true)
+  const [hCollapseOpen, setHCollapseOpen] = useState(true)
+  const [fadeIn, setFadeIn] = useState(true)
+  const [slideIn, setSlideIn] = useState(true)
+  const [slideDir, setSlideDir] = useState<'left' | 'right' | 'up' | 'down'>('down')
+
+  return (
+    <>
+      <SectionTitle>Batch C — Transitions</SectionTitle>
+
+      <Typography variant='subtitle2' sx={{ mt: 1, mb: 1 }}>
+        Collapse (vertical)
+      </Typography>
+      <Button variant='outlined' onClick={() => setCollapseOpen((v) => !v)}>
+        {collapseOpen ? 'Collapse' : 'Expand'}
+      </Button>
+      <Collapse in={collapseOpen}>
+        <Paper sx={{ p: 2, mt: 1 }}>
+          <Typography variant='body2'>
+            This content collapses vertically. On Lynx the height animates via a
+            max-height transition (no synchronous measurement).
+          </Typography>
+        </Paper>
+      </Collapse>
+
+      <Typography variant='subtitle2' sx={{ mt: 2, mb: 1 }}>
+        Collapse (horizontal)
+      </Typography>
+      <Button variant='outlined' onClick={() => setHCollapseOpen((v) => !v)}>
+        {hCollapseOpen ? 'Collapse' : 'Expand'}
+      </Button>
+      <view style={{ display: 'flex', flexDirection: 'row', marginTop: '8px' }}>
+        <Collapse in={hCollapseOpen} orientation='horizontal'>
+          <Paper sx={{ p: 2 }}>
+            <Typography variant='body2'>Sidebar</Typography>
+          </Paper>
+        </Collapse>
+      </view>
+
+      <Typography variant='subtitle2' sx={{ mt: 2, mb: 1 }}>
+        Fade
+      </Typography>
+      <view style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '8px' }}>
+        <Switch checked={fadeIn} onChange={(checked: boolean) => setFadeIn(checked)} />
+        <Typography variant='body2'>Toggle fade</Typography>
+      </view>
+      <Fade in={fadeIn}>
+        <view>
+          <Paper sx={{ p: 2, mt: 1 }}>
+            <Typography variant='body2'>I fade in and out.</Typography>
+          </Paper>
+        </view>
+      </Fade>
+
+      <Typography variant='subtitle2' sx={{ mt: 2, mb: 1 }}>
+        Slide
+      </Typography>
+      <view style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '8px' }}>
+        <Button variant='outlined' onClick={() => setSlideIn((v) => !v)}>
+          {slideIn ? 'Slide out' : 'Slide in'}
+        </Button>
+        <Button variant='text' onClick={() => setSlideDir('left')}>
+          Left
+        </Button>
+        <Button variant='text' onClick={() => setSlideDir('right')}>
+          Right
+        </Button>
+        <Button variant='text' onClick={() => setSlideDir('up')}>
+          Up
+        </Button>
+        <Button variant='text' onClick={() => setSlideDir('down')}>
+          Down
+        </Button>
+      </view>
+      <Typography variant='caption' sx={{ color: 'text.secondary' }}>
+        {`direction: ${slideDir}`}
+      </Typography>
+      <view style={{ overflow: 'hidden', marginTop: '8px' }}>
+        <Slide in={slideIn} direction={slideDir}>
+          <view>
+            <Paper sx={{ p: 2 }}>
+              <Typography variant='body2'>I slide {slideDir}.</Typography>
+            </Paper>
+          </view>
+        </Slide>
+      </view>
+    </>
+  )
+}
+
+function BatchDSection() {
+  return (
+    <>
+      <SectionTitle>Batch D — Leaf components</SectionTitle>
+
+      <Typography variant='subtitle2' sx={{ mt: 1, mb: 1 }}>
+        ButtonBase (unstyled pressable base)
+      </Typography>
+      <view style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
+        <ButtonBase
+          onClick={() => undefined}
+          sx={{ p: 1, borderRadius: '4px', backgroundColor: 'primary.main' }}
+        >
+          <Typography variant='button' sx={{ color: 'common.white' }}>
+            Tap me
+          </Typography>
+        </ButtonBase>
+        <ButtonBase disabled sx={{ p: 1 }}>
+          <Typography variant='button' sx={{ color: 'text.disabled' }}>
+            Disabled
+          </Typography>
+        </ButtonBase>
+      </view>
+
+      <Typography variant='subtitle2' sx={{ mt: 2, mb: 1 }}>
+        ListItemIcon
+      </Typography>
+      <Paper>
+        <List>
+          <ListItem>
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary='Home' />
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText primary='Settings' />
+          </ListItem>
+        </List>
+      </Paper>
+
+      <Typography variant='subtitle2' sx={{ mt: 2, mb: 1 }}>
+        Grid (container + items, spacing=2, 12 columns)
+      </Typography>
+      <Grid container spacing={2}>
+        <Grid size={6}>
+          <Paper sx={{ p: 2 }}>
+            <Typography variant='body2'>size=6</Typography>
+          </Paper>
+        </Grid>
+        <Grid size={6}>
+          <Paper sx={{ p: 2 }}>
+            <Typography variant='body2'>size=6</Typography>
+          </Paper>
+        </Grid>
+        <Grid size={4}>
+          <Paper sx={{ p: 2 }}>
+            <Typography variant='body2'>size=4</Typography>
+          </Paper>
+        </Grid>
+        <Grid size={4}>
+          <Paper sx={{ p: 2 }}>
+            <Typography variant='body2'>size=4</Typography>
+          </Paper>
+        </Grid>
+        <Grid size={4}>
+          <Paper sx={{ p: 2 }}>
+            <Typography variant='body2'>size=4</Typography>
+          </Paper>
+        </Grid>
+        <Grid size='grow'>
+          <Paper sx={{ p: 2 }}>
+            <Typography variant='body2'>grow</Typography>
+          </Paper>
+        </Grid>
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Paper sx={{ p: 2 }}>
+            <Typography variant='body2'>xs=12 / md=6</Typography>
+          </Paper>
+        </Grid>
+      </Grid>
+
+      <Typography variant='subtitle2' sx={{ mt: 2, mb: 1 }}>
+        CssBaseline (baseline-styled root)
+      </Typography>
+      <CssBaseline>
+        <view style={{ padding: '12px' }}>
+          <Typography variant='body2'>
+            Wrapped in a CssBaseline root (background.default + text.primary).
+          </Typography>
+        </view>
+      </CssBaseline>
     </>
   )
 }
