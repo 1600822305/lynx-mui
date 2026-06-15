@@ -1,6 +1,6 @@
 import type { ReactNode } from '@lynx-js/react'
 
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp, Theme } from '../system/types.js'
 import { LinearProgress } from './LinearProgress.js'
@@ -77,7 +77,7 @@ export function MobileStepper(props: MobileStepperProps) {
     style,
     sx,
   } = props
-  const theme = defaultTheme
+  const theme = useTheme()
 
   const rootStyle: LynxStyle = {
     ...sxToStyle(rootSx(position, theme), theme),

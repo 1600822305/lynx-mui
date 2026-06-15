@@ -1,6 +1,6 @@
 import type { ReactNode } from '@lynx-js/react'
 
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp } from '../system/types.js'
 import { Tablelvl2Context } from './Table.js'
@@ -20,10 +20,11 @@ export interface TableBodyProps {
  * MUI's `display: table-row-group` becomes a flex column.
  */
 export function TableBody(props: TableBodyProps) {
+  const theme = useTheme()
   const rootSx: SxObject = { display: 'flex', flexDirection: 'column', width: '100%' }
   const rootStyle: LynxStyle = {
-    ...sxToStyle(rootSx, defaultTheme),
-    ...sxToStyle(props.sx, defaultTheme),
+    ...sxToStyle(rootSx, theme),
+    ...sxToStyle(props.sx, theme),
     ...props.style,
   }
   return (

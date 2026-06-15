@@ -1,6 +1,6 @@
 import './progress.css'
 
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { resolveColor, sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp, Theme } from '../system/types.js'
 import { lighten } from '../utils/lighten.js'
@@ -52,7 +52,7 @@ export function LinearProgress(props: LinearProgressProps) {
     className,
   } = props
 
-  const theme = defaultTheme
+  const theme = useTheme()
   const trackBg = getTrackColor(color, theme)
   const barBg = getBarColor(color, theme)
   const isDeterminate = variant === 'determinate'

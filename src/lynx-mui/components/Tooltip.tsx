@@ -3,7 +3,7 @@ import type { ReactNode } from '@lynx-js/react'
 import { useAnchorRect } from '../hooks/useAnchorRect.js'
 import type { AnchorRect } from '../hooks/useAnchorRect.js'
 import { useControlled } from '../hooks/useControlled.js'
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject } from '../system/types.js'
 import { alpha } from '../utils/alpha.js'
@@ -53,7 +53,7 @@ function bubblePosition(placement: TooltipPlacement, rect: AnchorRect): SxObject
  * (MUI clones the child instead); placement is limited to the 4 base sides.
  */
 export function Tooltip(props: TooltipProps) {
-  const theme = defaultTheme
+  const theme = useTheme()
   const placement = props.placement ?? 'bottom'
   const anchor = useAnchorRect()
   const [open, setOpen] = useControlled(props.open, false)

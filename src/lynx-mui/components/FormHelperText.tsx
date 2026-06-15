@@ -1,6 +1,6 @@
 import type { ReactNode } from '@lynx-js/react'
 
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp } from '../system/types.js'
 import {
@@ -26,7 +26,7 @@ export interface FormHelperTextProps {
  * with error/disabled color overrides and contained (filled/outlined) margins.
  */
 export function FormHelperText(props: FormHelperTextProps) {
-  const theme = defaultTheme
+  const theme = useTheme()
   const fcs = useFormControl()
 
   const disabled = formControlState<boolean>(props.disabled, fcs?.disabled, false)

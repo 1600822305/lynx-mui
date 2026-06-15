@@ -16,8 +16,8 @@
 ## 1. 项目是什么 / 目的
 
 - **lynx-mui = 一个干净、独立、可单独发版的通用 UI 库**,把 `@mui/material` 1:1 复刻到 **Lynx**(ReactLynx)上。
-- **跟任何业务无关**(不要把 AetherLink 或其它业务的 theme/token 写进来)。它就像 MUI 本身一样通用,自带一套**最小默认主题**(对齐 MUI default light theme)。
-- **主题系统后置**:现在不做完整主题系统,只用够渲染的默认值。当前唯一焦点:**组件能不能和 MUI 视觉 1:1**。
+- **跟任何业务无关**(不要把 AetherLink 或其它业务的 theme/token 写进来)。它就像 MUI 本身一样通用,自带一套默认主题(对齐 MUI default light theme)。
+- **主题机制照 MUI 1:1 复刻**:`createTheme(options)` / `ThemeProvider` / `useTheme()` 都是 MUI 自带的公共 API,所以本库也提供。组件内部通过 `const theme = useTheme()`(context)读主题,`defaultTheme` 作为 context 默认值(无 Provider 也能跑)。**纠正早期"不用 context、直接 import defaultTheme"的偷懒做法**——MUI 组件本身就是靠 context 读 theme,要 1:1 就得走 context。注意:复刻的是 MUI 的**机制**,不是任何业务的主题数据。
 - **最终目标**:API 稳定后抽成 monorepo(`packages/lynx-mui` + `apps/playground`),`@lynx-js/react` 走 peerDependencies,用 Rslib + `pluginReactLynx()` 打包发 npm。**现在先在单仓库攒组件**(用户已拍板:攒够再抽,提前抽会拖慢)。
 
 ---

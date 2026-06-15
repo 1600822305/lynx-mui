@@ -1,6 +1,6 @@
 import type { ReactNode } from '@lynx-js/react'
 
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp, Theme } from '../system/types.js'
 import { SvgIcon } from './SvgIcon.js'
@@ -45,7 +45,7 @@ function iconColor(active: boolean, completed: boolean, error: boolean, theme: T
  */
 export function StepIcon(props: StepIconProps) {
   const { active = false, completed = false, error = false, icon, className, style, sx } = props
-  const theme = defaultTheme
+  const theme = useTheme()
 
   if (typeof icon === 'number' || typeof icon === 'string') {
     const color = iconColor(active, completed, error, theme)

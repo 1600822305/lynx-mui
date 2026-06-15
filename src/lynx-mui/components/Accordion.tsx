@@ -2,7 +2,7 @@ import { cloneElement, isValidElement } from '@lynx-js/react'
 import type { ReactElement, ReactNode } from '@lynx-js/react'
 
 import { useControlled } from '../hooks/useControlled.js'
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp } from '../system/types.js'
 
@@ -39,7 +39,7 @@ export type { AccordionProps as AccordionPropsType }
  * - borderRadius: all corners rounded when !square (can't target first/last-of-type).
  */
 export function Accordion(props: AccordionProps) {
-  const theme = defaultTheme
+  const theme = useTheme()
   const disabled = props.disabled === true
   const disableGutters = props.disableGutters === true
   const square = props.square === true

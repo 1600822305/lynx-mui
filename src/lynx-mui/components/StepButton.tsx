@@ -2,7 +2,7 @@ import { cloneElement, isValidElement } from '@lynx-js/react'
 import type { ReactElement, ReactNode } from '@lynx-js/react'
 
 import { usePressState } from '../hooks/usePressState.js'
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp } from '../system/types.js'
 import { StepLabel } from './StepLabel.js'
@@ -50,7 +50,7 @@ function rootSx(orientation: 'horizontal' | 'vertical'): SxObject {
  */
 export function StepButton(props: StepButtonProps) {
   const { children, icon, optional, onClick, className, style, sx } = props
-  const theme = defaultTheme
+  const theme = useTheme()
   const { orientation } = useStepperContext()
   const { disabled: ctxDisabled } = useStepContext()
   const disabled = props.disabled === true || ctxDisabled

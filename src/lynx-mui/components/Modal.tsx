@@ -1,6 +1,6 @@
 import type { ReactNode } from '@lynx-js/react'
 
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp } from '../system/types.js'
 import { FixedLayer } from './Portal.js'
@@ -39,7 +39,7 @@ export function Modal(props: ModalProps) {
   const keepMounted = props.keepMounted === true
   if (!open && !keepMounted) return null
 
-  const theme = defaultTheme
+  const theme = useTheme()
   const rootBase: SxObject = {
     top: 0,
     left: 0,

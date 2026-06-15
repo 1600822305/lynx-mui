@@ -1,8 +1,8 @@
 import { useControlled } from '../hooks/useControlled.js'
 import type { BaseProps } from '../system/createComponent.js'
-import { defaultTheme } from '../system/defaultTheme.js'
 import { sxToStyle } from '../system/resolveSx.js'
-import type { LynxStyle } from '../system/types.js'
+import { useTheme } from '../system/ThemeContext.js'
+import type { LynxStyle, Theme } from '../system/types.js'
 import { PaginationItem } from './PaginationItem.js'
 import type {
   PaginationItemColor,
@@ -47,7 +47,7 @@ const range = (start: number, end: number): number[] =>
   Array.from({ length: Math.max(end - start + 1, 0) }, (_, i) => start + i)
 
 /** v7 PaginationUl: flex row, wrap, centered, no padding/margin/list-style. */
-function ulStyle(): LynxStyle {
+function ulStyle(theme: Theme): LynxStyle {
   return sxToStyle({
     display: 'flex',
     flexDirection: 'row',
@@ -55,7 +55,7 @@ function ulStyle(): LynxStyle {
     alignItems: 'center',
     padding: 0,
     margin: 0,
-  }, defaultTheme)
+  }, theme)
 }
 
 /**
@@ -87,6 +87,7 @@ export function Pagination(props: PaginationProps) {
     className,
   } = props
 
+  const theme = useTheme()
   const [page, setPage] = useControlled<number>(pageProp, defaultPage)
 
   const handleClick = (value: number) => {
@@ -160,11 +161,11 @@ export function Pagination(props: PaginationProps) {
     }
   })
 
-  const rootStyle: LynxStyle = { ...(sx ? sxToStyle(sx, defaultTheme) : {}), ...style }
+  const rootStyle: LynxStyle = { ...(sx ? sxToStyle(sx, theme) : {}), ...style }
 
   return (
     <view style={rootStyle} className={className}>
-      <view style={ulStyle()}>
+      <view style={ulStyle(theme)}>
         {items.map((item, index) => (
           <PaginationItem
             key={index}

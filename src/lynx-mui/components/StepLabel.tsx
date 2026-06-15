@@ -1,6 +1,6 @@
 import type { ComponentType, ReactNode } from '@lynx-js/react'
 
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp, Theme } from '../system/types.js'
 import { StepIcon } from './StepIcon.js'
@@ -92,7 +92,7 @@ export function StepLabel(props: StepLabelProps) {
     style,
     sx,
   } = props
-  const theme = defaultTheme
+  const theme = useTheme()
 
   const { alternativeLabel, orientation } = useStepperContext()
   const { active, completed, icon: iconContext } = useStepContext()

@@ -1,9 +1,9 @@
 import { cloneElement, isValidElement } from '@lynx-js/react'
 import type { ReactElement, ReactNode } from '@lynx-js/react'
 
-import { defaultTheme } from '../system/defaultTheme.js'
 import { sxToStyle } from '../system/resolveSx.js'
-import type { LynxStyle, SxObject } from '../system/types.js'
+import { useTheme } from '../system/ThemeContext.js'
+import type { LynxStyle, SxObject, Theme } from '../system/types.js'
 import { Typography } from './Typography.js'
 
 export type FormControlLabelPlacement = 'end' | 'start' | 'top' | 'bottom'
@@ -27,7 +27,7 @@ const flexDirection: Record<FormControlLabelPlacement, FlexDirection> = {
 }
 
 /** v7 source margins: base ML -11 / MR 16; start flips MR to -11; start/top/bottom set ML 16. */
-function rootStyle(placement: FormControlLabelPlacement): LynxStyle {
+function rootStyle(placement: FormControlLabelPlacement, theme: Theme): LynxStyle {
   const sx: SxObject = {
     display: 'inline-flex',
     flexDirection: flexDirection[placement],
@@ -37,19 +37,20 @@ function rootStyle(placement: FormControlLabelPlacement): LynxStyle {
   }
   if (placement === 'start') sx.marginRight = '-11px'
   if (placement !== 'end') sx.marginLeft = '16px'
-  return sxToStyle(sx, defaultTheme)
+  return sxToStyle(sx, theme)
 }
 
 /** MUI `FormControlLabel` -> Lynx `<view>` row with the control + a Typography label. */
 export function FormControlLabel(props: FormControlLabelProps) {
   const placement = props.labelPlacement ?? 'end'
   const disabled = props.disabled === true
+  const theme = useTheme()
 
   const control = isValidElement(props.control) && disabled
     ? cloneElement(props.control as ReactElement<{ disabled?: boolean }>, { disabled: true })
     : props.control
 
-  const style: LynxStyle = { ...rootStyle(placement), ...props.style }
+  const style: LynxStyle = { ...rootStyle(placement, theme), ...props.style }
 
   return (
     <view className={props.className} style={style}>

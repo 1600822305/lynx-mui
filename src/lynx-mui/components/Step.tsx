@@ -1,6 +1,6 @@
 import type { ReactNode } from '@lynx-js/react'
 
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp } from '../system/types.js'
 import { StepContext } from './StepContext.js'
@@ -57,7 +57,7 @@ export function Step(props: StepProps) {
     style,
     sx,
   } = props
-  const theme = defaultTheme
+  const theme = useTheme()
   const { activeStep, alternativeLabel, connector, nonLinear, orientation } = useStepperContext()
 
   let active = activeProp ?? false

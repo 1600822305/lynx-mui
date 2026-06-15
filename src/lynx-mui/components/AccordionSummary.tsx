@@ -3,7 +3,7 @@ import type { ReactElement, ReactNode } from '@lynx-js/react'
 
 import { ExpandMoreIcon } from '../icons/index.js'
 import type { IconProps } from '../icons/createSvgIcon.js'
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp } from '../system/types.js'
 
@@ -33,7 +33,7 @@ export interface AccordionSummaryProps {
  * - focusVisible background omitted (Lynx has no keyboard focus state).
  */
 export function AccordionSummary(props: AccordionSummaryProps) {
-  const theme = defaultTheme
+  const theme = useTheme()
   const expanded = props.expanded === true
   const disabled = props.disabled === true
   const disableGutters = props.disableGutters === true

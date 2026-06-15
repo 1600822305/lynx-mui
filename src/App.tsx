@@ -110,6 +110,8 @@ import {
   RadioGroup,
   TextField,
 } from './lynx-mui/index.js'
+// Theme mechanism (createTheme / ThemeProvider / useTheme).
+import { createTheme, ThemeProvider, useTheme } from './lynx-mui/index.js'
 
 function SectionTitle(props: { children: string }) {
   return (
@@ -812,8 +814,56 @@ export function App() {
         <BatchOSection />
         <StepperSection />
         <BatchPSection />
+        <ThemeMechanismSection />
       </Box>
     </scroll-view>
+  )
+}
+
+// Theme mechanism demo — createTheme + ThemeProvider + useTheme.
+// Proves the same components re-color under a provider, and that a child hook
+// reads theme.palette.primary.main from context (default vs custom).
+function PrimarySwatch(props: { label: string }) {
+  const theme = useTheme()
+  return (
+    <Box
+      sx={{
+        px: 1.5,
+        py: 1,
+        borderRadius: 1,
+        bgcolor: theme.palette.primary.main,
+        color: theme.palette.primary.contrastText,
+      }}
+    >
+      <Typography variant='body2'>
+        {props.label}: {theme.palette.primary.main}
+      </Typography>
+    </Box>
+  )
+}
+
+function ThemeMechanismSection() {
+  const customTheme = createTheme({
+    palette: { primary: { main: '#9c27b0' }, secondary: { main: '#ff5722' } },
+  })
+  return (
+    <>
+      <SectionTitle>Theme · default (no provider)</SectionTitle>
+      <Row>
+        <Button variant='contained' color='primary'>Primary</Button>
+        <Button variant='contained' color='secondary'>Secondary</Button>
+        <PrimarySwatch label='useTheme()' />
+      </Row>
+
+      <SectionTitle>Theme · createTheme + ThemeProvider</SectionTitle>
+      <ThemeProvider theme={customTheme}>
+        <Row>
+          <Button variant='contained' color='primary'>Primary</Button>
+          <Button variant='contained' color='secondary'>Secondary</Button>
+          <PrimarySwatch label='useTheme()' />
+        </Row>
+      </ThemeProvider>
+    </>
   )
 }
 

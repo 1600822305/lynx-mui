@@ -1,4 +1,4 @@
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { resolveColor, sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxProp, Theme } from '../system/types.js'
 
@@ -78,7 +78,7 @@ export function SvgIcon(props: SvgIconProps) {
     className,
   } = props
 
-  const theme = defaultTheme
+  const theme = useTheme()
   const px = size ?? (fontSize === 'inherit' ? fontSizePx.medium : fontSizePx[fontSize])
   const fill = resolveIconColor(color, htmlColor, theme)
 

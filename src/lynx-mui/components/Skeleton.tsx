@@ -2,7 +2,7 @@ import './skeleton.css'
 
 import type { ReactNode } from '@lynx-js/react'
 
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp, Theme } from '../system/types.js'
 import { alpha } from '../utils/alpha.js'
@@ -65,7 +65,7 @@ export function Skeleton(props: SkeletonProps) {
     className,
   } = props
 
-  const theme: Theme = defaultTheme
+  const theme: Theme = useTheme()
   const hasChildren = Boolean(children)
 
   const rootSx: SxObject = {

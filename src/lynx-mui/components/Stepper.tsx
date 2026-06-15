@@ -1,7 +1,7 @@
 import { cloneElement, isValidElement, useMemo } from '@lynx-js/react'
 import type { ReactElement, ReactNode } from '@lynx-js/react'
 
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import { sxToStyle } from '../system/resolveSx.js'
 import type { LynxStyle, SxObject, SxProp } from '../system/types.js'
 import { StepConnector } from './StepConnector.js'
@@ -71,7 +71,7 @@ export function Stepper(props: StepperProps) {
     style,
     sx,
   } = props
-  const theme = defaultTheme
+  const theme = useTheme()
 
   const childrenArray = toStepArray(children)
   const steps = childrenArray.map((step, index) => {

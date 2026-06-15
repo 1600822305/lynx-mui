@@ -2,8 +2,8 @@ import { createElement } from '@lynx-js/react'
 import type { ReactNode } from '@lynx-js/react'
 
 import { usePressState } from '../hooks/usePressState.js'
-import { defaultTheme } from './defaultTheme.js'
 import { mergeResolved, mergeState, resolveSx } from './resolveSx.js'
+import { useTheme } from './ThemeContext.js'
 import type { LynxStyle, SxObject, SxProp, Theme } from './types.js'
 
 /** Lynx intrinsic elements a component can render as its root. */
@@ -51,7 +51,7 @@ const EMPTY_SX: SxObject = {}
 export function createComponent<OS, P extends BaseProps>(spec: ComponentSpec<OS, P>) {
   function Component(rawProps: P) {
     const props = { ...spec.defaultProps, ...rawProps } as P
-    const theme = defaultTheme
+    const theme = useTheme()
     const ownerState = (spec.ownerState ? spec.ownerState(props) : {}) as OS
 
     const press = usePressState()

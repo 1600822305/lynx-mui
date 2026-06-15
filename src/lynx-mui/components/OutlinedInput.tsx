@@ -1,4 +1,4 @@
-import { defaultTheme } from '../system/defaultTheme.js'
+import { useTheme } from '../system/ThemeContext.js'
 import type { SxObject } from '../system/types.js'
 import {
   InputBase,
@@ -28,8 +28,8 @@ export interface OutlinedInputProps extends InputBaseProps {
  *  - no `:hover` border darkening; focus border thickening is an instant swap.
  */
 export function OutlinedInput(props: OutlinedInputProps) {
+  const theme = useTheme()
   const getRootSx = (state: InputBaseState): SxObject => {
-    const theme = defaultTheme
     const sx: SxObject = {
       position: 'relative',
       borderRadius: '4px',
